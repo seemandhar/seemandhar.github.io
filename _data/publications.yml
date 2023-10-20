@@ -1,22 +1,64 @@
 main:
+  - title: Leveraging Control Knobs in Diffusion Models: Real-time Intrinsic Image Decomposition
+    authors: <strong>S. Jain</strong>, A. Bhattad, D. Forsyth
+    conference_short: WACV
+    conference: IEEE Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
+    pdf: # PDF Link here
+    code: # Code Link here
+    bibtex: # BibTeX Link here
+    image: # Image Link here
+    notes: Under Review
 
-  - title: Continual Learning for Abdominal Multi-Organ and Tumor Segmentation
-    authors: Yixiao Zhang, Xinyi Li, Huimiao Chen, Alan Yuille, <strong>Yaoyao Liu*</strong>, Zongwei Zhou* (*Corresponding authors)
-    conference_short: MICCAI
-    conference: International Conference on Medical Image Computing and Computer-Assisted Intervention <strong>(MICCAI)</strong>, 2023.
-    pdf: https://arxiv.org/pdf/2306.00988.pdf
-    code: https://github.com/MrGiovanni/ContinualLearning
-    bibtex: https://bib.yliu.me/MICCAI23.txt
-    image: ./assets/img/teaser_example_2.png
-    notes: Early Accept
+  - title: Blocks2World: Controlling Realistic Scenes with Editable Primitives
+    authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
+    conference_short: ACM SIGGRAPH
+    conference: ACM SIGGRAPH, 2023.
+    pdf: https://doi.org/10.48550/arXiv.2307.03847
+    code: # Code Link here
+    bibtex: # BibTeX Link here
+    image: # Image Link here
 
-  - title: "Mnemonics Training: Multi-Class Incremental Learning without Forgetting"
-    authors: <strong>Yaoyao Liu</strong>, Yuting Su, An-An Liu, Bernt Schiele, Qianru Sun
-    conference_short: CVPR
-    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2020.
-    pdf: https://arxiv.org/pdf/2002.10211.pdf
-    code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
-    page: https://class-il.mpi-inf.mpg.de/mnemonics/
-    bibtex: https://class-il.mpi-inf.mpg.de/mnemonics/
-    notes: Oral Presentation
-    image: ./assets/img/teaser_example.png
+  - title: An Energy Efficient Fault-Anomaly Detection in Wireless Body Area Networks
+    authors: P. Jain, <strong>S. Jain</strong>, PK. Upadhyay, JM. Moualeu, A. Srivastava
+    conference_short: ACM ToCH
+    conference: ACM Transactions on Computing for Healthcare, 2022.
+    pdf: https://dl.acm.org/doi/abs/10.1145/3501773
+    code: # Code Link here
+    bibtex: # BibTeX Link here
+    image: # Image Link here
+
+  - title: Anomaly Detection in Resource Constrained Environments with Streaming Data
+    authors: P. Jain, <strong>S. Jain</strong>, OR. Zaïane, A. Srivastava
+    conference_short: IEEE TETCI
+    conference: IEEE Transactions on Emerging Topics in Computational Intelligence, 2021.
+    pdf: https://ieeexplore.ieee.org/document/9410461
+    code: # Code Link here
+    bibtex: # BibTeX Link here
+    image: # Image Link here
+
+  - title: Large-Scale Contact Tracing, Hotspot Detection, and Safe Route Recommendation
+    authors: CK. Maurya, <strong>S. Jain</strong>, V. Thakre
+    conference_short: BDA
+    conference: 9th International Conference on Big Data Analytics, 2021.
+    pdf: https://link.springer.com/chapter/10.1007/978-3-030-93620-4_13
+    code: # Code Link here
+    bibtex: # BibTeX Link here
+    image: # Image Link here
+
+  - title: Cube Sampled K-Prototype Clustering for Featured Data
+    authors: <strong>S. Jain</strong>, AA. Shastri, K. Ahuja, Y. Busnel, NP. Singh
+    conference_short: INDICON
+    conference: IEEE 18th India Council International Conference, 2021.
+    pdf: https://ieeexplore.ieee.org/abstract/document/9691727/
+    code: # Code Link here
+    bibtex: # BibTeX Link here
+    image: # Image Link here
+
+  - title: An Efficient Anomaly Detection Approach using Cube Sampling with Streaming Data
+    authors: <strong>S. Jain</strong>, P. Jain, A. Srivastava
+    conference_short: PReMI
+    conference: International Conference on Pattern Recognition and Machine Intelligence, 2021.
+    pdf: https://arxiv.org/pdf/2110.01813.pdf
+    code: # Code Link here
+    bibtex: # BibTeX Link here
+    image: # Image Link here
