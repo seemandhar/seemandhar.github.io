@@ -1,7 +1,5 @@
 <h2 id="affiliations" style="margin: 2px 0px -15px;">Affiliations</h2>
 
-<div class="publications">
-<ol class="bibliography">
 
 {% for affiliation in site.data.affiliations.main %}
 
@@ -23,6 +21,3 @@
 <br>
 
 {% endfor %}
-
-</ol>
-</div>
