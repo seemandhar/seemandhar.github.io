@@ -1,0 +1,45 @@
+main:
+  - image: "./assets/img/uiuc.png"
+    name: "University of Illinois Urbana-Champaign, IL, USA"
+    type: "MSCS"
+    date: "Aug 2022 - Present"
+
+  - image: "./assets/img/healthaiignite.png"
+    name: "HealthAIgnite"
+    type: "CEO, Founder and Managing Director"
+    date: "Jan 2022 - Present"
+
+  - image: "./assets/img/docomo.png"
+    name: "DOCOMO Innovations, Inc., California, USA"
+    type: "Research Intern"  
+    date: "May 2023 - Aug 2023"  
+
+  - image: "./assets/img/salesforce.png"
+    name: "Salesforce Hyderabad, India"
+    type: "AMTS Software Developer"
+    date: "July 2021 - August 2022"
+
+  - image: "./assets/img/salesforce.png"
+    name: "Salesforce Hyderabad, India"
+    type: "Software Developer Intern"
+    date: "May 2020 - July 2020"
+
+  - image: "./assets/img/alberta.png"
+    name: "University of Alberta, Canada"
+    type: "Research Assistant"
+    date: "Jan 2019 - May 2021"
+
+  - image: "./assets/img/imt.png"
+    name: "IMT Atlantique"
+    type: "Research Assistant"
+    date: "Jan 2021 - May 2021"
+
+  - image: "./assets/img/witwater.png"
+    name: "University of Witwatersrand"
+    type: "Research Assistant"
+    date: "Jan 2020 - May 2021"
+
+  - image: "./assets/img/iit.png"
+    name: "Indian Institute of Technology Indore"
+    type: "B.Tech in CSE"
+    date: "July 2017 - May 2021"
