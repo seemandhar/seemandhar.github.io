@@ -13,8 +13,8 @@ main:
 
   - title: "Leveraging Control Knobs in Diffusion Models: Real-time Intrinsic Image Decomposition"
     authors: <strong>S. Jain</strong>, A. Bhattad, D. Forsyth
-    conference_short: WACV
-    conference: IEEE Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
+    conference_short: CVPR
+    conference: The IEEE / CVF Computer Vision and Pattern Recognition Conference (CVPR), 2024.
     image: ./assets/img/1.png
     notes: Under Review
 
