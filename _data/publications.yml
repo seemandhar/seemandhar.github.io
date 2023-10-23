@@ -21,7 +21,7 @@ main:
     notes: Oral Presentation
     image: ./assets/img/teaser_example.png
 
-  - title: Leveraging Control Knobs in Diffusion Models: Real-time Intrinsic Image Decomposition
+  - title: "Leveraging Control Knobs in Diffusion Models: Real-time Intrinsic Image Decomposition"
     authors: <strong>S. Jain</strong>, A. Bhattad, D. Forsyth
     conference_short: WACV
     conference: IEEE Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
@@ -31,7 +31,7 @@ main:
     image: # Image Link here
     notes: Under Review
 
-  - title: Blocks2World: Controlling Realistic Scenes with Editable Primitives
+  - title: "Blocks2World: Controlling Realistic Scenes with Editable Primitives"
     authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
     conference_short: ACM SIGGRAPH
     conference: ACM SIGGRAPH, 2023.
