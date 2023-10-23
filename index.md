@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-I am Seemandhar Jain, a Master of Science student at the [Department of Computer Science](https://cs.illinois.edu/), working under the guidance of [Professor David Forsyth](http://luthuli.cs.uiuc.edu/~daf/) in the realm of computer vision. My research is chiefly centered around the convex decomposition of indoor images and intrinsic image decomposition, with an overarching aim to harness the power of computer vision to foster significant advancements in healthcare.
+I am Seemandhar Jain, a Master of Science student at the [Department of Computer Science](https://cs.illinois.edu/), working under the guidance of [Professor David Forsyth](http://luthuli.cs.uiuc.edu/~daf/) in the realm of computer vision. My research is chiefly centered around the convex decomposition of indoor images and intrinsic image decomposition, with an overarching aim to harness the power of computer vision to foster significant advancements in healthcare. I'm also selected as [Siebel Scholar, Class of 2024](https://www.siebelscholars.com/) by Siebel foundation.
 
 I earned my B.Tech in Computer Science and Engineering from the [Indian Institute of Technology Indore](https://www.iiti.ac.in/), India. Over time, I have had the privilege of collaborating with esteemed professors from globally recognized institutions like [IMT Atlantique](https://www.imt-atlantique.fr/en), the [University of Witwatersrand](https://www.wits.ac.za/), [Indian Institute of Technology Indore](https://www.iiti.ac.in/), and the [University of Alberta](https://www.ualberta.ca/). My work has garnered attention and been featured in numerous top-tier conferences and journals. Additionally, I co-founded a modest tech venture, [HealthAIgnite](http://healthaignite.com/), which serves as a platform to display my innovative research intersecting healthcare and computer vision.
 
@@ -12,7 +12,7 @@ In the past, I have held positions as a research intern at [Docomo Innovations](
 
 ## Research Interests
 
-- **Computer Vision:** Convex Decomposition, 2d-to-3d, Intrinsic Image decomposition, Diffusion Models
+- **Computer Vision:** Convex Decomposition, 2d-to-3d, Intrinsic Image decomposition, Diffusion Models, NeRF
 - **Machine Learning:** Anomaly detection, Data Mining, Recommendation System
 
 ## News
@@ -37,3 +37,5 @@ In the past, I have held positions as a research intern at [Docomo Innovations](
 {% include_relative _includes/publications.md %}
 
 {% include_relative _includes/services.md %}
+
+{% include_relative _includes/affiliation.md %}
