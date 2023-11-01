@@ -28,7 +28,7 @@ main:
     image: ./assets/img/2.png
 
   - title: An Energy Efficient Fault-Anomaly Detection in Wireless Body Area Networks
-    authors: P. Jain, <strong>S. Jain</strong>, PK. Upadhyay, JM. Moualeu, A. Srivastava
+    authors: <strong>S. Jain</strong>, P. Jain, PK. Upadhyay, JM. Moualeu, A. Srivastava
     conference_short: ACM ToCH
     conference: ACM Transactions on Computing for Healthcare, 2022.
     pdf: https://dl.acm.org/doi/abs/10.1145/3501773
