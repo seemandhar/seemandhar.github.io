@@ -11,8 +11,8 @@ main:
   #   notes: Oral Presentation
   #   image: ./assets/img/teaser_example.png
 
-  - title: "Leveraging Control Knobs in Diffusion Models: Real-time Intrinsic Image Decomposition"
-    authors: <strong>S. Jain</strong>, A. Bhattad, D. Forsyth
+  - title: "Frustratingly Simple Convex Primitives from Real Images."
+    authors: V Vavilala, <strong>S. Jain</strong>, D. Forsyth
     conference_short: CVPR
     conference: The IEEE / CVF Computer Vision and Pattern Recognition Conference (CVPR), 2024.
     image: ./assets/img/1.png
@@ -20,8 +20,8 @@ main:
 
   - title: "Blocks2World: Controlling Realistic Scenes with Editable Primitives"
     authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
-    conference_short: ACM SIGGRAPH
-    conference: ACM SIGGRAPH, 2023.
+    conference_short: CVPR
+    conference: The IEEE / CVF Computer Vision and Pattern Recognition Conference (CVPR), 2024.
     pdf: https://doi.org/10.48550/arXiv.2307.03847
     code: # Code Link here
     bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:IIXlWJ8mCdAJ:scholar.google.com/&output=citation&scisdr=ClEyFxnpEMikyqn4gjE:AFWwaeYAAAAAZTX-mjGzewDvwF_jEmI9bQLiE_o&scisig=AFWwaeYAAAAAZTX-mmjG3_MV0bh5okwVL2xyYrE&scisf=4&ct=citation&cd=-1&hl=en&authuser=1

@@ -1,0 +1,22 @@
+fun test (max: ArrayMax) {
+try {
+
+assert(max.max (intArray0f (1)) == 1)
+assert(max.max (intArrayOf (1, 2, 3, 4, 5)==5)
+assert(max.max (intArrayOf(-1, -2, -3, -4,-5)) == -1)
+assert(max.max (intArrayOf (999999, 10000000, 999999)) == 10000000)
+} catch (e: Exception) {
+assert(false)
+}
+try {
+max.max (intArrayOf())
+assert(false)
+} catch (e: Exception) {
+assert(e is IllegalArgumentException)
+}
+try {
+max.max (null)
+assert(false)
+} catch (e: Exception) {
+assert(e is IllegalArgumentException)
+}
