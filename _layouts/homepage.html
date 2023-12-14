@@ -92,57 +92,7 @@
         </div>
 
         <br>
-
-        <script src="https://threejs.org/build/three.js"></script>
-    <script src="https://threejs.org/examples/js/loaders/OBJLoader.js"></script>
-    <script>
-        // Scene setup
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-
-        // Load 3D model
-        var loader = new THREE.OBJLoader();
-        loader.load(
-            './assets/img/3d.obj', // Replace this with the path to your model
-            function (object) {
-                scene.add(object);
-            },
-            function (xhr) {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            function (error) {
-                console.log('An error happened');
-            }
-        );
-
-        // Lighting
-        var ambientLight = new THREE.AmbientLight(0x404040);
-        scene.add(ambientLight);
-
-        // Camera position
-        camera.position.z = 5;
-
-        // Animation loop
-        var animate = function () {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        };
-        animate();
-
-        // Handle window resize
-        window.addEventListener('resize', function () {
-            var width = window.innerWidth;
-            var height = window.innerHeight;
-            renderer.setSize(width, height);
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-        });
-    </script>
-
-    <br>
+        
 
       </header>
       <section>
