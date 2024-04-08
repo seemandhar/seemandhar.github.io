@@ -11,6 +11,20 @@ main:
   #   notes: Oral Presentation
   #   image: ./assets/img/teaser_example.png
 
+  - title: "Improving Convex Decomposition with spatial priors, negative primitives, and transformers."
+    authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
+    conference_short: ECCV
+    conference:
+    image: ./assets/img/ur.jpeg
+    notes: Under Review
+
+  - title: "3DControlNet: Bridging 2D Image Editing with 3D Control."
+    authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
+    conference_short: CVPR
+    conference: The IEEE / CVF Computer Vision and Pattern Recognition Conference (CVPR), 2024.
+    image: ./assets/img/ur.jpeg
+    notes: Under Review
+
   - title: "Frustratingly Simple Convex Primitives from Real Images."
     authors: V Vavilala, <strong>S. Jain</strong>, D. Forsyth
     conference_short: CVPR
