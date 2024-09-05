@@ -11,6 +11,14 @@ main:
   #   notes: Oral Presentation
   #   image: ./assets/img/teaser_example.png
 
+  - title: "latent Intrinsics Emerge from Relighting Training."
+    authors: X. Zhang, W Gao, <strong>S. Jain</strong>, M Maire, D.A.Forsyth, A Bhattad
+    conference_short: NeurIPS
+    conference: NeurIPS 2024
+    image: ./assets/img/8.png
+    pdf: https://arxiv.org/abs/2405.21074
+
+
   - title: "Improving Convex Decomposition with spatial priors, negative primitives, and transformers."
     authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
     conference_short: ECCV
