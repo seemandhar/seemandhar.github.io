@@ -11,17 +11,17 @@ main:
   #   notes: Oral Presentation
   #   image: ./assets/img/teaser_example.png
 
-  - title: NERFIFY: Multi-Agent Framework for Turning NeRF Papers into Code
-    authors: <strong>S. Jain</strong>, K. Gupta, K. Gupta, M. Chandraker
+  - title: "NERFIFY: Multi-Agent Framework for Turning NeRF Papers into Code"
+    authors: <strong>S. Jain</strong>, K. Gupta, M. Chandraker
     conference_short: CVPR
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2026.
     image: ./assets/img/nerfify.png
     notes: Submitted (under review)
 
-  - title: Generative Blocks World: Moving Things Around in Pictures
+  - title: "Generative Blocks World: Moving Things Around in Pictures"
     authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, D. Forsyth, A. Bhattad
     conference_short: ICCV-W
-    conference: ICCV 2025 Workshop on Wild 3D: 3D Modeling, Reconstruction, and Generation
+    conference: "ICCV 2025 Workshop on Wild 3D: 3D Modeling, Reconstruction, and Generation"
     image: ./assets/img/moving.png
 
   
@@ -41,7 +41,7 @@ main:
     image: ./assets/img/ur.jpeg
     pdf: https://arxiv.org/abs/2405.19569
 
-  - title: 3DControlNet: Bridging 2D Image Editing with 3D Control.
+  - title: "3DControlNet: Bridging 2D Image Editing with 3D Control."
     authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
     conference_short: CVPR
     conference: The IEEE / CVF Computer Vision and Pattern Recognition Conference (CVPR), 2024.
@@ -55,10 +55,10 @@ main:
     image: ./assets/img/1.png
     notes: Under Review
 
-  - title: Blocks2World: Controlling Realistic Scenes with Editable Primitives
+  - title: "Blocks2World: Controlling Realistic Scenes with Editable Primitives"
     authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, A. Bhattad, D. Forsyth
     conference_short: arXiv
-    conference: arXiv preprint arXiv:2307.03847
+    conference: "arXiv preprint arXiv:2307.03847"
     pdf: https://doi.org/10.48550/arXiv.2307.03847
     code: # Code Link here
     bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:IIXlWJ8mCdAJ:scholar.google.com/&output=citation&scisdr=ClEyFxnpEMikyqn4gjE:AFWwaeYAAAAAZTX-mjGzewDvwF_jEmI9bQLiE_o&scisig=AFWwaeYAAAAAZTX-mmjG3_MV0bh5okwVL2xyYrE&scisf=4&ct=citation&cd=-1&hl=en&authuser=1
