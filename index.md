@@ -1,90 +1,68 @@
 ---
 layout: homepage
 ---
+
 ## About Me
 
-I am Seemandhar Jain — a PhD student in Computer Science at the University of California, San Diego, advised by Dr. Manmohan Chandraker. My research sits at the intersection of large language models (LLMs) and 3D vision: I build LLM-guided multi-agent systems and generative models that enable 3D-aware scene understanding and synthesis. My recent work focuses on automating the conversion of NeRF research into executable code and on diffusion-based 3D/4D generation with improved geometric consistency.
+I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). I work at the intersection of large language models (LLMs) and 3D vision, with a focus on multi-agent systems for 3D scene understanding, reconstruction, and generation; NeRFs; and diffusion models for 3D-aware image/video synthesis.
 
-Links: [LinkedIn](https://linkedin.com/in/seemandharjain) • [GitHub](https://github.com/jainsee24) • [Personal site](http://seemandharjain.web.illinois.edu/)
+Previously, I completed my MS in Computer Science at the [University of Illinois Urbana–Champaign](https://cs.illinois.edu/) (GPA 3.92/4), advised by [Prof. David Forsyth](http://luthuli.cs.uiuc.edu/~daf/), where I worked on single-shot 3D reconstruction, convex decomposition, intrinsic image decomposition and relighting with diffusion models, and 2D-to-3D transformations. I am a [Siebel Scholar, Class of 2024](https://www.siebelscholars.com/).
 
-## Education
+I graduated with a B.Tech in Computer Science and Engineering from the [Indian Institute of Technology Indore](https://www.iiti.ac.in/). I founded [HealthAIgnite](http://healthaignite.com/), a healthcare AI consulting company focused on computer vision. I have also worked with industry research and product teams, including Google (Student Researcher, BigML), Aireal (Research Scientist, CV), DOCOMO Innovations (Research Intern), and Salesforce (AMTS, AI).
 
-- **University of California San Diego (UC San Diego)** — PhD in Computer Science (Fully Funded), Jul 2024 – Present
-	- Thesis advisor: Dr. Manmohan Chandraker
-	- Thesis: Exploring the Potential of Large Language Models for 3D Scenes
+Quick links: [LinkedIn](https://linkedin.com/in/seemandharjain) · [GitHub](https://github.com/jainsee24) · [Website](http://seemandharjain.web.illinois.edu/)
 
-- **University of Illinois Urbana–Champaign (UIUC)** — MS in Computer Science (Siebel Scholar, Class of 2024), Aug 2022 – May 2024
-	- GPA: 3.92/4.0 (Fully Funded)
-	- Thesis advisor: Dr. David Forsyth
-	- Thesis title: Single-shot 3D Reconstruction and Convex Decomposition of Indoor Scenes
+## Research Interests
 
-- **IIT Indore** — B.Tech in Computer Science and Engineering; Minor in Humanities & Social Sciences, Jul 2017 – May 2021
-	- GPA: 3.6/4.0
+- 3D Vision and Graphics: NeRFs, single-shot 3D reconstruction, convex decomposition, 3D-aware image/video generation, relighting
+- Generative Models: diffusion models for image/video and 3D synthesis; accelerating sampling and improving geometric consistency
+- LLMs and Agents: multi-agent LLM frameworks for 3D scene understanding, reconstruction, and tool-augmented reasoning
 
-## Skills
+## News
 
-- Programming: Python, Java, C/C++, Apex, R, SQL, MATLAB
-- Research / ML: LLMs, 3D Reconstruction, 3D Vision, Diffusion Models, GANs, NeRFs
-- Frameworks / Tools: PyTorch, JAX, TensorFlow, Docker, Kubernetes, CUDA
-- Web / Cloud / DevTools: Django, Flask, React, AWS (EC2, Lambda, S3), Azure, Git, PostgreSQL, MongoDB
-
-## Work & Research Experience
-
-- **University of California San Diego** — Graduate Research Assistant (Dr. M. Chandraker), Jul 2024 – Present
-	- Proposed NeRFify: a multi-agent system to convert NeRF research papers into runnable code (CVPR’26 submission).
-	- Researching LLM-guided 3D-aware scene synthesis and diffusion-based video generation to improve geometric consistency and detail.
-	- Building multi-agent LLM frameworks for automated 3D reconstruction and generation pipelines.
-
-- **Google (BigML Team)** — Student Researcher, New York, Jun 2025 – Sep 2025
-	- Optimized SANA diffusion models for the Veo video generation pipeline, achieving ~2× speedup in sampling/inference while preserving visual fidelity.
-	- Built a Gemma 2-based image-captioning pipeline that improved LLM-conditioned generation, reducing FID by ~20%.
-
-- **Aireal** — Research Scientist, Computer Vision, May 2024 – Sep 2024
-	- Developed single-image-to-3D textured-mesh techniques and an AI interior-design tool (Livvy).
-	- Contributed to research on room reconstruction using diffusion models and NeRF variants.
-
-- **University of Illinois Urbana–Champaign** — Graduate Teaching & Research Assistant (Dr. D. Forsyth), Aug 2022 – May 2024
-	- Developed Blocks2World and 3DControlNet for 3D scene modeling and 3D-aware image editing.
-	- Worked on intrinsic image decomposition, relighting, and diffusion-based multimodal generation.
-	- Teaching Assistant: CS225 (Data Structures), CS128 (Intro to CS II), CS441 (Applied ML).
-
-- **HealthAIgnite** — CEO & Founder, Jan 2022 – Present
-	- Founded a healthcare AI consultancy applying computer vision solutions for medical/clinical workflows.
-
-- **DOCOMO Innovations, Inc.** — Research Intern, May 2023 – Aug 2023
-	- Built a GPT-2-based realtabformer to impute missing data and designed a stereo depth system for video.
-
-- **Salesforce** — AMTS Software Developer (Artificial Intelligence), Jul 2021 – Aug 2022
-	- Full-stack development on Force.com, implemented EMEA tax schemas, automated regression pipelines, and served as Scrum Master.
-
-- **University of Witwatersrand / University of Alberta** — Research Assistant, Jan 2019 – May 2021
-	- Designed energy-efficient ML solutions for wearable-health monitoring (WBAN) and ML-based forest-fire detection systems.
-
-## Selected Publications
-
-The full publications list is maintained in the publications include below. Highlights:
-
-- S. Jain, K. Gupta, M. Chandraker. "NeRFify: Multi Agent Framework for Turning NeRF Papers into Code." (CVPR 2026 submission)
-- S. Jain, R. Vasanth. "SwiftHome: Fast Real-Time Multi-Floor 3D House Generation from Text." (WACV 2026 submission)
-- Xiao Zhang, S. Jain, M. Maire, A. Bhattad, D. Forsyth. "Latent Intrinsics Emerge from Relighting Training." NeurIPS 2024
-- V. Vavilala, S. Jain, R. Vasanth, A. Bhattad, D. Forsyth. "3DControlNet: Bridging 2D Image Editing with 3D Control." CVPR 2024
+- **[Jun 2025]** Student Researcher (BigML) at Google, New York; optimized SANA diffusion for Veo and built Gemma 2–based captioning.
+- **[Jul 2024]** Started PhD in Computer Science at UC San Diego (advisor: Prof. Manmohan Chandraker).
+- **[May 2024]** Joined Aireal as Research Scientist (Computer Vision) on single-image-to-3D textured mesh and AI interior design (Livvy).
+- **[Sep 2023]** Selected as [Siebel Scholar, Class of 2024](https://cs.illinois.edu/news/Five/CS/Students/2024/Siebel/Scholars)
+- **[Aug 16, 2023]** Started working as a Teaching Assistant for CS124: Intro to Computer Science (Fall 2023)
+- **[May 15, 2023]** Joined the AI team in Docomo Innovations, Inc as a Research Intern!
+- **[Jan 17, 2023]** Started working as a Teaching Assistant for CS128: Intro to Computer Science (Spring 2023)
+- **[Aug 22, 2022]** Started working as a Teaching Assistant for CS225: Data Structures (Fall 2022)
+- **[Aug 15, 2022]** Joined the MS CS program at University of Illinois, Urbana-Champaign!
+- **[Sep 3, 2021]** Interviewed by [Times of India](https://timesofindia.indiatimes.com/city/nagpur/iit-indore-using-ai-to-develop-network-to-detect-fires-in-melghat-tiger-reserve/articleshow/85877519.cms) for research on wildfire detection algorithm.
+- **[Jun 5, 2021]** Joined the BI team at Salesforce as a Software Developer.
+- **[May 15, 2021]** Graduated with B.Tech degree in Computer Science from IIT Indore.
+- **[May 2021]** Received the Best BTP award from Computer Science Department among the graduating students.
+- **[Aug 2020]** Secured 8th rank in IEEE Programming League hosted by IEEE Computer Society on Codingblocks.
+- **[Oct 2017]** Secured 3rd rank in Intra IIT Tech Meet Robo Race.
+- **[July 2017]** Achieved All India Rank 1st in IIT JEE Advanced Mathematics Section with a score of 122/122 and overall rank of 1400 among a million students.
+- **[May 2016]** Secured AIR 43 in Technothlon hosted by IIT GUWAHATI.
+- **[Dec 2015]** Secured State rank 2 and International rank 26 in International Mathematics Olympiad.
+- **[Aug 2013]** Became a UCMAS degree scholar, and secured 9th rank in UCMAS global competition.
 
 {% include_relative _includes/publications.md %}
-
-## Achievements
-
-- Siebel Scholar, Class of 2024 (UIUC)
-- Best BTP award, Computer Science Department (IIT Indore)
-- International Mathematics Olympiad: State rank 2, International rank 26 (2015)
-- All-India Math: 1st in IIT JEE Advanced Mathematics section (2017)
-
-## Volunteering & Leadership
-
-- CEO & Founder, HealthAIgnite — organization building healthcare AI solutions; business development & technical lead.
-- Led Holi event for Indian Graduate Students Association at UIUC (1,000+ attendees).
-- Led resource development for HOPE NGO; awarded MP Young Philanthropist Award.
-- Captain, University Debate Team; Lead, Fluxus (IIT Indore) and Student Council Chair.
 
 {% include_relative _includes/services.md %}
 
 {% include_relative _includes/affiliation.md %}
+
+## Skills
+
+- Programming: Python, Java, C/C++, Apex, R, SQL, MATLAB
+- ML/Systems: PyTorch, JAX, TensorFlow, CUDA, Kubernetes, Azure, AWS (EC2, Lambda, S3)
+- CV/GenAI: NeRF, diffusion models, GANs, LLMs, 3D reconstruction, 3D-aware generation
+- Data/Infra: PostgreSQL, MongoDB, Docker, Git
+- Web/Tools: Django, Flask, React, Tableau, MuleSoft, HTML, PHP
+
+## Highlights
+
+- NeRFify: proposed a multi-agent system that autonomously converts NeRF papers to executable code (submitted to CVPR 2026)
+- Accelerated large-scale video generation: 2× faster SANA diffusion sampling for Veo; Gemma 2–based captioning improved FID by 20%
+- HealthAIgnite: founded and leading a healthcare CV consulting startup; partnerships across healthcare and MedTech
+
+## Honors & Awards
+
+- Siebel Scholar, Class of 2024 (UIUC)
+- Best BTP award, IIT Indore (2021)
+- International Mathematics Olympiad: State Rank 2, International Rank 26 (2015)
+- ACM ICPC onsite qualifier (2019); Technothlon AIR 43 (2016); UCMAS global rank 9 (2013)

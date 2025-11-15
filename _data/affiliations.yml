@@ -1,8 +1,23 @@
 main:
+  - image: "./assets/img/ucsd.png"
+    name: "University of California San Diego, CA, USA"
+    type: "PhD in Computer Science"
+    date: "Jul 2024 - Present"
+
+  - image: "./assets/img/google.png"
+    name: "Google, New York, USA"
+    type: "Student Researcher (BigML Team)"
+    date: "Jun 2025 - Sep 2025"
+
+  - image: "./assets/img/aireal.png"
+    name: "Aireal"
+    type: "Research Scientist, Computer Vision"
+    date: "May 2024 - Sep 2024"
+
   - image: "./assets/img/uiuc.png"
     name: "University of Illinois Urbana-Champaign, IL, USA"
     type: "MSCS"
-    date: "Aug 2022 - Present"
+    date: "Aug 2022 - May 2024"
 
   - image: "./assets/img/healthaiignite.png"
     name: "HealthAIgnite"
@@ -17,12 +32,12 @@ main:
   - image: "./assets/img/salesforce.png"
     name: "Salesforce Hyderabad, India"
     type: "AMTS Software Developer"
-    date: "July 2021 - August 2022"
+    date: "Jul 2021 - Aug 2022"
 
   - image: "./assets/img/salesforce.png"
     name: "Salesforce Hyderabad, India"
     type: "Software Developer Intern"
-    date: "May 2020 - July 2020"
+    date: "May 2020 - Jul 2020"
 
   - image: "./assets/img/alberta.png"
     name: "University of Alberta, Canada"
@@ -42,4 +57,4 @@ main:
   - image: "./assets/img/iit.png"
     name: "Indian Institute of Technology Indore"
     type: "B.Tech in CSE"
-    date: "July 2017 - May 2021"
+    date: "Jul 2017 - May 2021"
