@@ -55,3 +55,4 @@ exclude:
 include:
   - ubuntu/_next
   - ubuntu/next
+  - ubuntu
