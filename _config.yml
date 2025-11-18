@@ -54,3 +54,4 @@ exclude:
 # Ensure Next.js exported assets under /ubuntu/_next are served
 include:
   - ubuntu/_next
+  - ubuntu/next
