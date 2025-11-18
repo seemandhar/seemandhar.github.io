@@ -50,3 +50,7 @@ exclude:
   - LICENSE
   - minimal-light.gemspec
   - html_source_file/
+
+# Ensure Next.js exported assets under /ubuntu/_next are served
+include:
+  - ubuntu/_next

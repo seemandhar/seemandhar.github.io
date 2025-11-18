@@ -2,12 +2,6 @@
 layout: homepage
 ---
 
-<p>
-	<a href="/ubuntu/" class="button" style="display:inline-block;padding:8px 14px;background:#E95420;color:#fff;border-radius:6px;text-decoration:none;margin:6px 0;">
-		Magic
-	</a>
-</p>
-
 ## About Me
 
 I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). I work at the intersection of large language models (LLMs) and 3D vision, with a focus on multi-agent systems for 3D scene understanding, reconstruction, and generation; NeRFs; and diffusion models for 3D-aware image/video synthesis.
