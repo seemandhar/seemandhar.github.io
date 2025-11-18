@@ -56,3 +56,4 @@ include:
   - ubuntu/_next
   - ubuntu/next
   - ubuntu
+  - assets/ubuntu-next
