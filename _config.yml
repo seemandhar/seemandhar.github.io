@@ -55,9 +55,3 @@ exclude:
 include:
   - ubuntu/_next
   - ubuntu/next
-  - ubuntu
-  - assets/ubuntu-next
-  - assets/ubuntu-next/static
-  - assets/ubuntu-next/static/yMmhdX2QnwNBk0HSbQH6h/ssgManifest.js
-  - assets/ubuntu-next/static/yMmhdX2QnwNBk0HSbQH6h/buildManifest.js
-  - assets/ubuntu-next/static/yMmhdX2QnwNBk0HSbQH6h/pages/
