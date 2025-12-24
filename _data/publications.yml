@@ -11,12 +11,12 @@ main:
   #   notes: Oral Presentation
   #   image: ./assets/img/teaser_example.png
 
-  - title: "NERFIFY: Multi-Agent Framework for Turning NeRF Papers into Code"
-    authors: <strong>S. Jain</strong>, K. Gupta, K. Gupta, M. Chandraker
-    conference_short: CVPR
-    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2026.
-    image: ./assets/img/nerfify.png
-    notes: Submitted (under review)
+  # - title: "NERFIFY: Multi-Agent Framework for Turning NeRF Papers into Code"
+  #   authors: <strong>S. Jain</strong>, K. Gupta, K. Gupta, M. Chandraker
+  #   conference_short: CVPR
+  #   conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2026.
+  #   image: ./assets/img/nerfify.png
+  #   notes: Submitted (under review)
 
   - title: "Generative Blocks World: Moving Things Around in Pictures"
     authors: V. Vavilala, <strong>S. Jain</strong>, R. Vasanth, D. Forsyth, A. Bhattad

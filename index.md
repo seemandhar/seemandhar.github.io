@@ -56,7 +56,7 @@ Quick links: [LinkedIn](https://linkedin.com/in/seemandharjain) · [GitHub](http
 
 ## Highlights
 
-- NeRFify: proposed a multi-agent system that autonomously converts NeRF papers to executable code (submitted to CVPR 2026)
+<!-- - NeRFify: proposed a multi-agent system that autonomously converts NeRF papers to executable code (submitted to CVPR 2026) -->
 - Accelerated large-scale video generation: 2× faster SANA diffusion sampling for Veo; Gemma 2–based captioning improved FID by 20%
 - HealthAIgnite: founded and leading a healthcare CV consulting startup; partnerships across healthcare and MedTech
 
