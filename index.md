@@ -14,11 +14,11 @@ Quick links: [LinkedIn](https://linkedin.com/in/seemandharjain) · [GitHub](http
 
 ## Talk
 
-A talk on my research is available here: [YouTube](https://www.youtube.com/watch?v=kpuWap5wFWk).
+A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE).
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 	<iframe
-		src="https://www.youtube.com/embed/kpuWap5wFWk"
+		src="https://www.youtube.com/embed/lT77jFuQMzE"
 		title="Research Talk"
 		frameborder="0"
 		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
