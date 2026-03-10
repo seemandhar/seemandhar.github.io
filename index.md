@@ -12,7 +12,7 @@ I graduated with a B.Tech in Computer Science and Engineering from the [Indian I
 
 Quick links: [LinkedIn](https://linkedin.com/in/seemandharjain) · [GitHub](https://github.com/jainsee24) · [Website](http://seemandharjain.web.illinois.edu/) · [Talk](https://www.youtube.com/watch?v=VIDEO_ID)
 
-## Talk
+<!-- ## Talk
 
 A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE).
 
@@ -26,7 +26,7 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 		style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
 	</iframe>
   
-</div>
+</div> -->
 
 ## Research Interests
 
