@@ -10,7 +10,8 @@ Previously, I completed my MS in Computer Science at the [University of Illinois
 
 I graduated with a B.Tech in Computer Science and Engineering from the [Indian Institute of Technology Indore](https://www.iiti.ac.in/). I founded [HealthAIgnite](http://healthaignite.com/), a healthcare AI consulting company focused on computer vision. I have also worked with industry research and product teams, including Google (Student Researcher, BigML), Aireal (Research Scientist, CV), DOCOMO Innovations (Research Intern), and Salesforce (AMTS, AI).
 
-Quick links: [LinkedIn](https://linkedin.com/in/seemandharjain) · [GitHub](https://github.com/jainsee24) · [Website](http://seemandharjain.web.illinois.edu/) · [Talk](https://www.youtube.com/watch?v=VIDEO_ID)
+Quick links: [LinkedIn](https://linkedin.com/in/seemandharjain) · [GitHub](https://github.com/jainsee24) · [Website](http://seemandharjain.web.illinois.edu/) 
+<!-- · [Talk](https://www.youtube.com/watch?v=VIDEO_ID) -->
 
 <!-- ## Talk
 
