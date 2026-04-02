@@ -16,12 +16,14 @@ main:
     conference_short: ECCV 2026
     conference: European Conference on Computer Vision (ECCV), 2026.
     image: ./assets/img/splatify.png
+    notes: Under Review
 
   - title: "Reflecting Process Expertise in Procedural Material Generation"
     authors: K. Gupta, G. Joshi, Y.-R. Chen, <strong>S. Jain</strong>, I. Mehta, M. Chandraker
     conference_short: ECCV 2026
     conference: European Conference on Computer Vision (ECCV), 2026.
     image: ./assets/img/material.png
+    notes: Under Review
 
   - title: "NERFIFY: Multi-Agent Framework for Turning NeRF Papers into Code"
     authors: <strong>S. Jain</strong>, K. Gupta, K. Gupta, M. Chandraker

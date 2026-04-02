@@ -63,6 +63,15 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 <div class="media-grid">
 
+<a href="https://epaper.naidunia.com/28-mar-2026-74-indore-edition-indore-page-17.html" target="_blank" class="media-card">
+<img src="./media/Naiduniya.png" alt="Naidunia">
+<div class="card-body">
+<div class="card-date">Mar 2026</div>
+<div class="card-source">Naidunia</div>
+<div class="card-title">AI Tool Ka Kamaal: Research Paper Samajh Khud Taiyar Karega Computer Code</div>
+</div>
+</a>
+
 <a href="https://epaper.freepressjournal.in/reader/article/clip_79420369/?clip_key=ed78e054-be74-4d95-9e0c-095c2e1d78b6&page_key=4672741c-9a6d-409c-92fe-f0b38445fb36&volume_id=4130799&page_no=2&image_only=1" target="_blank" class="media-card">
 <img src="./media/freepress.jpeg" alt="Free Press Journal">
 <div class="card-body">
