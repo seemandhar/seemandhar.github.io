@@ -6,6 +6,50 @@ body { line-height: 1.65; }
 /* Smoother link transitions */
 a { transition: color 0.2s ease; }
 
+/* ===== Fade-in on scroll ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-section {
+  animation: fadeInUp 0.6s ease both;
+}
+
+/* Staggered entrance for publication items */
+.publications ol.bibliography li {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease both;
+}
+.publications ol.bibliography li:nth-child(1)  { animation-delay: 0.05s; }
+.publications ol.bibliography li:nth-child(2)  { animation-delay: 0.10s; }
+.publications ol.bibliography li:nth-child(3)  { animation-delay: 0.15s; }
+.publications ol.bibliography li:nth-child(4)  { animation-delay: 0.20s; }
+.publications ol.bibliography li:nth-child(5)  { animation-delay: 0.25s; }
+.publications ol.bibliography li:nth-child(6)  { animation-delay: 0.30s; }
+.publications ol.bibliography li:nth-child(7)  { animation-delay: 0.35s; }
+.publications ol.bibliography li:nth-child(8)  { animation-delay: 0.40s; }
+.publications ol.bibliography li:nth-child(9)  { animation-delay: 0.45s; }
+.publications ol.bibliography li:nth-child(10) { animation-delay: 0.50s; }
+.publications ol.bibliography li:nth-child(11) { animation-delay: 0.55s; }
+.publications ol.bibliography li:nth-child(12) { animation-delay: 0.60s; }
+.publications ol.bibliography li:nth-child(13) { animation-delay: 0.65s; }
+
+/* Staggered entrance for media cards */
+.media-grid .media-card {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease both;
+}
+.media-grid .media-card:nth-child(1) { animation-delay: 0.05s; }
+.media-grid .media-card:nth-child(2) { animation-delay: 0.12s; }
+.media-grid .media-card:nth-child(3) { animation-delay: 0.19s; }
+.media-grid .media-card:nth-child(4) { animation-delay: 0.26s; }
+.media-grid .media-card:nth-child(5) { animation-delay: 0.33s; }
+.media-grid .media-card:nth-child(6) { animation-delay: 0.40s; }
+.media-grid .media-card:nth-child(7) { animation-delay: 0.47s; }
+.media-grid .media-card:nth-child(8) { animation-delay: 0.54s; }
+.media-grid .media-card:nth-child(9) { animation-delay: 0.61s; }
+
 /* ===== Section headings ===== */
 section h2 {
   position: relative;
@@ -23,6 +67,11 @@ section h2::after {
   height: 3px;
   background: var(--global-theme-color, #002D72);
   border-radius: 2px;
+  transition: width 0.35s ease;
+}
+
+section h2:hover::after {
+  width: 80px;
 }
 
 /* ===== News timeline ===== */
@@ -72,16 +121,17 @@ section > ul > li:hover::before {
   text-decoration: none;
   color: inherit;
   border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  display: block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .media-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.14);
   color: inherit;
 }
 
@@ -89,49 +139,57 @@ section > ul > li:hover::before {
   width: 100%;
   height: 160px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
 }
 
 .media-card:hover img {
-  transform: scale(1.03);
+  transform: scale(1.06);
+  filter: brightness(1.04);
 }
 
 .media-card .card-body {
   padding: 14px 16px;
+  flex: 1;
 }
 
 .media-card .card-date {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #888;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
 }
 
 .media-card .card-source {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1rem;
-  margin: 2px 0 4px;
+  margin: 4px 0 6px;
+  transition: color 0.2s ease;
+}
+
+.media-card:hover .card-source {
+  color: var(--global-theme-color, #002D72);
 }
 
 .media-card .card-title {
   font-size: 0.88rem;
   color: #555;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 @media (prefers-color-scheme: dark) {
   .media-card { border-color: #3a3b4a; background: #282936; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-  .media-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+  .media-card:hover { box-shadow: 0 12px 36px rgba(0,0,0,0.4); }
   .media-card .card-date { color: #8899aa; }
   .media-card .card-source { color: #e0e0e0; }
+  .media-card:hover .card-source { color: var(--global-theme-color); }
   .media-card .card-title { color: #aab; }
 }
 
 .media-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  gap: 22px;
   margin-top: 1rem;
 }
 
@@ -154,23 +212,27 @@ section > ul > li:hover::before {
 
 .skill-pill {
   display: inline-block;
-  padding: 4px 14px;
+  padding: 5px 16px;
   font-size: 0.85rem;
   border-radius: 20px;
   background: #f0f4f8;
   color: #333;
   border: 1px solid #d8dfe6;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
 }
 
 .skill-pill:hover {
-  background: #e0e8f0;
-  transform: translateY(-1px);
+  background: var(--global-theme-color, #002D72);
+  color: #fff;
+  border-color: var(--global-theme-color, #002D72);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 45, 114, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
   .skill-pill { background: #2a2b3a; color: #ccd; border-color: #3a3b4a; }
-  .skill-pill:hover { background: #353648; }
+  .skill-pill:hover { background: var(--global-theme-color); color: #fff; border-color: var(--global-theme-color); box-shadow: 0 4px 12px rgba(36, 150, 203, 0.25); }
 }
 
 /* ===== Contact form ===== */
@@ -205,7 +267,7 @@ section > ul > li:hover::before {
 
 .contact-form .btn-submit {
   width: 100%;
-  padding: 10px 20px;
+  padding: 11px 20px;
   border: none;
   border-radius: 8px;
   font-size: 15px;
@@ -214,17 +276,38 @@ section > ul > li:hover::before {
   cursor: pointer;
   background: var(--global-theme-color, #002D72);
   color: #fff;
-  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-form .btn-submit::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  transition: width 0.4s ease, height 0.4s ease;
+  transform: translate(-50%, -50%);
+}
+
+.contact-form .btn-submit:hover::after {
+  width: 300px;
+  height: 300px;
 }
 
 .contact-form .btn-submit:hover {
   background: #001d4f;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 45, 114, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 45, 114, 0.3);
 }
 
 .contact-form .btn-submit:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 45, 114, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -267,12 +350,112 @@ section ol[style] li div[style*="display: flex"] {
   }
 }
 
+/* ===== Publication row hover ===== */
+.pub-row {
+  padding: 12px 10px;
+  border-radius: 10px;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pub-row:hover {
+  background: rgba(0, 45, 114, 0.03);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+.pub-row .teaser {
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease !important;
+}
+
+.pub-row:hover .teaser {
+  transform: scale(1.03);
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+.pub-row .links a.btn {
+  transition: all 0.2s ease !important;
+  border-radius: 4px !important;
+}
+
+.pub-row .links a.btn:hover {
+  background: var(--global-theme-color, #002D72) !important;
+  color: #fff !important;
+  border-color: var(--global-theme-color, #002D72) !important;
+  transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .pub-row:hover { background: rgba(36, 150, 203, 0.06); box-shadow: 0 2px 16px rgba(0,0,0,0.15); }
+  .pub-row .links a.btn:hover { background: var(--global-theme-color) !important; color: #fff !important; border-color: var(--global-theme-color) !important; }
+}
+
+/* ===== Avatar hover ===== */
+.image.avatar img {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.image.avatar:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+/* ===== Social icons enhanced ===== */
+.social-icons a {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* ===== Badge pulse for "Under Review" ===== */
+.publications ol.bibliography li .abbr abbr {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.publications ol.bibliography li:hover .abbr abbr {
+  transform: scale(1.05);
+  box-shadow: 0 3px 10px rgba(0, 45, 114, 0.25);
+}
+
+/* ===== Contact form input focus glow ===== */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  transform: translateY(-1px);
+}
+
+/* ===== News timeline enhanced ===== */
+section > ul > li {
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  border-radius: 4px;
+}
+
+section > ul > li:hover {
+  transform: translateX(4px);
+  background: rgba(0, 45, 114, 0.02);
+}
+
+@media (prefers-color-scheme: dark) {
+  section > ul > li:hover { background: rgba(36, 150, 203, 0.04); }
+}
+
 /* ===== Magic button polish ===== */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 6px 20px rgba(233, 84, 32, 0.25); }
+  50%      { box-shadow: 0 6px 28px rgba(233, 84, 32, 0.45); }
+}
+
 a[href="/ubuntu/"] {
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+  animation: pulse-glow 2.5s ease-in-out infinite !important;
 }
 
 a[href="/ubuntu/"]:hover {
-  transform: scale(1.08) !important;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.3) !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 8px 28px rgba(233, 84, 32, 0.4) !important;
+  animation: none !important;
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
