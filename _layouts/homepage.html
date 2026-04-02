@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
     <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
     {% endif %}
+    <link rel="stylesheet" href="./assets/css/custom.css">
 
   </head>
   <body>
@@ -90,15 +91,14 @@
         </a>
         {% endif %}
 
-        <form action="https://getform.io/f/blljnzdb" method="POST" style="margin-top: 20px; max-width: 500px; margin: 0 auto;">
-          <div style="display: flex; flex-direction: column; gap: 15px;">
-            <input type="text" name="name" placeholder="Your Name" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; width: 100%;">
-            <input type="email" name="email" placeholder="Your Email" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; width: 100%;">
-            <textarea name="message" placeholder="Your Message" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; width: 100%; height: 150px;"></textarea>
-            <!-- Honeypot field to prevent spam -->
+        <form action="https://getform.io/f/blljnzdb" method="POST" class="contact-form">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="How can I help?" required></textarea>
             <input type="hidden" name="_gotcha" style="display:none !important">
-            <button type="submit" style="background-color: #007BFF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-              Hire Me!
+            <button type="submit" class="btn-submit">
+              Let's Connect
             </button>
           </div>
       </form>

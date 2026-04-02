@@ -11,6 +11,18 @@ main:
   #   notes: Oral Presentation
   #   image: ./assets/img/teaser_example.png
 
+  - title: "SPLATIFY: Reproduce, Discover, Innovate! From Papers and Ideas to Trainable 3DGS Code"
+    authors: <strong>S. Jain</strong>, K. Gupta, M. Chandraker
+    conference_short: ECCV 2026
+    conference: European Conference on Computer Vision (ECCV), 2026.
+    image: ./assets/img/splatify.png
+
+  - title: "Reflecting Process Expertise in Procedural Material Generation"
+    authors: K. Gupta, G. Joshi, Y.-R. Chen, <strong>S. Jain</strong>, I. Mehta, M. Chandraker
+    conference_short: ECCV 2026
+    conference: European Conference on Computer Vision (ECCV), 2026.
+    image: ./assets/img/material.png
+
   - title: "NERFIFY: Multi-Agent Framework for Turning NeRF Papers into Code"
     authors: <strong>S. Jain</strong>, K. Gupta, K. Gupta, M. Chandraker
     conference_short: CVPR 2026
