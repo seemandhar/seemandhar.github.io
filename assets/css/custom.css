@@ -333,21 +333,307 @@ section ol[style] li div[style*="display: flex"] {
   border-radius: 8px;
 }
 
-/* ===== Better responsive behavior ===== */
+/* ===== Responsive: Tablet (961px and below) ===== */
+@media screen and (max-width: 960px) {
+  /* Header becomes horizontal top section */
+  header {
+    text-align: center;
+    padding: 20px 16px !important;
+  }
+
+  section {
+    padding: 20px 16px !important;
+  }
+
+  /* Center the avatar */
+  .image.avatar {
+    display: block;
+    margin: 0 auto 1rem;
+  }
+
+  /* Social icons centered */
+  .social-icons {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  /* Media grid 2 columns on tablet */
+  .media-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Publication images scale better */
+  .publications ol.bibliography li .teaser {
+    width: 100%;
+    max-width: 270px;
+    height: auto;
+    min-height: 80px;
+  }
+
+  /* Pub row flex wrap for medium screens */
+  .pub-row {
+    padding: 10px 8px;
+    gap: 12px;
+  }
+
+  /* Affiliation rows */
+  section ol[style] li div[style*="display: flex"] {
+    gap: 10px;
+  }
+}
+
+/* ===== Responsive: Mobile (480px and below) ===== */
 @media screen and (max-width: 480px) {
+  body {
+    font-size: 15px;
+  }
+
+  /* Tighter section spacing */
+  section h2 {
+    font-size: 1.35rem;
+    margin-top: 1.6rem;
+    margin-bottom: 0.9rem;
+  }
+
+  /* Media grid single column */
   .media-grid {
     grid-template-columns: 1fr;
     gap: 14px;
   }
 
+  .media-card img {
+    height: 140px;
+  }
+
+  .media-card .card-body {
+    padding: 12px 14px;
+  }
+
+  .media-card .card-source {
+    font-size: 0.92rem;
+  }
+
+  .media-card .card-title {
+    font-size: 0.82rem;
+  }
+
+  /* Publication row stacks vertically */
+  .pub-row {
+    flex-direction: column !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    padding: 10px 6px;
+    gap: 8px;
+  }
+
+  /* Publication image full width on mobile */
+  .pub-row .col-sm-3 {
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: 4px;
+  }
+
+  .publications ol.bibliography li .teaser {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin-left: 0 !important;
+    border-radius: 8px;
+  }
+
+  .publications ol.bibliography li .abbr {
+    height: auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  .publications ol.bibliography li .abbr abbr {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .pub-row .col-sm-9 {
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .pub-row .title {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .pub-row .author {
+    font-size: 0.85rem;
+  }
+
+  .pub-row .periodical {
+    font-size: 0.82rem;
+  }
+
+  .pub-row .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .pub-row .links a.btn {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  /* Skills */
   .skills-group {
     gap: 6px;
   }
 
   .skill-pill {
     font-size: 0.8rem;
+    padding: 4px 12px;
+  }
+
+  .skills-section h4 {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  /* News timeline tighter */
+  section > ul > li {
+    padding-left: 16px;
+    padding-bottom: 5px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  section > ul > li::before {
+    width: 6px;
+    height: 6px;
+    left: -4px;
+    top: 7px;
+  }
+
+  /* Disable hover translateX on mobile (touch) */
+  section > ul > li:hover {
+    transform: none;
+  }
+
+  /* Affiliation rows stack on small screens */
+  section ol[style] li div[style*="display: flex"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px;
+  }
+
+  section ol[style] li div[style*="display: flex"] > div:first-child {
+    flex: 0 0 auto !important;
+    width: 60px !important;
+    margin-right: 0 !important;
+  }
+
+  /* Contact form */
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px; /* prevents iOS zoom on focus */
+    padding: 12px;
+  }
+
+  .contact-form textarea {
+    height: 80px;
+  }
+
+  .contact-form .btn-submit {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  /* Magic button smaller on mobile */
+  a[href="/ubuntu/"] {
+    padding: 8px 12px !important;
+    font-size: 0.85rem !important;
+    bottom: 14px !important;
+    right: 14px !important;
+  }
+}
+
+/* ===== Responsive: Small mobile (360px and below) ===== */
+@media screen and (max-width: 360px) {
+  body {
+    font-size: 14px;
+    padding: 10px !important;
+  }
+
+  section h2 {
+    font-size: 1.2rem;
+  }
+
+  .media-card img {
+    height: 120px;
+  }
+
+  .skill-pill {
+    font-size: 0.75rem;
     padding: 3px 10px;
   }
+
+  .pub-row .title {
+    font-size: 0.88rem;
+  }
+}
+
+/* ===== Touch device adjustments ===== */
+@media (hover: none) {
+  /* Remove hover transforms that feel janky on touch */
+  .media-card:hover {
+    transform: none;
+  }
+
+  .skill-pill:hover {
+    transform: none;
+    background: #f0f4f8;
+    color: #333;
+    border-color: #d8dfe6;
+    box-shadow: none;
+  }
+
+  .pub-row:hover {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .pub-row:hover .teaser {
+    transform: none;
+  }
+
+  section > ul > li:hover {
+    transform: none;
+    background: transparent;
+  }
+
+  /* Keep active states for tap feedback */
+  .media-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .skill-pill:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+
+  .contact-form .btn-submit:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (hover: none) and (prefers-color-scheme: dark) {
+  .skill-pill:hover { background: #2a2b3a; color: #ccd; border-color: #3a3b4a; box-shadow: none; }
 }
 
 /* ===== Publication row hover ===== */
