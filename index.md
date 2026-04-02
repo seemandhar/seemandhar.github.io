@@ -35,6 +35,8 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 - Generative Models: diffusion models for image/video and 3D synthesis; accelerating sampling and improving geometric consistency
 - LLMs and Agents: multi-agent LLM frameworks for 3D scene understanding, reconstruction, and tool-augmented reasoning
 
+{% include multiagent-viz.html %}
+
 ## News
 
 - **[Mar 2026]** Invited talk at Google on NERFIFY.
