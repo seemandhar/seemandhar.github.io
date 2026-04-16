@@ -4,7 +4,9 @@ layout: homepage
 
 ## About Me
 
-I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). I work at the intersection of large language models (LLMs) and 3D vision, with a focus on multi-agent systems for 3D scene understanding, reconstruction, and generation; NeRFs; and diffusion models for 3D-aware image/video synthesis.
+I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). I work at the intersection of large language models (LLMs) and 3D vision, with a focus on multi-agent systems that automate scientific discovery and research, alongside NeRFs, 3D Gaussian Splatting, and diffusion models for 3D-aware image/video synthesis.
+
+My recent work includes **Nerfify** (CVPR 2026 Highlight), a multi-agent system that autonomously converts NeRF research papers into executable code; **Splatify**, its 3DGS counterpart with knowledge discovery; and **Idea2Paper**, a multi-agent pipeline extending these systems toward end-to-end research automation — from literature to novel method to validated paper.
 
 Previously, I completed my MS in Computer Science at the [University of Illinois Urbana–Champaign](https://cs.illinois.edu/) (GPA 3.92/4), advised by [Prof. David Forsyth](http://luthuli.cs.uiuc.edu/~daf/), where I worked on single-shot 3D reconstruction, convex decomposition, intrinsic image decomposition and relighting with diffusion models, and 2D-to-3D transformations. I am a [Siebel Scholar, Class of 2024](https://www.siebelscholars.com/).
 
@@ -39,6 +41,7 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 ## News
 
+- **[Apr 2026]** **Nerfify** selected as a **CVPR 2026 Highlight**!
 - **[Mar 2026]** Invited talk at Google on NERFIFY.
 - **[Jan 2026]** Invited talk at Pixel Cafe.
 - **[Jun 2025]** Student Researcher (BigML) at Google, New York; optimized SANA diffusion for Veo and built Gemma 2–based captioning.
@@ -213,7 +216,7 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 ## Highlights
 
-<!-- - NeRFify: proposed a multi-agent system that autonomously converts NeRF papers to executable code (submitted to CVPR 2026) -->
+- Nerfify (CVPR 2026 Highlight): multi-agent system that autonomously converts NeRF papers to executable code
 - Accelerated large-scale video generation: 2× faster SANA diffusion sampling for Veo; Gemma 2–based captioning improved FID by 20%
 - HealthAIgnite: founded and leading a healthcare CV consulting startup; partnerships across healthcare and MedTech
 
