@@ -1,5 +1,11 @@
 main:
 
+  - title: "Who Wrote This Paper? Autonomous Scientific Discovery for 3DGS Research"
+    authors: <strong>S. Jain</strong>, M. Chandraker
+    conference_short: NeurIPS 2026
+    conference: NeurIPS 2026 Conference Submission
+    pdf: ./assets/files/GS-SCIENTIST_SUPP_merged.pdf
+
   # - title: "Mnemonics Training: Multi-Class Incremental Learning without Forgetting"
   #   authors: <strong>Yaoyao Liu</strong>, Yuting Su, An-An Liu, Bernt Schiele, Qianru Sun
   #   conference_short: CVPR
