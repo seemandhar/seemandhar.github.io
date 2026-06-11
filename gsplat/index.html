@@ -37,7 +37,7 @@ body{
 ::-webkit-scrollbar-track{background:#08080f}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--cyan),var(--violet),var(--magenta));border-radius:6px}
 
-#gl{position:fixed;inset:0;z-index:0;display:block}
+#gl{position:fixed;inset:0;z-index:0;display:block;cursor:crosshair}
 
 /* ---------- vignette + grain ---------- */
 .vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
@@ -101,7 +101,8 @@ nav a.exit{color:var(--amber)}
 @media(max-width:900px){nav .hide-sm{display:none}}
 
 /* ---------- content ---------- */
-main{position:relative;z-index:10}
+main{position:relative;z-index:10;pointer-events:none}
+section>*{pointer-events:auto}
 section{position:relative;max-width:960px;margin:0 auto;padding:13vh 24px}
 .stage-tag{
   font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
@@ -148,6 +149,44 @@ h1 .l2{display:block;background:linear-gradient(100deg,var(--cyan) 0%,var(--viol
   text-transform:uppercase;animation:bob 2.4s ease-in-out infinite;text-align:center;
 }
 @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ---------- GT comparison slider ---------- */
+#gtwrap{position:fixed;z-index:2;pointer-events:none;opacity:0;transition:opacity .7s;border-radius:8px}
+#gtwrap.on{opacity:1}
+#gtimg{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;
+  clip-path:inset(0 78% 0 0);border-radius:8px}
+.gt-divider{position:absolute;top:0;bottom:0;width:2px;left:22%;
+  background:linear-gradient(180deg,var(--cyan),var(--magenta));
+  box-shadow:0 0 16px rgba(34,211,238,.8)}
+.gt-handle{position:absolute;top:50%;left:22%;transform:translate(-50%,-50%);
+  width:38px;height:38px;border-radius:50%;cursor:ew-resize;pointer-events:auto;
+  background:rgba(8,9,16,.88);border:1px solid var(--cyan);color:var(--cyan);
+  font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 22px rgba(34,211,238,.5);user-select:none;touch-action:none;
+  animation:gtpulse 2.2s ease-in-out infinite}
+@keyframes gtpulse{0%,100%{box-shadow:0 0 14px rgba(34,211,238,.4)}50%{box-shadow:0 0 30px rgba(34,211,238,.85)}}
+.gt-label{position:absolute;top:8px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;padding:3px 8px;border-radius:6px;background:rgba(8,9,16,.78);
+  border:1px solid var(--edge);pointer-events:none;white-space:nowrap}
+.gt-label.l{left:8px;color:#34d399}
+.gt-label.r{right:8px;color:var(--magenta)}
+
+/* ---------- keys hint ---------- */
+#keys{position:fixed;bottom:16px;right:16px;z-index:28;font-family:var(--mono);font-size:10px;
+  color:var(--faint);background:rgba(8,9,16,.7);border:1px solid var(--edge);border-radius:10px;
+  padding:7px 12px;backdrop-filter:blur(10px);letter-spacing:.04em}
+#keys b{color:var(--dim);font-weight:500}
+@media(max-width:900px){#keys{display:none}}
+
+/* ---------- render-mode + scale controls ---------- */
+.mode-btns{display:flex;gap:4px;margin-top:8px}
+.mode-btns button{flex:1;font-family:var(--mono);font-size:9px;font-weight:700;padding:5px 2px;
+  border-radius:7px;cursor:pointer;border:1px solid var(--edge);background:transparent;
+  color:var(--faint);transition:all .15s;letter-spacing:.03em}
+.mode-btns button.on{background:rgba(34,211,238,.16);color:var(--cyan);border-color:rgba(34,211,238,.4)}
+.mode-btns button:hover{color:var(--ink)}
+.scale-row{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--dim)}
+.scale-row input{flex:1;accent-color:#a78bfa;height:3px;cursor:pointer}
 
 /* glass cards */
 .card{
@@ -264,6 +303,15 @@ footer .conv{color:#34d399}
 
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
+
+<!-- ground-truth vs render comparison (the classic 3DGS training view) -->
+<div id="gtwrap">
+  <img id="gtimg" alt="ground truth photo">
+  <div class="gt-divider"></div>
+  <span class="gt-label l">ground truth</span>
+  <span class="gt-label r">rendered gaussians</span>
+  <div class="gt-handle">⇆</div>
+</div>
 <div id="nogl">WebGL unavailable — rendering the rasterized fallback (the content still works!)</div>
 
 <!-- training console -->
@@ -275,7 +323,8 @@ footer .conv{color:#34d399}
   <div class="row"><span>gaussians</span><b id="h-count">0</b></div>
   <div class="row"><span>lr (position)</span><b id="h-lr">1.6e-4</b></div>
   <div class="row"><span>SH degree</span><b id="h-sh">0</b></div>
-  <div class="row"><span>PSNR</span><b id="h-psnr" class="good">—</b></div>
+  <div class="row"><span>PSNR·SSIM·LPIPS</span><b id="h-psnr" class="good">—</b></div>
+  <div class="row"><span>camera</span><b id="h-view">view 000/167</b></div>
   <canvas id="losschart" width="232" height="46"></canvas>
   <div class="row" style="font-size:9px;color:var(--faint)"><span>← loss</span><span id="h-phase">initialization</span></div>
   <div id="hudlog"></div>
@@ -284,6 +333,13 @@ footer .conv{color:#34d399}
     <button id="b-prune" title="cull low-opacity gaussians">PRUNE</button>
     <button id="b-retrain" title="reset to random init and optimize again">RE-TRAIN</button>
   </div>
+  <div class="mode-btns" id="modes">
+    <button data-m="0" class="on" title="alpha-blended gaussian splats">SPLATS</button>
+    <button data-m="1" title="covariance ellipsoid outlines">ELLIPS</button>
+    <button data-m="2" title="gaussian centers — SfM-style point cloud">POINTS</button>
+    <button data-m="3" title="per-splat depth map">DEPTH</button>
+  </div>
+  <div class="scale-row"><span style="font-size:9px">σ&nbsp;scale</span><input id="scalemod" type="range" min="30" max="220" value="100"><b id="scaleval" style="font-size:9px">1.0×</b></div>
 </div>
 
 <nav>
@@ -311,7 +367,7 @@ footer .conv{color:#34d399}
       <a class="btn btn-primary" href="#pubs">⬢ View converged papers</a>
       <a class="btn btn-ghost" href="https://github.com/jainsee24" target="_blank" rel="noopener">⌥ GitHub</a>
     </div>
-    <div class="scroll-hint">scroll = next optimization stage<br>▼</div>
+    <div class="scroll-hint">scroll = next stage · drag = novel view · drag ⇆ = GT compare<br>▼</div>
   </section>
 
   <!-- ====================== ABOUT ====================== -->
@@ -423,9 +479,11 @@ footer .conv{color:#34d399}
 
 </main>
 
+<div id="keys"><b>d</b> densify · <b>p</b> prune · <b>r</b> re-train · <b>1–4</b> render mode · <b>2×click</b> local split · drag = novel view</div>
+
 <footer>
   <span class="conv">✓ converged</span> after <span id="f-iter">—</span> iterations ·
-  every pixel above was splatted live in your browser<br>
+  every pixel above was splatted live in your browser · no test views were leaked during training<br>
   © 2026 Seemandhar Jain · handcrafted gaussians, no two visits render alike
 </footer>
 
@@ -441,7 +499,7 @@ import * as THREE from 'three';
 const isMobile = matchMedia('(max-width:760px)').matches;
 const MAXN = isMobile ? 4800 : 9216;
 
-let renderer, scene, camera, mesh;
+let renderer, scene, camera, mesh, mat;
 const canvas = document.getElementById('gl');
 try{
   renderer = new THREE.WebGLRenderer({canvas, antialias:false, alpha:false, powerPreference:'high-performance', preserveDrawingBuffer:true});
@@ -501,29 +559,46 @@ if(renderer){
   geo.setAttribute('iColor', new THREE.InstancedBufferAttribute(aColor,3).setUsage(THREE.DynamicDrawUsage));
   geo.setAttribute('iOpac',  new THREE.InstancedBufferAttribute(aOpac,1).setUsage(THREE.DynamicDrawUsage));
 
-  const mat = new THREE.ShaderMaterial({
+  mat = new THREE.ShaderMaterial({
     transparent:true, depthWrite:false, depthTest:false,
     blending:THREE.AdditiveBlending,
+    uniforms:{ uMode:{value:0}, uScaleMod:{value:1} },
     vertexShader:`
+      uniform float uScaleMod;
       attribute vec3 iPos; attribute vec2 iScale; attribute float iRot;
       attribute vec3 iColor; attribute float iOpac;
-      varying vec2 vUv; varying vec3 vCol; varying float vOp;
+      varying vec2 vUv; varying vec3 vCol; varying float vOp; varying float vDepth;
       void main(){
         vUv = position.xy; vCol = iColor; vOp = iOpac;
         float c = cos(iRot), s = sin(iRot);
-        vec2 off = mat2(c,-s,s,c) * (position.xy * iScale);
+        vec2 off = mat2(c,-s,s,c) * (position.xy * iScale * uScaleMod);
         vec4 mv = modelViewMatrix * vec4(iPos,1.0);
         mv.xy += off;
+        vDepth = -mv.z;
         gl_Position = projectionMatrix * mv;
       }`,
     fragmentShader:`
       precision mediump float;
-      varying vec2 vUv; varying vec3 vCol; varying float vOp;
+      uniform int uMode;
+      varying vec2 vUv; varying vec3 vCol; varying float vOp; varying float vDepth;
       void main(){
         float r2 = dot(vUv,vUv);
-        float a = exp(-r2*4.2) * vOp;       // true gaussian falloff
+        float r  = sqrt(r2);
+        vec3 col = vCol;
+        float a;
+        if(uMode==1){                       // covariance ellipsoid outlines
+          a = (exp(-pow((r-.78)*7.0,2.0)) + .05*exp(-r2*2.0)) * vOp * 1.5;
+        } else if(uMode==2){                // gaussian centers (point cloud)
+          a = r2 < .055 ? vOp*1.7 : 0.0;
+        } else if(uMode==3){                // depth map (viridis-ish, near=bright)
+          float t = clamp((vDepth-26.0)/42.0, 0.0, 1.0);
+          col = mix(mix(vec3(.99,.92,.18), vec3(.13,.58,.55), t), vec3(.27,.01,.33), t*t);
+          a = exp(-r2*4.2)*vOp;
+        } else {                            // true gaussian falloff
+          a = exp(-r2*4.2)*vOp;
+        }
         if(a < 0.004) discard;
-        gl_FragColor = vec4(vCol*a, a);
+        gl_FragColor = vec4(col*a, a);
       }`
   });
   mesh = new THREE.Mesh(geo, mat);
@@ -581,6 +656,11 @@ function loadPortrait(){
           const lum=0.299*r+0.587*g+0.114*b;
           px.push({x:p%W, y:(p/W)|0, r,g,b, w:(0.75+0.25*lum)*(A/255)});
         }
+        // hi-res ground-truth crop for the GT|render comparison slider
+        const GW=480, GH=Math.round(GW*sh/sw);
+        const c2=document.createElement('canvas'); c2.width=GW; c2.height=GH;
+        c2.getContext('2d').drawImage(img,sx,sy,sw,sh,0,0,GW,GH);
+        gtimg.src=c2.toDataURL('image/jpeg',0.88);
         portraitData = {px, W, H};
       }catch(e){ portraitData=null; }
       res();
@@ -593,6 +673,7 @@ function targetPortrait(cx=0, cy=0, worldW=24){
   if(!portraitData){ targetTorus(); return; }
   const {px,W,H} = portraitData;
   const pitch = worldW/W;              // world distance between sampled pixels
+  gtRect={cx, cy, w:worldW, h:worldW*(H/W)};
   const g=c=>Math.min(1, Math.pow(c,1.55)*1.65);   // contrast curve tuned for additive blending
   for(let i=0;i<MAXN;i++){
     // deterministic assignment: every pixel gets a splat (no shot noise)
@@ -667,14 +748,16 @@ function targetHelix(){
 }
 
 const PHASES = {
-  hero:     {name:'fitting portrait',      make:()=>targetPortrait(isMobile?0:13.5, 0, isMobile?18:23)},
-  about:    {name:'optimization',          make:()=>targetText('3DGS', isMobile?0:-2, 2, isMobile?22:30)},
-  research: {name:'fitting torus knot',    make:targetTorus},
-  pubs:     {name:'densifying 12 papers',  make:()=>targetGalaxy(12)},
-  news:     {name:'adaptive control',      make:targetGalaxy},
-  xp:       {name:'helix trajectory',      make:targetHelix},
-  contact:  {name:'novel view synthesis',  make:()=>targetText('SAY HI :)', 0, 2, isMobile?22:32)},
+  hero:     {name:'fitting portrait',      cam:[0,0,46],      make:()=>targetPortrait(isMobile?0:13.5, isMobile?-4:0, isMobile?17:23)},
+  about:    {name:'optimization',          cam:[-.26,.06,44], make:()=>targetText('3DGS', isMobile?0:-2, 2, isMobile?22:30)},
+  research: {name:'fitting torus knot',    cam:[.32,.14,40],  make:targetTorus},
+  pubs:     {name:'densifying 12 papers',  cam:[0,-.16,48],   make:()=>targetGalaxy(12)},
+  news:     {name:'adaptive control',      cam:[-.22,.1,46],  make:targetGalaxy},
+  xp:       {name:'helix trajectory',      cam:[.55,.04,42],  make:targetHelix},
+  contact:  {name:'novel view synthesis',  cam:[0,0,46],      make:()=>targetText('SAY HI :)', 0, 2, isMobile?22:32)},
 };
+let currentKey='hero';
+const camT=[0,0,46];
 
 /* ============================================================
    HUD — the training console
@@ -710,7 +793,9 @@ function updateHUD(){
   $('h-count').textContent = activeN.toLocaleString();
   $('h-lr').textContent = (1.6e-4*Math.exp(-phaseIter/9000)).toExponential(1);
   $('h-sh').textContent = Math.min(3, (iter/1500)|0);
-  $('h-psnr').textContent = (14 + (1-Math.min(1,loss))*22.6).toFixed(2)+' dB';
+  const q=1-Math.min(1,loss);
+  $('h-psnr').textContent = (14+q*22.6).toFixed(1)+' · '+(0.62+q*0.352).toFixed(3)+' · '+(0.42-q*0.384).toFixed(3);
+  $('h-view').textContent = 'view '+String(viewId).padStart(3,'0')+'/167';
   $('h-phase').textContent = currentPhase;
   $('f-iter').textContent = iter.toLocaleString();
 }
@@ -757,9 +842,12 @@ $('b-retrain').onclick=retrain;
 let pendingPhase=null;
 function enterPhase(key){
   const ph=PHASES[key]; if(!ph) return;
+  if(key===currentKey && phaseIter<600 && iter>10) return;   // debounce double-fire on load
   ph.make();
-  currentPhase=ph.name;
+  currentPhase=ph.name; currentKey=key;
+  const cc=ph.cam||[0,0,46]; camT[0]=cc[0]; camT[1]=cc[1]; camT[2]=cc[2];
   temp=1; phaseIter=0;
+  gtSet(key==='hero');
   hudlog(`[view] new target sampled → ${ph.name}`, true);
 }
 const sections=[...document.querySelectorAll('section')];
@@ -788,9 +876,63 @@ const navObs=new IntersectionObserver(es=>{
 sections.forEach(s=>navObs.observe(s));
 
 /* ============================================================
+   GT | RENDER comparison slider (hero phase)
+   ============================================================ */
+const gtwrap=$('gtwrap'), gtimg=$('gtimg'),
+      gtdiv=document.querySelector('.gt-divider'), gth=document.querySelector('.gt-handle');
+let gtOn=false, gtX=0.22, gtDrag=false, gtRect=null;
+function gtApply(){
+  const pct=(gtX*100)+'%';
+  gtimg.style.clipPath='inset(0 '+(100-gtX*100)+'% 0 0)';
+  gtdiv.style.left=pct; gth.style.left=pct;
+}
+function gtSet(on){
+  gtOn = on && !isMobile && !!portraitData && !!gtimg.src;
+  gtwrap.classList.toggle('on', gtOn);
+  if(gtOn) gtApply();
+}
+gth.addEventListener('pointerdown',e=>{ gtDrag=true; gth.setPointerCapture(e.pointerId); e.stopPropagation(); });
+addEventListener('pointermove',e=>{
+  if(!gtDrag) return;
+  const r=gtwrap.getBoundingClientRect();
+  gtX=Math.max(0,Math.min(1,(e.clientX-r.left)/Math.max(1,r.width)));
+  gtApply();
+});
+addEventListener('pointerup',()=>gtDrag=false);
+
+/* ============================================================
+   VIEWER CONTROLS — render modes, scaling modifier, keyboard
+   ============================================================ */
+const MODENAMES=['gaussian splats','covariance ellipsoids','gaussian centers','depth map'];
+function setMode(m){
+  if(!mat) return;
+  mat.uniforms.uMode.value=m;
+  document.querySelectorAll('#modes button').forEach(b=>b.classList.toggle('on',+b.dataset.m===m));
+  hudlog('[mode] rendering '+MODENAMES[m], true);
+}
+document.querySelectorAll('#modes button').forEach(b=>b.onclick=()=>setMode(+b.dataset.m));
+const smEl=$('scalemod');
+smEl.addEventListener('input',()=>{
+  if(!mat) return;
+  const v=smEl.value/100;
+  mat.uniforms.uScaleMod.value=v;
+  $('scaleval').textContent=v.toFixed(1)+'×';
+});
+smEl.addEventListener('change',()=>hudlog('[viewer] scaling modifier → '+(smEl.value/100).toFixed(2)+'×', true));
+addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.metaKey||e.ctrlKey) return;
+  const k=e.key.toLowerCase();
+  if(k==='d') densify();
+  else if(k==='p') prune();
+  else if(k==='r') retrain();
+  else if(k>='1'&&k<='4') setMode(+k-1);
+});
+
+/* ============================================================
    POINTER — repulsion field + parallax orbit
    ============================================================ */
 const ptr={x:0,y:0,wx:0,wy:0,active:false,down:false,ox:0,oy:0,rotY:0,rotX:0,tRotY:0,tRotX:0};
+let camY=0, camX=0, camD=46;
 addEventListener('pointermove',e=>{
   ptr.x=e.clientX/innerWidth*2-1; ptr.y=-(e.clientY/innerHeight*2-1);
   ptr.active=true;
@@ -805,11 +947,22 @@ addEventListener('pointermove',e=>{
 canvas.addEventListener('pointerdown',e=>{ptr.down=true;ptr.ox=e.clientX;ptr.oy=e.clientY});
 addEventListener('pointerup',()=>ptr.down=false);
 addEventListener('pointerleave',()=>ptr.active=false);
+// double-click = local clone&split burst: gaussians teleport to the cursor, then re-optimize home
+canvas.addEventListener('dblclick',()=>{
+  const n=Math.min(activeN,170);
+  for(let k=0;k<n;k++){
+    const i=(Math.random()*activeN)|0;
+    aPos[i*3]=ptr.wx+rnd(-1.2,1.2); aPos[i*3+1]=ptr.wy+rnd(-1.2,1.2); aPos[i*3+2]=rnd(-2,2);
+  }
+  hudlog('[densify] local split @ viewer ray — re-optimizing', true);
+});
 
 /* ============================================================
    MAIN LOOP — the "optimizer"
    ============================================================ */
 let last=performance.now(), shLast=0, autoEvents=[600,1500,2600];
+let viewId=0, nextOpc=6500, lastWarn=0, hlK=-1;
+const _gv1=new THREE.Vector3(), _gv2=new THREE.Vector3();
 function frame(now){
   requestAnimationFrame(frame);
   if(!renderer) return;
@@ -831,13 +984,21 @@ function frame(now){
   const sh=Math.min(3,(iter/1500)|0);
   if(sh!==shLast){ shLast=sh; hudlog(`[sh] spherical harmonics degree → ${sh}`, true); }
 
+  // periodic opacity reset — the real 3DGS transparency trick (sec. ADC)
+  if(iter>nextOpc){
+    nextOpc=iter+6500;
+    for(let i=0;i<activeN;i++) aOpac[i]*=0.12;
+    hudlog('[opacity] α reset → re-learning transparency', true);
+  }
+
   // mouse world position at z=0 plane (approx, camera looks at origin)
   const fovScale=Math.tan(camera.fov*Math.PI/360)*camera.position.z;
   ptr.wx=ptr.x*fovScale*camera.aspect; ptr.wy=ptr.y*fovScale;
 
-  let errAcc=0;
+  let errAcc=0, repelN=0;
   const jitter=temp*temp*2.6;
   const t0=now*0.00045;
+  const spotlight = hlK>=0 && currentKey==='pubs';
   for(let i=0;i<activeN;i++){
     const i3=i*3;
     let dx=tgtPos[i3]-aPos[i3], dy=tgtPos[i3+1]-aPos[i3+1], dz=tgtPos[i3+2]-aPos[i3+2];
@@ -856,16 +1017,20 @@ function frame(now){
       if(d2<22 && d2>0.0001){
         const f=(1-d2/22)*0.5;
         aPos[i3]+=rx/Math.sqrt(d2)*f; aPos[i3+1]+=ry/Math.sqrt(d2)*f;
+        repelN++;
       }
     }
 
-    // color & scale convergence + soft breathing
-    aOpac[i]   +=(tgtOp[i]-aOpac[i])*conv*.8;
+    // color & scale convergence + soft breathing (+ paper-cluster spotlight)
+    let opT=tgtOp[i];
+    if(spotlight){ opT = (i%12===hlK) ? Math.min(.95,opT*2.2) : opT*.25; }
+    aOpac[i]   +=(opT-aOpac[i])*Math.max(conv*.8,.09);
     aColor[i3]  +=(tgtCol[i3]-aColor[i3])*conv*.8;
     aColor[i3+1]+=(tgtCol[i3+1]-aColor[i3+1])*conv*.8;
     aColor[i3+2]+=(tgtCol[i3+2]-aColor[i3+2])*conv*.8;
     const breathe=1+Math.sin(t0*2+s)*0.04;
-    const sTgt=tgtScl[i]*breathe*(1+temp*1.6);
+    let sTgt=tgtScl[i]*breathe*(1+temp*1.6);
+    if(spotlight && i%12===hlK) sTgt*=1.8;
     aScale[i*2]  +=(sTgt*(1+Math.sin(s)*.16)-aScale[i*2])*conv;
     aScale[i*2+1]+=(sTgt*(1-Math.sin(s)*.16)-aScale[i*2+1])*conv;
     aRot[i]+=dt*(0.01+temp*1.4)*(i%2?1:-1);
@@ -873,14 +1038,30 @@ function frame(now){
   loss=Math.min(1, errAcc/activeN/18);
   if((iter/step|0)%2===0){ lossHist.push(loss); if(lossHist.length>90)lossHist.shift(); }
 
-  // camera: drag orbit + gentle autonomous drift + mouse parallax
+  // camera: phase-choreographed base + drag orbit + drift + parallax
+  camY+=(camT[0]-camY)*0.025; camX+=(camT[1]-camX)*0.025; camD+=(camT[2]-camD)*0.025;
+  if(gtDrag){ ptr.tRotY+=(0-ptr.tRotY)*0.2; ptr.tRotX+=(0-ptr.tRotX)*0.2; }
   ptr.rotY+=(ptr.tRotY-ptr.rotY)*0.06; ptr.rotX+=(ptr.tRotX-ptr.rotX)*0.06;
-  const drift=Math.sin(now*0.00011)*0.07;
-  const ry=ptr.rotY+drift+ptr.x*0.04, rx=ptr.rotX+ptr.y*0.03;
-  camera.position.x=Math.sin(ry)*46;
-  camera.position.z=Math.cos(ry)*Math.cos(rx)*46;
-  camera.position.y=Math.sin(rx)*-30;
+  const drift=Math.sin(now*0.00011)*0.06;
+  const ry=camY+ptr.rotY+drift+ptr.x*0.04, rx=camX+ptr.rotX+ptr.y*0.03;
+  camera.position.x=Math.sin(ry)*camD;
+  camera.position.z=Math.cos(ry)*Math.cos(rx)*camD;
+  camera.position.y=Math.sin(rx)*-camD*0.65;
   camera.lookAt(0,0,0);
+  viewId=Math.round((((ry%6.2832)+6.2832)%6.2832)/6.2832*167)%167;
+
+  // viewer disturbing the optimization?
+  if(repelN>350 && now-lastWarn>7000){ lastWarn=now; hudlog('[warn] viewer ray injecting gradient noise', true); }
+
+  // keep the GT comparison glued to the projected portrait rect
+  if(gtOn && gtRect){
+    _gv1.set(gtRect.cx-gtRect.w/2, gtRect.cy+gtRect.h/2, 0).project(camera);
+    _gv2.set(gtRect.cx+gtRect.w/2, gtRect.cy-gtRect.h/2, 0).project(camera);
+    const x1=(_gv1.x*.5+.5)*innerWidth, y1=(-_gv1.y*.5+.5)*innerHeight;
+    const x2=(_gv2.x*.5+.5)*innerWidth, y2=(-_gv2.y*.5+.5)*innerHeight;
+    gtwrap.style.left=x1+'px'; gtwrap.style.top=y1+'px';
+    gtwrap.style.width=Math.max(0,x2-x1)+'px'; gtwrap.style.height=Math.max(0,y2-y1)+'px';
+  }
 
   mesh.geometry.attributes.iPos.needsUpdate=true;
   mesh.geometry.attributes.iScale.needsUpdate=true;
@@ -965,12 +1146,20 @@ document.getElementById('publist').innerHTML = PUBS.map((p,i)=>`
     </div>
   </div>`).join('');
 document.querySelectorAll('#publist .reveal').forEach(el=>revObs.observe(el));
+// hovering a paper spotlights its gaussian cluster in the galaxy formation
+const publistEl=document.getElementById('publist');
+publistEl.addEventListener('mouseover',e=>{
+  const card=e.target.closest('.pub'); if(!card) return;
+  const k=[...publistEl.children].indexOf(card)%12;
+  if(k!==hlK){ hlK=k; hudlog(`[select] paper ${String(k+1).padStart(2,'0')}/12 → spotlight cluster i≡${k} (mod 12)`, true); }
+});
+publistEl.addEventListener('mouseleave',()=>{ hlK=-1; });
 
 /* ============================================================
    BOOT
    ============================================================ */
 targetNoise();
-window.__gs = {enterPhase, densify, prune, retrain};   // debug/console hook
+window.__gs = {enterPhase, densify, prune, retrain, setMode, gt:x=>{gtX=Math.max(0,Math.min(1,x));gtApply();}};   // debug/console hook
 hudlog('[init] 9,216 gaussians ← random SfM points', true);
 loadPortrait().then(()=>{
   enterPhase('hero');
