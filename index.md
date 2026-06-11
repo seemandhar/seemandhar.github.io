@@ -151,6 +151,8 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 </div>
 
+{% include gallery.html %}
+
 {% include_relative _includes/publications.md %}
 
 {% include_relative _includes/services.md %}
