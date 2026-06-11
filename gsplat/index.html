@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seemandhar Jain · Gaussian Portfolio — a live 3DGS training run</title>
+<meta name="description" content="Seemandhar Jain's research portfolio, rendered as a live 3D Gaussian Splatting optimization. PhD @ UC San Diego.">
+<link rel="icon" href="/assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050509;
+  --ink:#e8e9f1;
+  --dim:#9b9db1;
+  --faint:#5b5d72;
+  --cyan:#22d3ee;
+  --violet:#a78bfa;
+  --magenta:#f472b6;
+  --amber:#fbbf24;
+  --card:rgba(16,17,28,.62);
+  --edge:rgba(167,139,250,.16);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(167,139,250,.35)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#08080f}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--cyan),var(--violet),var(--magenta));border-radius:6px}
+
+#gl{position:fixed;inset:0;z-index:0;display:block}
+
+/* ---------- vignette + grain ---------- */
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(3,3,8,.75) 100%)}
+
+/* ---------- training HUD ---------- */
+#hud{
+  position:fixed;top:18px;left:18px;z-index:30;
+  font-family:var(--mono);font-size:11px;line-height:1.7;
+  background:rgba(8,9,16,.72);border:1px solid var(--edge);
+  border-radius:14px;padding:14px 16px;min-width:248px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 18px 50px rgba(0,0,0,.5);
+  transition:transform .4s cubic-bezier(.2,.9,.3,1),opacity .4s;
+}
+#hud.hidden{transform:translateX(-110%);opacity:0}
+#hud .hud-title{
+  display:flex;align-items:center;gap:8px;
+  font-weight:700;letter-spacing:.14em;font-size:10px;color:var(--dim);
+  text-transform:uppercase;margin-bottom:8px;
+}
+#hud .rec{width:8px;height:8px;border-radius:50%;background:#34d399;
+  box-shadow:0 0 10px #34d399;animation:blink 1.6s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+#hud .row{display:flex;justify-content:space-between;gap:18px;color:var(--dim)}
+#hud .row b{color:var(--ink);font-weight:500}
+#hud .row .good{color:#34d399}
+#hud .row .warm{color:var(--amber)}
+#losschart{display:block;width:100%;height:46px;margin:8px 0 6px;
+  border-radius:6px;background:rgba(255,255,255,.03)}
+#hudlog{margin-top:6px;border-top:1px dashed rgba(255,255,255,.08);padding-top:6px;
+  color:var(--faint);font-size:10px;max-height:68px;overflow:hidden}
+#hudlog div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hudlog .ev{color:var(--cyan)}
+.hud-btns{display:flex;gap:6px;margin-top:10px}
+.hud-btns button{
+  flex:1;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;
+  padding:7px 4px;border-radius:8px;cursor:pointer;border:1px solid var(--edge);
+  background:rgba(167,139,250,.08);color:var(--ink);
+  transition:all .18s ease;
+}
+.hud-btns button:hover{background:rgba(167,139,250,.22);transform:translateY(-1px);
+  box-shadow:0 6px 18px rgba(167,139,250,.25)}
+.hud-btns button:active{transform:translateY(0) scale(.97)}
+#hudToggle{
+  position:fixed;top:18px;left:18px;z-index:29;width:38px;height:38px;border-radius:12px;
+  border:1px solid var(--edge);background:rgba(8,9,16,.72);color:var(--cyan);
+  font-family:var(--mono);font-size:14px;cursor:pointer;backdrop-filter:blur(10px);
+}
+
+/* ---------- top-right nav ---------- */
+nav{
+  position:fixed;top:18px;right:18px;z-index:30;display:flex;gap:6px;align-items:center;
+  font-family:var(--mono);font-size:11px;
+  background:rgba(8,9,16,.72);border:1px solid var(--edge);border-radius:999px;
+  padding:6px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+nav a{color:var(--dim);text-decoration:none;padding:6px 11px;border-radius:999px;transition:all .2s}
+nav a:hover,nav a.active{color:#fff;background:rgba(167,139,250,.18)}
+nav a.exit{color:var(--amber)}
+@media(max-width:900px){nav .hide-sm{display:none}}
+
+/* ---------- content ---------- */
+main{position:relative;z-index:10}
+section{position:relative;max-width:960px;margin:0 auto;padding:13vh 24px}
+.stage-tag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.stage-tag::before{content:'';width:34px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+h2{font-size:clamp(28px,4.5vw,44px);font-weight:800;letter-spacing:-.02em;margin-bottom:22px}
+h2 .grad{background:linear-gradient(110deg,var(--cyan),var(--violet) 50%,var(--magenta));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* hero */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:0}
+.hero-kicker{font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.hero-kicker .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--magenta);box-shadow:0 0 12px var(--magenta);animation:blink 2s infinite}
+h1{
+  font-size:clamp(44px,8.5vw,104px);font-weight:800;line-height:.98;letter-spacing:-.035em;
+}
+h1 .l1{display:block}
+h1 .l2{display:block;background:linear-gradient(100deg,var(--cyan) 0%,var(--violet) 45%,var(--magenta) 80%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 28px rgba(167,139,250,.35))}
+.hero-sub{margin-top:26px;max-width:560px;color:var(--dim);font-size:17px;line-height:1.7}
+.hero-sub b{color:var(--ink);font-weight:600}
+.hero-cta{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;
+  padding:13px 22px;border-radius:12px;text-decoration:none;cursor:pointer;border:none;
+  transition:all .25s cubic-bezier(.2,.9,.3,1);display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{
+  color:#0a0a12;background:linear-gradient(110deg,var(--cyan),var(--violet),var(--magenta));
+  background-size:200% 100%;animation:gradshift 5s ease infinite;
+  box-shadow:0 8px 30px rgba(167,139,250,.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 42px rgba(167,139,250,.5)}
+.btn-ghost{color:var(--ink);background:rgba(255,255,255,.05);border:1px solid var(--edge)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+@keyframes gradshift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.2em;
+  text-transform:uppercase;animation:bob 2.4s ease-in-out infinite;text-align:center;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* glass cards */
+.card{
+  background:var(--card);border:1px solid var(--edge);border-radius:20px;
+  padding:30px 32px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 24px 70px rgba(0,0,0,.45);
+  position:relative;overflow:hidden;
+}
+.card::before{content:'';position:absolute;inset:0;border-radius:20px;pointer-events:none;
+  background:linear-gradient(120deg,rgba(34,211,238,.07),transparent 35%,transparent 70%,rgba(244,114,182,.06))}
+.card p{color:var(--dim);line-height:1.85;font-size:15.5px;margin-bottom:14px}
+.card p:last-child{margin-bottom:0}
+.card p b,.card p a{color:var(--ink);font-weight:600}
+.card a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(34,211,238,.3);transition:border-color .2s}
+.card a:hover{border-bottom-color:var(--cyan)}
+
+/* research chips */
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:8px}
+.chip{
+  background:var(--card);border:1px solid var(--edge);border-radius:16px;padding:22px;
+  backdrop-filter:blur(14px);transition:all .3s cubic-bezier(.2,.9,.3,1);position:relative;overflow:hidden;
+}
+.chip:hover{transform:translateY(-5px);border-color:rgba(34,211,238,.4);
+  box-shadow:0 20px 50px rgba(34,211,238,.12)}
+.chip .ic{font-size:22px;margin-bottom:10px;display:block}
+.chip h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.chip p{font-size:13px;color:var(--dim);line-height:1.7}
+.chip .bar{position:absolute;left:0;top:0;height:3px;width:100%;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--magenta));opacity:.7}
+
+/* publications */
+.pubs{display:flex;flex-direction:column;gap:14px}
+.pub{
+  display:flex;gap:20px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--edge);border-radius:16px;padding:20px 22px;
+  backdrop-filter:blur(14px);transition:all .3s cubic-bezier(.2,.9,.3,1);
+}
+.pub:hover{transform:translateX(6px);border-color:rgba(244,114,182,.35);
+  box-shadow:-10px 14px 44px rgba(244,114,182,.08)}
+.pub img{width:118px;height:78px;object-fit:cover;border-radius:10px;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.08);background:#0c0d18}
+.pub .meta{flex:1;min-width:0}
+.pub .badge{
+  display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+  padding:3px 9px;border-radius:6px;margin-bottom:7px;
+  background:rgba(34,211,238,.12);color:var(--cyan);border:1px solid rgba(34,211,238,.25);
+}
+.pub .badge.hot{background:rgba(251,191,36,.12);color:var(--amber);border-color:rgba(251,191,36,.3)}
+.pub h3{font-size:15.5px;font-weight:700;line-height:1.45;margin-bottom:5px}
+.pub .auth{font-size:12.5px;color:var(--dim);margin-bottom:4px}
+.pub .auth b{color:var(--ink)}
+.pub .venue{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.pub .links{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+.pub .links a{
+  font-family:var(--mono);font-size:10px;font-weight:700;color:var(--violet);text-decoration:none;
+  padding:4px 10px;border:1px solid rgba(167,139,250,.3);border-radius:6px;transition:all .2s;
+}
+.pub .links a:hover{background:rgba(167,139,250,.18);color:#fff}
+@media(max-width:640px){.pub{flex-direction:column}.pub img{width:100%;height:130px}}
+
+/* news */
+.news{display:flex;flex-direction:column;gap:0}
+.news-item{
+  display:flex;gap:18px;padding:15px 6px;border-bottom:1px dashed rgba(255,255,255,.07);
+  align-items:baseline;transition:background .2s;border-radius:8px;
+}
+.news-item:hover{background:rgba(255,255,255,.025)}
+.news-item .d{font-family:var(--mono);font-size:11px;color:var(--cyan);flex-shrink:0;width:84px}
+.news-item .t{font-size:14.5px;color:var(--dim);line-height:1.6}
+.news-item .t b{color:var(--ink)}
+
+/* timeline */
+.timeline{position:relative;padding-left:30px}
+.timeline::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(180deg,var(--cyan),var(--violet),var(--magenta));border-radius:2px;opacity:.5}
+.tl{position:relative;padding:0 0 28px 22px}
+.tl::before{content:'';position:absolute;left:-30px;top:5px;width:16px;height:16px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,var(--violet) 45%,transparent 75%);
+  box-shadow:0 0 16px rgba(167,139,250,.6)}
+.tl .when{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.08em;margin-bottom:4px}
+.tl h3{font-size:16.5px;font-weight:700;margin-bottom:4px}
+.tl p{font-size:13.5px;color:var(--dim);line-height:1.7}
+
+/* contact */
+#contact .card{text-align:center;padding:54px 32px}
+.socials{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+
+/* footer */
+footer{
+  position:relative;z-index:10;text-align:center;padding:40px 20px 110px;
+  font-family:var(--mono);font-size:11px;color:var(--faint);line-height:2;
+}
+footer .conv{color:#34d399}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.2,.9,.3,1),transform .9s cubic-bezier(.2,.9,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+/* webgl fallback */
+#nogl{display:none;position:fixed;inset:auto 18px 18px 18px;z-index:40;
+  font-family:var(--mono);font-size:12px;color:var(--amber);text-align:center}
+
+@media(max-width:760px){
+  #hud{min-width:206px;font-size:10px;padding:11px 12px}
+  section{padding:11vh 18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{transition:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="gl"></canvas>
+<div class="vignette"></div>
+<div id="nogl">WebGL unavailable — rendering the rasterized fallback (the content still works!)</div>
+
+<!-- training console -->
+<button id="hudToggle" title="toggle training console" style="display:none">▣</button>
+<div id="hud">
+  <div class="hud-title"><span class="rec"></span> 3DGS · training live</div>
+  <div class="row"><span>iteration</span><b id="h-iter">0</b></div>
+  <div class="row"><span>loss (L1 + λ·D-SSIM)</span><b id="h-loss" class="warm">—</b></div>
+  <div class="row"><span>gaussians</span><b id="h-count">0</b></div>
+  <div class="row"><span>lr (position)</span><b id="h-lr">1.6e-4</b></div>
+  <div class="row"><span>SH degree</span><b id="h-sh">0</b></div>
+  <div class="row"><span>PSNR</span><b id="h-psnr" class="good">—</b></div>
+  <canvas id="losschart" width="232" height="46"></canvas>
+  <div class="row" style="font-size:9px;color:var(--faint)"><span>← loss</span><span id="h-phase">initialization</span></div>
+  <div id="hudlog"></div>
+  <div class="hud-btns">
+    <button id="b-densify" title="clone & split gaussians (adaptive density control)">DENSIFY</button>
+    <button id="b-prune" title="cull low-opacity gaussians">PRUNE</button>
+    <button id="b-retrain" title="reset to random init and optimize again">RE-TRAIN</button>
+  </div>
+</div>
+
+<nav>
+  <a href="#about" class="hide-sm">about</a>
+  <a href="#research" class="hide-sm">research</a>
+  <a href="#pubs">papers</a>
+  <a href="#xp" class="hide-sm">journey</a>
+  <a href="#contact">contact</a>
+  <a href="/" class="exit" title="back to the classic site">⏎ 2D mode</a>
+</nav>
+
+<main>
+
+  <!-- ====================== HERO ====================== -->
+  <section id="hero">
+    <div class="hero-kicker reveal"><span class="pulse"></span> initializing 9,216 gaussians from SfM noise…</div>
+    <h1 class="reveal d1"><span class="l1">SEEMANDHAR</span><span class="l2">JAIN</span></h1>
+    <p class="hero-sub reveal d2">
+      PhD student @ <b>UC San Diego</b>, advised by <b>Prof. Manmohan Chandraker</b>.
+      I build <b>multi-agent LLM systems that do 3D vision research autonomously</b> —
+      and this page is rendered the way I see the world: as a cloud of gaussians,
+      optimizing itself into something meaningful. <b>Watch it train. →</b>
+    </p>
+    <div class="hero-cta reveal d3">
+      <a class="btn btn-primary" href="#pubs">⬢ View converged papers</a>
+      <a class="btn btn-ghost" href="https://github.com/jainsee24" target="_blank" rel="noopener">⌥ GitHub</a>
+    </div>
+    <div class="scroll-hint">scroll = next optimization stage<br>▼</div>
+  </section>
+
+  <!-- ====================== ABOUT ====================== -->
+  <section id="about">
+    <div class="stage-tag reveal">stage 01 / initialization</div>
+    <h2 class="reveal">Point cloud → <span class="grad">person</span></h2>
+    <div class="card reveal d1">
+      <p>Every 3DGS scene starts as structureless noise; so does every research career. Mine
+      initialized at <b>IIT Indore</b> (B.Tech, CSE), where I founded
+      <a href="http://healthaignite.com/" target="_blank" rel="noopener">HealthAIgnite</a>, a healthcare
+      computer-vision consultancy — my first densification step.</p>
+      <p>The optimizer then routed me through an MS at <b>UIUC</b> (GPA 3.92/4) with
+      <a href="http://luthuli.cs.uiuc.edu/~daf/" target="_blank" rel="noopener">Prof. David Forsyth</a> — single-shot 3D
+      reconstruction, convex decomposition, intrinsic images, relighting with diffusion models —
+      and a <a href="https://www.siebelscholars.com/" target="_blank" rel="noopener">Siebel Scholar (Class of 2024)</a> award.</p>
+      <p>Today I'm a <b>PhD student at UC San Diego</b> working at the intersection of
+      <b>LLM agents and 3D vision</b>: multi-agent systems that read papers, write code, run experiments,
+      and discover new methods on their own. Recent splats in my covariance:
+      <b>Nerfify</b> (CVPR 2026 <i style="color:var(--amber)">Highlight</i>) which turns NeRF papers into executable code,
+      <b>Splatify</b> — its 3DGS counterpart with knowledge discovery — and <b>Idea2Paper</b>,
+      a pipeline that goes from literature to novel method to validated paper, end-to-end.</p>
+      <p>Along the way: <b>Google</b> (Student Researcher, BigML — optimized SANA diffusion for Veo,
+      built Gemma-2 captioning), <b>Aireal</b> (Research Scientist, CV), <b>DOCOMO Innovations</b>, and <b>Salesforce</b> (AMTS, AI).</p>
+    </div>
+  </section>
+
+  <!-- ====================== RESEARCH ====================== -->
+  <section id="research">
+    <div class="stage-tag reveal">stage 02 / optimization</div>
+    <h2 class="reveal">What my gradients <span class="grad">flow toward</span></h2>
+    <div class="chips">
+      <div class="chip reveal"><span class="bar"></span><span class="ic">🤖</span>
+        <h3>Autonomous Research Agents</h3>
+        <p>Multi-agent LLM frameworks that reproduce, discover, and innovate: papers → trainable code → new methods. Nerfify, Splatify, Idea2Paper.</p>
+      </div>
+      <div class="chip reveal d1"><span class="bar"></span><span class="ic">⬢</span>
+        <h3>Radiance Fields &amp; 3DGS</h3>
+        <p>NeRFs, 3D Gaussian Splatting, single-shot reconstruction, convex decomposition — explicit and implicit 3D, and the tooling to automate it.</p>
+      </div>
+      <div class="chip reveal d2"><span class="bar"></span><span class="ic">✦</span>
+        <h3>Generative 3D &amp; Diffusion</h3>
+        <p>Diffusion models for 3D-aware image/video synthesis, relighting, intrinsic decomposition; faster sampling with better geometric consistency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== PUBLICATIONS ====================== -->
+  <section id="pubs">
+    <div class="stage-tag reveal">stage 03 / densification</div>
+    <h2 class="reveal">Converged <span class="grad">publications</span></h2>
+    <p class="reveal d1" style="color:var(--faint);font-family:var(--mono);font-size:12px;margin-bottom:22px">
+      // each paper below is one cluster in the galaxy behind this text — 12 clusters, 12 papers</p>
+    <div class="pubs" id="publist"><!-- filled by JS --></div>
+  </section>
+
+  <!-- ====================== NEWS ====================== -->
+  <section id="news">
+    <div class="stage-tag reveal">stage 04 / adaptive density control</div>
+    <h2 class="reveal">Recent <span class="grad">densification events</span></h2>
+    <div class="card reveal d1">
+      <div class="news">
+        <div class="news-item"><span class="d">Apr 2026</span><span class="t"><b>Nerfify</b> selected as a <b>CVPR 2026 Highlight</b>! 🎉</span></div>
+        <div class="news-item"><span class="d">Mar 2026</span><span class="t">Invited talk at <b>Google</b> on NERFIFY.</span></div>
+        <div class="news-item"><span class="d">Jan 2026</span><span class="t">Invited talk at <b>Pixel Cafe</b>.</span></div>
+        <div class="news-item"><span class="d">Jun 2025</span><span class="t"><b>Student Researcher (BigML)</b> at Google, New York — optimized SANA diffusion for Veo, built Gemma-2-based captioning.</span></div>
+        <div class="news-item"><span class="d">Jul 2024</span><span class="t">Started <b>PhD at UC San Diego</b> with Prof. Manmohan Chandraker.</span></div>
+        <div class="news-item"><span class="d">May 2024</span><span class="t">Joined <b>Aireal</b> as Research Scientist (CV) — single-image-to-3D textured mesh, AI interior design (Livvy).</span></div>
+        <div class="news-item"><span class="d">Sep 2023</span><span class="t">Selected as <b>Siebel Scholar, Class of 2024</b>.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== EXPERIENCE ====================== -->
+  <section id="xp">
+    <div class="stage-tag reveal">stage 05 / the optimization trajectory</div>
+    <h2 class="reveal">Loss curve of a <span class="grad">career</span></h2>
+    <div class="timeline reveal d1">
+      <div class="tl"><div class="when">2024 → now</div><h3>PhD, Computer Science · UC San Diego</h3>
+        <p>Advisor: Prof. Manmohan Chandraker. LLM agents × 3D vision: autonomous research systems for NeRF/3DGS, generative 3D.</p></div>
+      <div class="tl"><div class="when">2025</div><h3>Student Researcher · Google (BigML, NYC)</h3>
+        <p>Optimized SANA diffusion for Veo; Gemma-2-based captioning at scale.</p></div>
+      <div class="tl"><div class="when">2024</div><h3>Research Scientist (CV) · Aireal</h3>
+        <p>Single-image → textured 3D mesh; AI interior design product (Livvy).</p></div>
+      <div class="tl"><div class="when">2022 → 2024</div><h3>MS, Computer Science · UIUC</h3>
+        <p>Advisor: Prof. David Forsyth. GPA 3.92/4. Siebel Scholar '24. 3D reconstruction, convex decomposition, relighting.</p></div>
+      <div class="tl"><div class="when">2021 — 2022</div><h3>Salesforce (AMTS, AI) · DOCOMO Innovations (Research Intern)</h3>
+        <p>Applied ML in production; large-scale contact tracing &amp; recommendation research.</p></div>
+      <div class="tl"><div class="when">2017 → 2021</div><h3>B.Tech, CSE · IIT Indore — founded HealthAIgnite</h3>
+        <p>Healthcare-AI consulting focused on computer vision. Iteration 0.</p></div>
+    </div>
+  </section>
+
+  <!-- ====================== CONTACT ====================== -->
+  <section id="contact">
+    <div class="stage-tag reveal">stage 06 / novel view synthesis</div>
+    <h2 class="reveal">Render a <span class="grad">new view</span> — together</h2>
+    <div class="card reveal d1">
+      <p style="font-size:17px">The splats behind this card just spelled it out: I'm always up for
+      collaborations on <b>agents × 3D</b>, radiance fields, and autonomous science.</p>
+      <p style="font-family:var(--mono);font-size:13px;color:var(--cyan)">sejain [at] ucsd [dot] edu</p>
+      <div class="socials">
+        <a class="btn btn-ghost" href="https://linkedin.com/in/seemandharjain" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/jainsee24" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://seemandhar.github.io/NERFIFY/" target="_blank" rel="noopener">NERFIFY</a>
+        <a class="btn btn-primary" href="/" >⏎ Classic site</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="conv">✓ converged</span> after <span id="f-iter">—</span> iterations ·
+  every pixel above was splatted live in your browser<br>
+  © 2026 Seemandhar Jain · handcrafted gaussians, no two visits render alike
+</footer>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ============================================================
+   SPLAT ENGINE — true anisotropic 2D gaussians, instanced quads
+   ============================================================ */
+const isMobile = matchMedia('(max-width:760px)').matches;
+const MAXN = isMobile ? 4800 : 9216;
+
+let renderer, scene, camera, mesh;
+const canvas = document.getElementById('gl');
+try{
+  renderer = new THREE.WebGLRenderer({canvas, antialias:false, alpha:false, powerPreference:'high-performance', preserveDrawingBuffer:true});
+}catch(e){
+  document.getElementById('nogl').style.display='block';
+  document.getElementById('hud').style.display='none';
+}
+
+const aPos   = new Float32Array(MAXN*3);
+const aScale = new Float32Array(MAXN*2);
+const aRot   = new Float32Array(MAXN);
+const aColor = new Float32Array(MAXN*3);
+const aOpac  = new Float32Array(MAXN);
+
+// simulation state (CPU)
+const tgtPos = new Float32Array(MAXN*3);
+const tgtCol = new Float32Array(MAXN*3);
+const tgtScl = new Float32Array(MAXN);
+const tgtOp  = new Float32Array(MAXN);
+const seed   = new Float32Array(MAXN);   // per-splat phase for organic motion
+let activeN  = Math.floor(MAXN*0.72);
+
+let iter = 0, phaseIter = 0, temp = 1.0, loss = 1.0;
+const lossHist = [];
+let currentPhase = 'initialization';
+
+function rnd(a=1,b){ return b===undefined ? Math.random()*a : a+Math.random()*(b-a); }
+
+function randomize(i){
+  aPos[i*3]   = rnd(-26,26);
+  aPos[i*3+1] = rnd(-16,16);
+  aPos[i*3+2] = rnd(-14,10);
+  aColor[i*3]=rnd(.2,.9); aColor[i*3+1]=rnd(.2,.9); aColor[i*3+2]=rnd(.3,1);
+  aScale[i*2]=rnd(.12,.5); aScale[i*2+1]=rnd(.12,.5);
+  aRot[i]=rnd(Math.PI*2);
+  aOpac[i]= i<activeN ? rnd(.4,.58) : 0;
+  tgtOp[i]= aOpac[i];
+  seed[i]=rnd(1000);
+}
+for(let i=0;i<MAXN;i++) randomize(i);
+
+if(renderer){
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050509);
+  camera = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, .1, 400);
+  camera.position.set(0,0,46);
+
+  const plane = new THREE.PlaneGeometry(2,2);
+  const geo = new THREE.InstancedBufferGeometry();
+  geo.index = plane.index;
+  geo.setAttribute('position', plane.attributes.position);
+  geo.instanceCount = MAXN;
+  geo.setAttribute('iPos',   new THREE.InstancedBufferAttribute(aPos,3).setUsage(THREE.DynamicDrawUsage));
+  geo.setAttribute('iScale', new THREE.InstancedBufferAttribute(aScale,2).setUsage(THREE.DynamicDrawUsage));
+  geo.setAttribute('iRot',   new THREE.InstancedBufferAttribute(aRot,1).setUsage(THREE.DynamicDrawUsage));
+  geo.setAttribute('iColor', new THREE.InstancedBufferAttribute(aColor,3).setUsage(THREE.DynamicDrawUsage));
+  geo.setAttribute('iOpac',  new THREE.InstancedBufferAttribute(aOpac,1).setUsage(THREE.DynamicDrawUsage));
+
+  const mat = new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, depthTest:false,
+    blending:THREE.AdditiveBlending,
+    vertexShader:`
+      attribute vec3 iPos; attribute vec2 iScale; attribute float iRot;
+      attribute vec3 iColor; attribute float iOpac;
+      varying vec2 vUv; varying vec3 vCol; varying float vOp;
+      void main(){
+        vUv = position.xy; vCol = iColor; vOp = iOpac;
+        float c = cos(iRot), s = sin(iRot);
+        vec2 off = mat2(c,-s,s,c) * (position.xy * iScale);
+        vec4 mv = modelViewMatrix * vec4(iPos,1.0);
+        mv.xy += off;
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader:`
+      precision mediump float;
+      varying vec2 vUv; varying vec3 vCol; varying float vOp;
+      void main(){
+        float r2 = dot(vUv,vUv);
+        float a = exp(-r2*4.2) * vOp;       // true gaussian falloff
+        if(a < 0.004) discard;
+        gl_FragColor = vec4(vCol*a, a);
+      }`
+  });
+  mesh = new THREE.Mesh(geo, mat);
+  mesh.frustumCulled = false;
+  scene.add(mesh);
+}
+
+/* ============================================================
+   TARGET GENERATORS — what the cloud "trains" toward
+   ============================================================ */
+const PALETTE = [[0.13,0.83,0.93],[0.65,0.55,0.98],[0.96,0.45,0.71],[0.98,0.75,0.14]];
+function palAt(t){
+  t = Math.max(0,Math.min(.999,t)) * (PALETTE.length-1);
+  const i = Math.floor(t), f = t-i;
+  const a=PALETTE[i], b=PALETTE[Math.min(i+1,PALETTE.length-1)];
+  return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f, a[2]+(b[2]-a[2])*f];
+}
+
+function setTarget(i, x,y,z, r,g,b, s, op){
+  tgtPos[i*3]=x; tgtPos[i*3+1]=y; tgtPos[i*3+2]=z;
+  tgtCol[i*3]=r; tgtCol[i*3+1]=g; tgtCol[i*3+2]=b;
+  tgtScl[i]=s;
+  tgtOp[i]= op!==undefined ? op : rnd(.4,.58);
+}
+
+// --- random ball (init / fallback) ---
+function targetNoise(){
+  for(let i=0;i<MAXN;i++){
+    const th=rnd(Math.PI*2), ph=Math.acos(rnd(-1,1)), R=14*Math.cbrt(Math.random());
+    const c=palAt(Math.random());
+    setTarget(i, R*Math.sin(ph)*Math.cos(th), R*Math.sin(ph)*Math.sin(th)*0.7, R*Math.cos(ph)*0.6,
+      c[0]*.8,c[1]*.8,c[2]*.8, rnd(.2,.5));
+  }
+}
+
+// --- portrait from avatar.png pixels ---
+let portraitData = null;
+function loadPortrait(){
+  return new Promise(res=>{
+    const img = new Image();
+    img.onload = ()=>{
+      try{
+        // crop to head & shoulders so the subject, not the background, gets the splats
+        const sx=img.width*0.18, sy=img.height*0.0, sw=img.width*0.82, sh=img.height*0.62;
+        const W=Math.max(40,Math.floor(Math.sqrt(Math.floor(MAXN*0.72)*(sw/sh)))), H=Math.round(W*sh/sw);
+        const c=document.createElement('canvas'); c.width=W; c.height=H;
+        const x=c.getContext('2d',{willReadFrequently:true});
+        x.drawImage(img,sx,sy,sw,sh,0,0,W,H);
+        const d=x.getImageData(0,0,W,H).data;
+        const px=[];
+        for(let p=0;p<W*H;p++){
+          const A=d[p*4+3];
+          if(A<40) continue;
+          const r=d[p*4]/255,g=d[p*4+1]/255,b=d[p*4+2]/255;
+          const lum=0.299*r+0.587*g+0.114*b;
+          px.push({x:p%W, y:(p/W)|0, r,g,b, w:(0.75+0.25*lum)*(A/255)});
+        }
+        portraitData = {px, W, H};
+      }catch(e){ portraitData=null; }
+      res();
+    };
+    img.onerror = ()=>res();
+    img.src = '/assets/img/avatar.png';
+  });
+}
+function targetPortrait(cx=0, cy=0, worldW=24){
+  if(!portraitData){ targetTorus(); return; }
+  const {px,W,H} = portraitData;
+  const pitch = worldW/W;              // world distance between sampled pixels
+  const g=c=>Math.min(1, Math.pow(c,1.55)*1.65);   // contrast curve tuned for additive blending
+  for(let i=0;i<MAXN;i++){
+    // deterministic assignment: every pixel gets a splat (no shot noise)
+    const p=px[i % px.length];
+    const wx = cx + ((p.x+rnd(-.12,.12))/W - .5)*worldW;
+    const wy = cy - ((p.y+rnd(-.12,.12))/H - .5)*worldW*(H/W);
+    setTarget(i, wx, wy, rnd(-.2,.2),
+      g(p.r), g(p.g), g(p.b),
+      pitch*rnd(1.45,1.7), .5);
+  }
+}
+
+// --- text rendered to splats ---
+function targetText(str, cx=0, cy=0, worldW=30){
+  const c=document.createElement('canvas'); c.width=560; c.height=160;
+  const x=c.getContext('2d',{willReadFrequently:true});
+  x.fillStyle='#fff';
+  x.font='800 92px Inter, sans-serif';
+  x.textAlign='center'; x.textBaseline='middle';
+  x.fillText(str, 280, 84);
+  const d=x.getImageData(0,0,560,160).data;
+  const pts=[];
+  for(let p=0;p<560*160;p++) if(d[p*4+3]>120) pts.push([p%560,(p/560)|0]);
+  if(!pts.length){ targetNoise(); return; }
+  for(let i=0;i<MAXN;i++){
+    const p=pts[(Math.random()*pts.length)|0];
+    const u=(p[0]+rnd(-.8,.8))/560, v=(p[1]+rnd(-.8,.8))/160;
+    const col=palAt(u + rnd(-.05,.05));
+    setTarget(i, cx+(u-.5)*worldW, cy-(v-.5)*worldW*(160/560), rnd(-1,1),
+      col[0],col[1],col[2], rnd(.24,.42));
+  }
+}
+
+// --- torus knot (research) ---
+function targetTorus(){
+  for(let i=0;i<MAXN;i++){
+    const t=rnd(Math.PI*2), pq=[2,3];
+    const r=6.5+2.6*Math.cos(pq[1]*t);
+    const x=r*Math.cos(pq[0]*t), y=r*Math.sin(pq[0]*t), z=2.6*Math.sin(pq[1]*t);
+    const j=rnd(.9);
+    const c=palAt(t/(Math.PI*2));
+    setTarget(i, x*1.35+rnd(-j,j), y*0.95+rnd(-j,j), z*1.3+rnd(-j,j),
+      c[0],c[1],c[2], rnd(.2,.42));
+  }
+}
+
+// --- 12 paper clusters in a spiral galaxy (publications) ---
+function targetGalaxy(nClusters=12){
+  for(let i=0;i<MAXN;i++){
+    const k=i%nClusters;
+    const ang=k/nClusters*Math.PI*2*2.2 - 1.2;        // spiral
+    const rad=4.5+k*1.35;
+    const cx=Math.cos(ang)*rad, cy=Math.sin(ang)*rad*0.55;
+    const c=palAt(k/(nClusters-1));
+    const s=1.5 - k*0.06;
+    setTarget(i, cx+rnd(-s,s), cy+rnd(-s,s)+1, rnd(-2,2),
+      c[0],c[1],c[2], rnd(.18,.4));
+  }
+}
+
+// --- double helix (career timeline) ---
+function targetHelix(){
+  for(let i=0;i<MAXN;i++){
+    const strand=i%2 ? 1:-1, t=rnd(-1,1);
+    const ang=t*Math.PI*3.2 + (strand>0?0:Math.PI);
+    const rung = Math.random()<0.12;
+    const R=rung ? rnd(0,6.5) : 6.5;
+    const c=palAt((t+1)/2);
+    setTarget(i, Math.cos(ang)*R+rnd(-.4,.4), t*15+rnd(-.4,.4), Math.sin(ang)*R*0.8+rnd(-.4,.4),
+      c[0],c[1],c[2], rnd(.18,.38));
+  }
+}
+
+const PHASES = {
+  hero:     {name:'fitting portrait',      make:()=>targetPortrait(isMobile?0:13.5, 0, isMobile?18:23)},
+  about:    {name:'optimization',          make:()=>targetText('3DGS', isMobile?0:-2, 2, isMobile?22:30)},
+  research: {name:'fitting torus knot',    make:targetTorus},
+  pubs:     {name:'densifying 12 papers',  make:()=>targetGalaxy(12)},
+  news:     {name:'adaptive control',      make:targetGalaxy},
+  xp:       {name:'helix trajectory',      make:targetHelix},
+  contact:  {name:'novel view synthesis',  make:()=>targetText('SAY HI :)', 0, 2, isMobile?22:32)},
+};
+
+/* ============================================================
+   HUD — the training console
+   ============================================================ */
+const $ = id=>document.getElementById(id);
+const logEl=$('hudlog');
+function hudlog(msg, ev=false){
+  const d=document.createElement('div');
+  if(ev) d.innerHTML=`<span class="ev">${msg}</span>`; else d.textContent=msg;
+  logEl.prepend(d);
+  while(logEl.children.length>4) logEl.lastChild.remove();
+}
+const chart=$('losschart').getContext('2d');
+function drawChart(){
+  const w=232,h=46; chart.clearRect(0,0,w,h);
+  if(lossHist.length<2) return;
+  const grad=chart.createLinearGradient(0,0,w,0);
+  grad.addColorStop(0,'#22d3ee'); grad.addColorStop(.5,'#a78bfa'); grad.addColorStop(1,'#f472b6');
+  chart.strokeStyle=grad; chart.lineWidth=1.6; chart.beginPath();
+  const n=lossHist.length;
+  for(let i=0;i<n;i++){
+    const x=i/(n-1)*w, y=h-3-(h-7)*Math.min(1,lossHist[i]);
+    i?chart.lineTo(x,y):chart.moveTo(x,y);
+  }
+  chart.stroke();
+}
+function fmtLoss(v){ return v.toExponential(2).replace('e-','e-'); }
+
+function updateHUD(){
+  $('h-iter').textContent = iter.toLocaleString();
+  $('h-loss').textContent = fmtLoss(Math.max(loss*0.21, 1e-4));
+  $('h-loss').className = loss>0.25 ? 'warm':'good';
+  $('h-count').textContent = activeN.toLocaleString();
+  $('h-lr').textContent = (1.6e-4*Math.exp(-phaseIter/9000)).toExponential(1);
+  $('h-sh').textContent = Math.min(3, (iter/1500)|0);
+  $('h-psnr').textContent = (14 + (1-Math.min(1,loss))*22.6).toFixed(2)+' dB';
+  $('h-phase').textContent = currentPhase;
+  $('f-iter').textContent = iter.toLocaleString();
+}
+
+/* ---- interactive ADC buttons ---- */
+function densify(){
+  const add=Math.min(MAXN-activeN, Math.round(MAXN*0.07));
+  if(add<=0){ hudlog('[densify] at capacity — prune first', true); return; }
+  for(let k=0;k<add;k++){
+    const src=(Math.random()*activeN)|0, dst=activeN+k;
+    // clone & split: child near parent, scale ÷1.6 (the classic split factor)
+    for(let a=0;a<3;a++){
+      aPos[dst*3+a]=aPos[src*3+a]+rnd(-1,1);
+      aColor[dst*3+a]=aColor[src*3+a];
+      tgtPos[dst*3+a]=tgtPos[src*3+a]+rnd(-.5,.5);
+      tgtCol[dst*3+a]=tgtCol[src*3+a];
+    }
+    tgtScl[dst]=tgtScl[src]/1.6;
+    aScale[dst*2]=aScale[src*2]/1.6; aScale[dst*2+1]=aScale[src*2+1]/1.6;
+    aOpac[dst]=rnd(.25,.55); tgtOp[dst]=tgtOp[src]; aRot[dst]=rnd(Math.PI*2); seed[dst]=rnd(1000);
+  }
+  activeN+=add; temp=Math.min(1,temp+.25);
+  hudlog(`[densify] +${add} gaussians (clone&split)`, true);
+}
+function prune(){
+  const cut=Math.round(activeN*0.1);
+  if(activeN-cut<800){ hudlog('[prune] refusing — too few gaussians', true); return; }
+  activeN-=cut;
+  for(let i=activeN;i<activeN+cut;i++){ aOpac[i]=0; tgtOp[i]=0; }
+  hudlog(`[prune] −${cut} low-α gaussians`, true);
+}
+function retrain(){
+  for(let i=0;i<MAXN;i++) randomize(i);
+  temp=1; phaseIter=0; loss=1;
+  hudlog('[reset] re-initialized from random SfM', true);
+}
+$('b-densify').onclick=densify;
+$('b-prune').onclick=prune;
+$('b-retrain').onclick=retrain;
+
+/* ============================================================
+   PHASE SWITCHING — scroll drives the curriculum
+   ============================================================ */
+let pendingPhase=null;
+function enterPhase(key){
+  const ph=PHASES[key]; if(!ph) return;
+  ph.make();
+  currentPhase=ph.name;
+  temp=1; phaseIter=0;
+  hudlog(`[view] new target sampled → ${ph.name}`, true);
+}
+const sections=[...document.querySelectorAll('section')];
+const phaseObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting && PHASES[e.target.id]) pendingPhase=e.target.id;
+  });
+},{threshold:0.36});
+sections.forEach(s=>phaseObs.observe(s));
+
+/* reveal-on-scroll */
+const revObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target);} });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+/* nav active state */
+const navLinks=[...document.querySelectorAll('nav a[href^="#"]')];
+const navObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{threshold:0.4});
+sections.forEach(s=>navObs.observe(s));
+
+/* ============================================================
+   POINTER — repulsion field + parallax orbit
+   ============================================================ */
+const ptr={x:0,y:0,wx:0,wy:0,active:false,down:false,ox:0,oy:0,rotY:0,rotX:0,tRotY:0,tRotX:0};
+addEventListener('pointermove',e=>{
+  ptr.x=e.clientX/innerWidth*2-1; ptr.y=-(e.clientY/innerHeight*2-1);
+  ptr.active=true;
+  if(ptr.down){
+    ptr.tRotY += (e.clientX-ptr.ox)*0.004;
+    ptr.tRotX += (e.clientY-ptr.oy)*0.003;
+    ptr.tRotY=Math.max(-.7,Math.min(.7,ptr.tRotY));
+    ptr.tRotX=Math.max(-.45,Math.min(.45,ptr.tRotX));
+    ptr.ox=e.clientX; ptr.oy=e.clientY;
+  }
+});
+canvas.addEventListener('pointerdown',e=>{ptr.down=true;ptr.ox=e.clientX;ptr.oy=e.clientY});
+addEventListener('pointerup',()=>ptr.down=false);
+addEventListener('pointerleave',()=>ptr.active=false);
+
+/* ============================================================
+   MAIN LOOP — the "optimizer"
+   ============================================================ */
+let last=performance.now(), shLast=0, autoEvents=[600,1500,2600];
+function frame(now){
+  requestAnimationFrame(frame);
+  if(!renderer) return;
+  const dt=Math.min(.05,(now-last)/1000); last=now;
+
+  if(pendingPhase){ enterPhase(pendingPhase); pendingPhase=null; }
+
+  // training schedule
+  const step=Math.round(420*dt);
+  iter+=step; phaseIter+=step;
+  temp*=Math.pow(0.62, dt);                    // annealing
+  const conv=1-Math.pow(0.04, dt);             // convergence rate ~visible over ~2.5s
+
+  // scripted ADC events during the first phase (mimics real 3DGS schedule)
+  if(autoEvents.length && iter>autoEvents[0]){
+    autoEvents.shift();
+    (autoEvents.length===0?prune:densify)();
+  }
+  const sh=Math.min(3,(iter/1500)|0);
+  if(sh!==shLast){ shLast=sh; hudlog(`[sh] spherical harmonics degree → ${sh}`, true); }
+
+  // mouse world position at z=0 plane (approx, camera looks at origin)
+  const fovScale=Math.tan(camera.fov*Math.PI/360)*camera.position.z;
+  ptr.wx=ptr.x*fovScale*camera.aspect; ptr.wy=ptr.y*fovScale;
+
+  let errAcc=0;
+  const jitter=temp*temp*2.6;
+  const t0=now*0.00045;
+  for(let i=0;i<activeN;i++){
+    const i3=i*3;
+    let dx=tgtPos[i3]-aPos[i3], dy=tgtPos[i3+1]-aPos[i3+1], dz=tgtPos[i3+2]-aPos[i3+2];
+    errAcc+=Math.abs(dx)+Math.abs(dy)+Math.abs(dz);
+
+    // SGD-ish noisy descent
+    const s=seed[i];
+    aPos[i3]  +=dx*conv + Math.sin(t0*1.7+s)*jitter*dt*7 + Math.sin(t0*.9+s*1.3)*.013*(.07+temp);
+    aPos[i3+1]+=dy*conv + Math.cos(t0*1.3+s*1.7)*jitter*dt*7 + Math.cos(t0*1.1+s)*.013*(.07+temp);
+    aPos[i3+2]+=dz*conv + Math.sin(t0+s*2.1)*jitter*dt*5;
+
+    // pointer repulsion (xy plane)
+    if(ptr.active){
+      const rx=aPos[i3]-ptr.wx, ry=aPos[i3+1]-ptr.wy;
+      const d2=rx*rx+ry*ry;
+      if(d2<22 && d2>0.0001){
+        const f=(1-d2/22)*0.5;
+        aPos[i3]+=rx/Math.sqrt(d2)*f; aPos[i3+1]+=ry/Math.sqrt(d2)*f;
+      }
+    }
+
+    // color & scale convergence + soft breathing
+    aOpac[i]   +=(tgtOp[i]-aOpac[i])*conv*.8;
+    aColor[i3]  +=(tgtCol[i3]-aColor[i3])*conv*.8;
+    aColor[i3+1]+=(tgtCol[i3+1]-aColor[i3+1])*conv*.8;
+    aColor[i3+2]+=(tgtCol[i3+2]-aColor[i3+2])*conv*.8;
+    const breathe=1+Math.sin(t0*2+s)*0.04;
+    const sTgt=tgtScl[i]*breathe*(1+temp*1.6);
+    aScale[i*2]  +=(sTgt*(1+Math.sin(s)*.16)-aScale[i*2])*conv;
+    aScale[i*2+1]+=(sTgt*(1-Math.sin(s)*.16)-aScale[i*2+1])*conv;
+    aRot[i]+=dt*(0.01+temp*1.4)*(i%2?1:-1);
+  }
+  loss=Math.min(1, errAcc/activeN/18);
+  if((iter/step|0)%2===0){ lossHist.push(loss); if(lossHist.length>90)lossHist.shift(); }
+
+  // camera: drag orbit + gentle autonomous drift + mouse parallax
+  ptr.rotY+=(ptr.tRotY-ptr.rotY)*0.06; ptr.rotX+=(ptr.tRotX-ptr.rotX)*0.06;
+  const drift=Math.sin(now*0.00011)*0.07;
+  const ry=ptr.rotY+drift+ptr.x*0.04, rx=ptr.rotX+ptr.y*0.03;
+  camera.position.x=Math.sin(ry)*46;
+  camera.position.z=Math.cos(ry)*Math.cos(rx)*46;
+  camera.position.y=Math.sin(rx)*-30;
+  camera.lookAt(0,0,0);
+
+  mesh.geometry.attributes.iPos.needsUpdate=true;
+  mesh.geometry.attributes.iScale.needsUpdate=true;
+  mesh.geometry.attributes.iRot.needsUpdate=true;
+  mesh.geometry.attributes.iColor.needsUpdate=true;
+  mesh.geometry.attributes.iOpac.needsUpdate=true;
+
+  renderer.render(scene,camera);
+  updateHUD(); drawChart();
+}
+
+function resize(){
+  if(!renderer) return;
+  renderer.setSize(innerWidth,innerHeight);
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize',resize);
+
+/* HUD collapse on small screens */
+const hud=$('hud'), hudT=$('hudToggle');
+if(isMobile){ hud.classList.add('hidden'); hudT.style.display='block'; }
+hudT.onclick=()=>{
+  const hidden=hud.classList.toggle('hidden');
+  hudT.style.display = hidden ? 'block':'none';
+};
+if(isMobile){
+  hud.addEventListener('click',e=>{
+    if(e.target.tagName!=='BUTTON'){ hud.classList.add('hidden'); hudT.style.display='block'; }
+  });
+}
+
+/* ============================================================
+   PUBLICATIONS — data + render
+   ============================================================ */
+const PUBS=[
+  {t:'NERFIFY: Multi-Agent Framework for Turning NeRF Papers into Code',
+   a:'<b>S. Jain</b>, K. Gupta, K. Gupta, M. Chandraker', v:'CVPR 2026', hot:'Highlight ✦',
+   img:'/assets/img/nerfify.png', links:[['Project','https://seemandhar.github.io/NERFIFY/']]},
+  {t:'Generative Blocks World: Moving Things Around in Pictures',
+   a:'V. Vavilala, <b>S. Jain</b>, R. Vasanth, D. Forsyth, A. Bhattad', v:'ICCV 2025 · Wild3D Workshop',
+   img:'/assets/img/moving.png', links:[]},
+  {t:'Latent Intrinsics Emerge from Relighting Training',
+   a:'X. Zhang, <b>S. Jain</b>, M. Maire, A. Bhattad, D. A. Forsyth', v:'NeurIPS 2024',
+   img:'/assets/img/8.png', links:[['PDF','https://arxiv.org/abs/2405.21074']]},
+  {t:'Improving Convex Decomposition with Spatial Priors, Negative Primitives, and Transformers',
+   a:'V. Vavilala, F. Kluger, <b>S. Jain</b>, R. Vasanth, A. Bhattad, D. Forsyth', v:'arXiv',
+   img:'/assets/img/ur.jpeg', links:[['PDF','https://arxiv.org/abs/2405.19569']]},
+  {t:'3DControlNet: Bridging 2D Image Editing with 3D Control',
+   a:'V. Vavilala, <b>S. Jain</b>, R. Vasanth, A. Bhattad, D. Forsyth', v:'CVPR 2024',
+   img:'/assets/img/ur.jpeg', links:[]},
+  {t:'Frustratingly Simple Convex Primitives from Real Images',
+   a:'V. Vavilala, <b>S. Jain</b>, D. Forsyth', v:'CVPR 2024',
+   img:'/assets/img/1.png', links:[]},
+  {t:'Blocks2World: Controlling Realistic Scenes with Editable Primitives',
+   a:'V. Vavilala, <b>S. Jain</b>, R. Vasanth, A. Bhattad, D. Forsyth', v:'arXiv 2307.03847',
+   img:'/assets/img/2.png', links:[['PDF','https://doi.org/10.48550/arXiv.2307.03847']]},
+  {t:'An Energy Efficient Fault-Anomaly Detection in Wireless Body Area Networks',
+   a:'<b>S. Jain</b>, P. Jain, PK. Upadhyay, JM. Moualeu, A. Srivastava', v:'ACM Trans. Computing for Healthcare 2022',
+   img:'/assets/img/3.png', links:[['PDF','https://dl.acm.org/doi/abs/10.1145/3501773'],['Code','https://github.com/jainsee24/PiForest']]},
+  {t:'Anomaly Detection in Resource Constrained Environments with Streaming Data',
+   a:'P. Jain, <b>S. Jain</b>, OR. Zaïane, A. Srivastava', v:'IEEE TETCI 2021',
+   img:'/assets/img/4.png', links:[['PDF','https://ieeexplore.ieee.org/document/9410461'],['Code','https://github.com/jainsee24/PiForest']]},
+  {t:'Large-Scale Contact Tracing, Hotspot Detection, and Safe Route Recommendation',
+   a:'CK. Maurya, <b>S. Jain</b>, V. Thakre', v:'Big Data Analytics (BDA) 2021',
+   img:'/assets/img/5.png', links:[['PDF','https://link.springer.com/chapter/10.1007/978-3-030-93620-4_13']]},
+  {t:'Cube Sampled K-Prototype Clustering for Featured Data',
+   a:'<b>S. Jain</b>, AA. Shastri, K. Ahuja, Y. Busnel, NP. Singh', v:'IEEE INDICON 2021',
+   img:'/assets/img/6.png', links:[['PDF','https://ieeexplore.ieee.org/abstract/document/9691727/']]},
+  {t:'An Efficient Anomaly Detection Approach using Cube Sampling with Streaming Data',
+   a:'<b>S. Jain</b>, P. Jain, A. Srivastava', v:'PReMI 2021',
+   img:'/assets/img/7.png', links:[['PDF','https://arxiv.org/pdf/2110.01813.pdf']]},
+];
+document.getElementById('publist').innerHTML = PUBS.map((p,i)=>`
+  <div class="pub reveal ${i%3===1?'d1':i%3===2?'d2':''}">
+    <img src="${p.img}" alt="" loading="lazy" onerror="this.style.display='none'">
+    <div class="meta">
+      <span class="badge ${p.hot?'hot':''}">${p.v}${p.hot?' · '+p.hot:''}</span>
+      <h3>${p.t}</h3>
+      <div class="auth">${p.a}</div>
+      ${p.links.length?`<div class="links">${p.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('')}</div>`:''}
+    </div>
+  </div>`).join('');
+document.querySelectorAll('#publist .reveal').forEach(el=>revObs.observe(el));
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+targetNoise();
+window.__gs = {enterPhase, densify, prune, retrain};   // debug/console hook
+hudlog('[init] 9,216 gaussians ← random SfM points', true);
+loadPortrait().then(()=>{
+  enterPhase('hero');
+  resize();
+  requestAnimationFrame(frame);
+});
+</script>
+</body>
+</html>
