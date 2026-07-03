@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). My research centers on **world models, policies, and automated research** — building multi-agent systems that automate scientific discovery, alongside NeRFs, 3D Gaussian Splatting, and diffusion models for 3D-aware image/video synthesis.
+I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). My research centers on **world models and policy learning for embodied decision-making**, and on **automating the scientific research process** through multi-agent systems — alongside NeRFs, 3D Gaussian Splatting, and diffusion models for 3D-aware image/video synthesis.
 
 My recent work includes **Nerfify** (CVPR 2026 Highlight), a multi-agent system that autonomously converts NeRF research papers into executable code; **Splatify**, its 3DGS counterpart with knowledge discovery; and **Idea2Paper**, a multi-agent pipeline extending these systems toward end-to-end research automation — from literature to novel method to validated paper.
 
@@ -36,14 +36,14 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 - 3D Vision and Graphics: NeRFs, single-shot 3D reconstruction, convex decomposition, 3D-aware image/video generation, relighting
 - Generative Models: diffusion models for image/video and 3D synthesis; accelerating sampling and improving geometric consistency
 - LLMs and Agents: multi-agent LLM frameworks for 3D scene understanding, reconstruction, and tool-augmented reasoning
-- World Models, Policies, and Automated Research: learned world models and policies for decision-making, and multi-agent systems that automate the scientific research loop
+- World Models and Automated Research: learning world models and policies for embodied decision-making, and multi-agent systems that automate the scientific research loop
 
 {% include multiagent-viz.html %}
 
 ## News
 
 - **[Jun 2026]** Started as a **Research Scientist Intern at Adobe Research**, working on **world models**.
-- **[Jun 2026]** Passed my PhD Research Exam at UC San Diego; my research now centers on **world models, policies, and automated research**.
+- **[Jun 2026]** Passed my PhD Research Exam at UC San Diego; my research now focuses on **world models, policy learning, and automated research**.
 - **[Apr 2026]** **Nerfify** selected as a **CVPR 2026 Highlight**!
 - **[Mar 2026]** Invited talk at Google on NERFIFY.
 - **[Jan 2026]** Invited talk at Pixel Cafe.
