@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160" role="img" aria-label="SMEStreet">
+  <rect width="400" height="160" fill="#1b1b2b"/>
+  <rect x="0" y="0" width="400" height="6" fill="#e2231a"/>
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="200" y="82" font-size="42" font-weight="800" letter-spacing="1">
+      <tspan fill="#ffffff">SME</tspan><tspan fill="#e2231a">Street</tspan>
+    </text>
+    <text x="200" y="112" font-size="14" letter-spacing="4" fill="#9aa3b2" font-weight="600">MEDIA &amp; INTELLIGENCE</text>
+  </g>
+</svg>

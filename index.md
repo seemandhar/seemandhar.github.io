@@ -71,6 +71,15 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 <div class="media-grid">
 
+<a href="https://smestreet.in/technology/the-indore-born-researcher-whose-ai-system-can-do-in-minutes-what-takes-scientists-weeks-11446406" target="_blank" class="media-card">
+<img src="./media/smestreet.svg" alt="SMEStreet">
+<div class="card-body">
+<div class="card-date">2026</div>
+<div class="card-source">SMEStreet</div>
+<div class="card-title">The Indore-Born Researcher Whose AI System Can Do in Minutes What Takes Scientists Weeks</div>
+</div>
+</a>
+
 <a href="https://epaper.naidunia.com/28-mar-2026-74-indore-edition-indore-page-17.html" target="_blank" class="media-card">
 <img src="./media/Naiduniya.png" alt="Naidunia">
 <div class="card-body">
