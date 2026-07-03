@@ -1,4 +1,8 @@
 main:
+  - name: "Adobe Research"
+    type: "Research Scientist Intern (World Models)"
+    date: "Jun 2026 - Sep 2026"
+
   - image: "./assets/img/ucsd.png"
     name: "University of California San Diego, CA, USA"
     type: "PhD in Computer Science"
