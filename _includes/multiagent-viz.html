@@ -1,18 +1,18 @@
 <div id="multiagent-section" style="margin: 30px 0;">
-<h2 style="margin-bottom: 4px;">How Multi-Agent Systems Automate Research</h2>
-<p style="margin-top: 0; color: #888; font-size: 0.95em;">A 3D research loop: agent spheres orbit a central knowledge core, passing an artifact through <strong>Literature → Hypothesis → Experiment → Validation</strong>. Each validated artifact settles into the core as a new <em>discovery</em>. <span style="white-space:nowrap;">Drag to orbit</span> the scene · click an agent to launch a research thread.</p>
+<h2 style="margin-bottom: 4px;">How Embodied Agents Discover Robot Skills</h2>
+<p style="margin-top: 0; color: #888; font-size: 0.95em;">A closed-loop robotic coding agent, in the spirit of NVIDIA GEAR's <a href="https://research.nvidia.com/labs/gear/aspire/" target="_blank" rel="noopener">ASPIRE</a>. An actor runs a <em>code-as-policy</em> program on the robot, then loops <strong>Execute → Inspect → Repair → Validate</strong> over per-primitive multimodal traces. Every validated repair is distilled into a shared <em>Skill Library</em> the whole fleet reuses. <span style="white-space:nowrap;">Drag to orbit</span> · click a stage to dispatch an actor (candidate program).</p>
 
-<canvas id="ar3d-canvas" width="800" height="470" role="img"
-  aria-label="3D visualization of a four-agent automated-research loop — Literature, Hypothesis, Experiment, and Validation agents orbiting a central knowledge core that accumulates discoveries."
+<canvas id="ar3d-canvas" width="800" height="480" role="img"
+  aria-label="3D visualization of an embodied-AI robot-skill discovery loop — Execute, Inspect, Repair, and Validate agents orbit a central Skill Library that accumulates reusable robot skills, above a simulation floor grid."
   style="width: 100%; max-width: 800px; border-radius: 16px; cursor: grab; touch-action: none; display: block;"></canvas>
 
-<div id="ar3d-tooltip" role="status" aria-live="polite" style="position: fixed; pointer-events: none; opacity: 0; transition: opacity 0.18s ease; background: rgba(15,23,42,0.95); color: #f8fafc; padding: 7px 11px; border-radius: 8px; font-size: 12.5px; line-height: 1.35; max-width: 230px; box-shadow: 0 8px 28px rgba(0,0,0,0.4); z-index: 1000;"></div>
+<div id="ar3d-tooltip" role="status" aria-live="polite" style="position: fixed; pointer-events: none; opacity: 0; transition: opacity 0.18s ease; background: rgba(15,23,42,0.95); color: #f8fafc; padding: 7px 11px; border-radius: 8px; font-size: 12.5px; line-height: 1.35; max-width: 240px; box-shadow: 0 8px 28px rgba(0,0,0,0.4); z-index: 1000;"></div>
 
-<ul id="ar3d-legend" style="list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px 18px; font-size: 0.9em;">
-  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#3b82f6; transform:translateY(1px);"></span><span><strong>1 · Literature</strong> — surveys prior work and extracts open gaps.</span></li>
-  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#f59e0b; transform:translateY(1px);"></span><span><strong>2 · Hypothesis</strong> — proposes a novel, testable idea.</span></li>
-  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#10b981; transform:translateY(1px);"></span><span><strong>3 · Experiment</strong> — designs and runs experiments for evidence.</span></li>
-  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#8b5cf6; transform:translateY(1px);"></span><span><strong>4 · Validation</strong> — verifies results; passing artifacts become discoveries.</span></li>
+<ul id="ar3d-legend" style="list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px 18px; font-size: 0.9em;">
+  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#3b82f6; transform:translateY(1px);"></span><span><strong>1 · Execute</strong> — runs the code-as-policy program, logging per-primitive traces (perception, planning, grasping).</span></li>
+  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#f59e0b; transform:translateY(1px);"></span><span><strong>2 · Inspect</strong> — localizes the failure by diagnosing the multimodal traces.</span></li>
+  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#10b981; transform:translateY(1px);"></span><span><strong>3 · Repair</strong> — synthesizes a targeted code-as-policy fix for the faulty primitive.</span></li>
+  <li style="display:flex; gap:8px; align-items:baseline;"><span style="flex:0 0 10px; width:10px; height:10px; border-radius:50%; background:#8b5cf6; transform:translateY(1px);"></span><span><strong>4 · Validate</strong> — re-executes closed-loop; a passing repair is distilled into a reusable skill.</span></li>
 </ul>
 </div>
 
@@ -22,10 +22,8 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const tooltip = document.getElementById('ar3d-tooltip');
-  const W = 800, H = 470, CX = W / 2, CY = H / 2 - 4;
-
-  // camera / scene constants
-  const RING = 165, CAM = 560, FOCAL = 560, NODE_R = 27, CORE_R = 34;
+  const W = 800, H = 480, CX = W / 2, CY = H / 2 - 8;
+  const RING = 165, CAM = 560, FOCAL = 560, NODE_R = 27, CORE_R = 34, FLOOR = -118;
 
   const dmq = window.matchMedia('(prefers-color-scheme: dark)');
   let isDark = dmq.matches;
@@ -41,29 +39,30 @@
   }
   fit();
 
+  // embodied-AI closed loop (ASPIRE-style)
   const STAGES = [
-    { key: 'lit', name: 'Literature', color: '#3b82f6', role: 'Surveys prior work, extracts open gaps and unexplained phenomena.' },
-    { key: 'hyp', name: 'Hypothesis', color: '#f59e0b', role: 'Proposes a novel, testable idea that could close the gap.' },
-    { key: 'exp', name: 'Experiment', color: '#10b981', role: 'Designs and runs the experiment, gathering evidence.' },
-    { key: 'val', name: 'Validation', color: '#8b5cf6', role: 'Critiques and verifies results; a passing artifact becomes a discovery.' },
+    { key: 'arm',   name: 'Execute',  color: '#3b82f6', role: 'Robot execution engine runs the code-as-policy program, recording per-primitive multimodal traces: perception, planning, grasping, control.' },
+    { key: 'scan',  name: 'Inspect',  color: '#f59e0b', role: 'Diagnoses the traces to localize the failing primitive — a bad grasp, an infeasible pose, a perception miss.' },
+    { key: 'code',  name: 'Repair',   color: '#10b981', role: 'Rewrites the faulty program, synthesizing a targeted code-as-policy fix (e.g. a multi-angle approach routine).' },
+    { key: 'check', name: 'Validate', color: '#8b5cf6', role: 'Re-executes in closed loop; a passing repair is distilled into a reusable, transferable skill.' },
   ];
   const N = STAGES.length;
   const nodes = STAGES.map((s, i) => ({ ...s, ang: i * (Math.PI * 2 / N), _sx: 0, _sy: 0, _pr: 0, _depthA: 1 }));
 
-  let yaw = -0.5, pitch = 0.52, time = 0, spawnT = 0, discCount = 0;
-  let packets = [], discoveries = [], flyers = [];
+  let yaw = -0.5, pitch = 0.5, time = 0, spawnT = 0, skillCount = 0;
+  let packets = [], skills = [], flyers = [];
   let dragging = false, overNode = null, pressNode = null, moved = false, lastX = 0, lastY = 0;
   let autoResume = 0;
 
   const TAU = Math.PI * 2;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, t) => a + (b - a) * t;
-  const bg = () => isDark ? '#0e1322' : '#f5f8fd';
+  const bg = () => isDark ? '#0d1220' : '#f5f8fd';
   const fg = () => isDark ? '#e6ecf7' : '#334155';
   const mut = () => isDark ? '#8ea0bd' : '#64748b';
   function withA(hex, a) { const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16); return `rgba(${r},${g},${b},${a})`; }
-  function lighten(hex, p) { const r = Math.min(255, parseInt(hex.slice(1,3),16)+p), g = Math.min(255, parseInt(hex.slice(3,5),16)+p), b = Math.min(255, parseInt(hex.slice(5,7),16)+p); return `rgb(${r},${g},${b})`; }
   function lightA(hex, p, a) { const r = Math.min(255, parseInt(hex.slice(1,3),16)+p), g = Math.min(255, parseInt(hex.slice(3,5),16)+p), b = Math.min(255, parseInt(hex.slice(5,7),16)+p); return `rgba(${r},${g},${b},${a})`; }
+  function lighten(hex, p) { const r = Math.min(255, parseInt(hex.slice(1,3),16)+p), g = Math.min(255, parseInt(hex.slice(3,5),16)+p), b = Math.min(255, parseInt(hex.slice(5,7),16)+p); return `rgb(${r},${g},${b})`; }
 
   // --- 3D -> 2D perspective projection (yaw about Y, pitch about X) ---
   function project(x, y, z) {
@@ -71,38 +70,44 @@
     let X = x * cy + z * sy, Z = -x * sy + z * cy, Y = y;
     const cp = Math.cos(pitch), sp = Math.sin(pitch);
     let Y2 = Y * cp - Z * sp, Z2 = Y * sp + Z * cp;
-    const depth = CAM - Z2;
-    const scale = FOCAL / depth;
+    const depth = CAM - Z2, scale = FOCAL / depth;
     return { sx: CX + X * scale, sy: CY - Y2 * scale, scale, z: Z2 };
   }
   const ringPt = (param) => { const a = param * (TAU / N); return { x: Math.cos(a) * RING, y: 0, z: Math.sin(a) * RING }; };
-  function depthAlpha(scale) { return clamp(0.42 + 0.58 * (scale - 0.78) / 0.62, 0.32, 1); }
+  const depthAlpha = (scale) => clamp(0.42 + 0.58 * (scale - 0.78) / 0.62, 0.3, 1);
 
-  // --- vector agent icons (billboarded, never emoji) ---
+  // --- robotics vector icons (billboarded, never emoji) ---
   function icon(key, x, y, s, col, alpha) {
     ctx.save(); ctx.translate(x, y); ctx.globalAlpha = alpha;
-    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = Math.max(1.2, s * 0.13); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    if (key === 'lit') {
-      ctx.strokeRect(-s*0.6, -s*0.75, s*1.2, s*1.5);
-      for (let i = -1; i <= 1; i++) { ctx.beginPath(); ctx.moveTo(-s*0.35, i*s*0.4); ctx.lineTo(s*0.35, i*s*0.4); ctx.stroke(); }
-    } else if (key === 'hyp') {
-      ctx.beginPath(); ctx.arc(0, -s*0.15, s*0.42, 0, TAU); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*0.22, s*0.55); ctx.lineTo(s*0.22, s*0.55); ctx.stroke();
-      for (let k = 0; k < 4; k++) { const a = -Math.PI/2 + k*Math.PI/2; ctx.beginPath(); ctx.moveTo(Math.cos(a)*s*0.7, -s*0.15+Math.sin(a)*s*0.7); ctx.lineTo(Math.cos(a)*s*0.95, -s*0.15+Math.sin(a)*s*0.95); ctx.stroke(); }
-    } else if (key === 'exp') {
-      ctx.beginPath(); ctx.moveTo(-s*0.22,-s*0.6); ctx.lineTo(-s*0.22,-s*0.15); ctx.lineTo(-s*0.6,s*0.6); ctx.lineTo(s*0.6,s*0.6); ctx.lineTo(s*0.22,-s*0.15); ctx.lineTo(s*0.22,-s*0.6); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*0.32,-s*0.6); ctx.lineTo(s*0.32,-s*0.6); ctx.stroke();
-      ctx.globalAlpha = alpha*0.5; ctx.beginPath(); ctx.moveTo(-s*0.4,s*0.28); ctx.lineTo(s*0.4,s*0.28); ctx.lineTo(s*0.6,s*0.6); ctx.lineTo(-s*0.6,s*0.6); ctx.closePath(); ctx.fill();
-    } else if (key === 'val') {
-      ctx.beginPath(); ctx.arc(0,0,s*0.72,0,TAU); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*0.33,s*0.02); ctx.lineTo(-s*0.08,s*0.3); ctx.lineTo(s*0.38,-s*0.28); ctx.stroke();
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = Math.max(1.3, s * 0.14); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    if (key === 'arm') {                          // articulated robot arm + gripper
+      ctx.fillRect(-s*0.42, s*0.5, s*0.84, s*0.22);            // base plate
+      ctx.beginPath(); ctx.moveTo(0, s*0.52); ctx.lineTo(-s*0.34, -s*0.02); ctx.lineTo(s*0.22, -s*0.46); ctx.stroke();  // links
+      [[0,s*0.52],[-s*0.34,-s*0.02],[s*0.22,-s*0.46]].forEach(j => { ctx.beginPath(); ctx.arc(j[0], j[1], s*0.1, 0, TAU); ctx.fillStyle = col; ctx.fill(); });
+      ctx.beginPath();                                          // two-finger gripper
+      ctx.moveTo(s*0.05, -s*0.58); ctx.lineTo(s*0.42, -s*0.58);
+      ctx.moveTo(s*0.1, -s*0.58); ctx.lineTo(s*0.1, -s*0.76);
+      ctx.moveTo(s*0.37, -s*0.58); ctx.lineTo(s*0.37, -s*0.76); ctx.stroke();
+    } else if (key === 'scan') {                  // magnifier over a trace waveform
+      ctx.beginPath(); ctx.moveTo(-s*0.7, s*0.5); ctx.lineTo(-s*0.35, s*0.5); ctx.lineTo(-s*0.15, s*0.2); ctx.lineTo(s*0.05, s*0.55); ctx.lineTo(s*0.3, s*0.5); ctx.stroke(); // trace
+      ctx.beginPath(); ctx.arc(-s*0.05, -s*0.2, s*0.42, 0, TAU); ctx.stroke();     // lens
+      ctx.beginPath(); ctx.moveTo(s*0.26, s*0.11); ctx.lineTo(s*0.6, s*0.45); ctx.stroke(); // handle
+    } else if (key === 'code') {                  // </> code-as-policy
+      ctx.beginPath(); ctx.moveTo(-s*0.22, -s*0.42); ctx.lineTo(-s*0.62, 0); ctx.lineTo(-s*0.22, s*0.42); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s*0.22, -s*0.42); ctx.lineTo(s*0.62, 0); ctx.lineTo(s*0.22, s*0.42); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s*0.14, -s*0.5); ctx.lineTo(-s*0.14, s*0.5); ctx.stroke();
+    } else if (key === 'check') {                 // validated
+      ctx.beginPath(); ctx.arc(0, 0, s*0.72, 0, TAU); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-s*0.33, s*0.02); ctx.lineTo(-s*0.08, s*0.3); ctx.lineTo(s*0.38, -s*0.28); ctx.stroke();
     }
     ctx.restore();
   }
-  function star(x, y, r, col, a) {
-    ctx.save(); ctx.translate(x, y); ctx.globalAlpha = a; ctx.fillStyle = col; ctx.beginPath();
-    for (let i = 0; i < 8; i++) { const ang = i*Math.PI/4, rad = i%2===0?r:r*0.4; const px=Math.cos(ang)*rad, py=Math.sin(ang)*rad; i===0?ctx.moveTo(px,py):ctx.lineTo(px,py); }
-    ctx.closePath(); ctx.fill(); ctx.restore();
+  function hexChip(x, y, r, col, a) {             // a discovered skill (modular tile)
+    ctx.save(); ctx.translate(x, y); ctx.globalAlpha = a; ctx.beginPath();
+    for (let i = 0; i < 6; i++) { const ang = Math.PI/6 + i*Math.PI/3, px = Math.cos(ang)*r, py = Math.sin(ang)*r; i===0?ctx.moveTo(px,py):ctx.lineTo(px,py); }
+    ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+    ctx.lineWidth = Math.max(0.8, r*0.16); ctx.strokeStyle = lightA(col, 70, 0.9); ctx.stroke();
+    ctx.restore();
   }
   function sphere(p, r, col, alpha, held) {
     if (held) { ctx.beginPath(); ctx.arc(p.sx, p.sy, r + 8, 0, TAU); ctx.fillStyle = withA(col, 0.22 * alpha); ctx.fill(); }
@@ -114,11 +119,11 @@
     ctx.beginPath(); ctx.arc(p.sx - r*0.32, p.sy - r*0.36, r*0.28, 0, TAU); ctx.fillStyle = withA('#ffffff', alpha * 0.35); ctx.fill();
   }
 
-  function spawnPacket(seg) { packets.push({ p: (seg || 0) }); }
-  function emitDiscovery() { flyers.push({ from: nodes[3].ang, t: 0 }); }
-  function settleDiscovery(color) {
-    discCount++;
-    discoveries.push({ a: Math.random()*TAU, rad: CORE_R + 14 + (discoveries.length % 3) * 10, incl: Math.random()*Math.PI, spd: 0.006 + Math.random()*0.006, color, fade: 0 });
+  const spawnPacket = (seg) => packets.push({ p: (seg || 0) });
+  const emitSkill = () => flyers.push({ t: 0 });
+  function settleSkill(color) {
+    skillCount++;
+    skills.push({ a: Math.random()*TAU, rad: CORE_R + 14 + (skills.length % 3) * 10, incl: Math.random()*Math.PI, spd: 0.006 + Math.random()*0.006, color, fade: 0 });
   }
 
   function step() {
@@ -126,67 +131,68 @@
     if (autoResume > 0) autoResume -= 0.016;
     if (!dragging && autoResume <= 0) yaw += 0.0032;
     spawnT += 0.016;
-    if (spawnT > 3.2 && packets.length < 3) { spawnPacket(0); spawnT = 0; }
-    packets.forEach(pk => { pk.p += 0.0055; if (pk.p >= N) { pk.p -= N; emitDiscovery(); } });
+    if (spawnT > 3.0 && packets.length < 3) { spawnPacket(0); spawnT = 0; }
+    packets.forEach(pk => { pk.p += 0.0055; if (pk.p >= N) { pk.p -= N; emitSkill(); } });
     if (packets.length > 6) packets = packets.slice(-6);
-    flyers.forEach(f => { f.t += 0.028; if (f.t >= 1) { f.done = true; settleDiscovery(nodes[3].color); } });
+    flyers.forEach(f => { f.t += 0.028; if (f.t >= 1) { f.done = true; settleSkill(nodes[3].color); } });
     flyers = flyers.filter(f => !f.done);
-    discoveries.forEach(d => { d.a += d.spd; if (d.fade < 1) d.fade += 0.02; });
-    if (discoveries.length > 16) discoveries[0].fade = -1;
-    discoveries = discoveries.filter(d => d.fade >= 0);
+    skills.forEach(d => { d.a += d.spd; if (d.fade < 1) d.fade += 0.02; });
+    if (skills.length > 16) skills[0].fade = -1;
+    skills = skills.filter(d => d.fade >= 0);
   }
 
   function render() {
     ctx.clearRect(0, 0, W, H);
     const g = ctx.createRadialGradient(CX, CY, 30, CX, CY, W * 0.66);
-    g.addColorStop(0, isDark ? '#141b30' : '#ffffff');
+    g.addColorStop(0, isDark ? '#131a2e' : '#ffffff');
     g.addColorStop(1, bg());
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
-    const draws = [];
+    // --- simulation floor grid (embodied environment) ---
+    const E = 300, ST = 60, gcol = isDark ? '148,163,184' : '100,116,139';
+    ctx.lineWidth = 1;
+    for (let gx = -E; gx <= E; gx += ST) {
+      const a = project(gx, FLOOR, -E), b = project(gx, FLOOR, E);
+      const fade = (1 - Math.abs(gx) / E) * (isDark ? 0.22 : 0.16);
+      ctx.strokeStyle = `rgba(${gcol},${clamp(fade, 0, 1)})`;
+      ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke();
+    }
+    for (let gz = -E; gz <= E; gz += ST) {
+      const a = project(-E, FLOOR, gz), b = project(E, FLOOR, gz);
+      const fade = (1 - Math.abs(gz) / E) * (isDark ? 0.22 : 0.16);
+      ctx.strokeStyle = `rgba(${gcol},${clamp(fade, 0, 1)})`;
+      ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke();
+    }
 
-    // ring path segments (curved loop through all four stages)
+    const draws = [];
+    // ring path (curved loop through the four stages)
     const SEG = 60;
     for (let i = 0; i < SEG; i++) {
       const p0 = ringPt((i / SEG) * N), p1 = ringPt(((i + 1) / SEG) * N);
       const a = project(p0.x, p0.y, p0.z), b = project(p1.x, p1.y, p1.z);
-      draws.push({ z: (a.z + b.z) / 2, kind: 'edge', a, b, hue: (i / SEG) });
+      draws.push({ z: (a.z + b.z) / 2, kind: 'edge', a, b });
     }
-    // directional arrowheads at each stage boundary midpoint
     for (let i = 0; i < N; i++) {
       const m = i + 0.5, pa = ringPt(m - 0.05), pb = ringPt(m + 0.05), pm = ringPt(m);
       const A = project(pa.x, pa.y, pa.z), B = project(pb.x, pb.y, pb.z), M = project(pm.x, pm.y, pm.z);
       draws.push({ z: M.z + 1, kind: 'arrow', A, B, M, col: nodes[(i + 1) % N].color });
     }
-    // ambient flow dots gliding along the ring
     for (let k = 0; k < 5; k++) {
-      const param = ((time * 0.16 + k / 5) % 1) * N;
-      const pp = ringPt(param), P = project(pp.x, pp.y, pp.z);
+      const param = ((time * 0.16 + k / 5) % 1) * N, pp = ringPt(param), P = project(pp.x, pp.y, pp.z);
       draws.push({ z: P.z, kind: 'flow', P, col: nodes[Math.floor(param) % N].color });
     }
-    // travelling artifacts
-    packets.forEach(pk => {
-      const pp = ringPt(pk.p), P = project(pp.x, pp.y, pp.z);
-      draws.push({ z: P.z, kind: 'packet', P, col: nodes[(Math.floor(pk.p) + 1) % N].color });
-    });
-    // knowledge core
+    packets.forEach(pk => { const pp = ringPt(pk.p), P = project(pp.x, pp.y, pp.z); draws.push({ z: P.z, kind: 'packet', P, col: nodes[(Math.floor(pk.p) + 1) % N].color }); });
     const core = project(0, 0, 0);
     draws.push({ z: core.z, kind: 'core', P: core });
-    // discoveries orbiting the core in 3D
-    discoveries.forEach(d => {
+    skills.forEach(d => {
       const x = Math.cos(d.a) * d.rad, y = Math.sin(d.a) * d.rad * Math.sin(d.incl), z = Math.sin(d.a) * d.rad * Math.cos(d.incl);
-      const P = project(x, y, z);
-      draws.push({ z: P.z, kind: 'disc', P, col: d.color, fade: clamp(d.fade, 0, 1) });
+      const P = project(x, y, z); draws.push({ z: P.z, kind: 'skill', P, col: d.color, fade: clamp(d.fade, 0, 1) });
     });
-    // flyers streaking from Validation into the core
     flyers.forEach(f => {
-      const ease = f.t * f.t * (3 - 2 * f.t);
-      const pp = ringPt(3); // validation position on ring
-      const x = lerp(pp.x, 0, ease), y = lerp(pp.y, 0, ease), z = lerp(pp.z, 0, ease);
-      const P = project(x, y, z);
+      const ease = f.t * f.t * (3 - 2 * f.t), pp = ringPt(3);
+      const P = project(lerp(pp.x, 0, ease), lerp(pp.y, 0, ease), lerp(pp.z, 0, ease));
       draws.push({ z: P.z, kind: 'flyer', P, col: nodes[3].color, t: f.t });
     });
-    // agent nodes
     nodes.forEach((n, i) => {
       const bob = animate ? Math.sin(time * 1.5 + i * 1.4) * 6 : 0;
       const p = ringPt(n.ang), P = project(p.x, bob, p.z);
@@ -194,13 +200,11 @@
       draws.push({ z: P.z, kind: 'node', P, n, i, r: NODE_R * P.scale, alpha: n._depthA });
     });
 
-    // paint far -> near
     draws.sort((a, b) => a.z - b.z);
     draws.forEach(d => {
       if (d.kind === 'edge') {
-        const col = isDark ? '#93a4c8' : '#64748b';
         ctx.beginPath(); ctx.moveTo(d.a.sx, d.a.sy); ctx.lineTo(d.b.sx, d.b.sy);
-        ctx.strokeStyle = withA(col, isDark ? 0.28 : 0.24); ctx.lineWidth = 1.6; ctx.stroke();
+        ctx.strokeStyle = withA(isDark ? '#93a4c8' : '#64748b', isDark ? 0.28 : 0.24); ctx.lineWidth = 1.6; ctx.stroke();
       } else if (d.kind === 'arrow') {
         let dx = d.B.sx - d.A.sx, dy = d.B.sy - d.A.sy; const len = Math.hypot(dx, dy) || 1; dx /= len; dy /= len;
         const nx = -dy, ny = dx, s = 7;
@@ -209,7 +213,7 @@
         ctx.lineTo(d.M.sx - dx*s - nx*s*0.7, d.M.sy - dy*s - ny*s*0.7);
         ctx.closePath(); ctx.fillStyle = withA(d.col, 0.85); ctx.fill();
       } else if (d.kind === 'flow') {
-        star(d.P.sx, d.P.sy, 2.6 * d.P.scale, d.col, 0.6);
+        hexChip(d.P.sx, d.P.sy, 2.7 * d.P.scale, d.col, 0.55);
       } else if (d.kind === 'packet') {
         const r = 12 * d.P.scale;
         const gl = ctx.createRadialGradient(d.P.sx, d.P.sy, 0, d.P.sx, d.P.sy, r);
@@ -219,20 +223,18 @@
       } else if (d.kind === 'core') {
         const r = CORE_R * d.P.scale, pulse = animate ? (Math.sin(time * 1.4) + 1) / 2 : 0.5;
         const gl = ctx.createRadialGradient(d.P.sx - r*0.3, d.P.sy - r*0.3, r*0.1, d.P.sx, d.P.sy, r);
-        gl.addColorStop(0, isDark ? '#2a3763' : '#eef3fd');
-        gl.addColorStop(1, isDark ? '#161d33' : '#e2ebfb');
+        gl.addColorStop(0, isDark ? '#2a3763' : '#eef3fd'); gl.addColorStop(1, isDark ? '#161d33' : '#e2ebfb');
         ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(d.P.sx, d.P.sy, r, 0, TAU); ctx.fill();
         ctx.strokeStyle = withA('#6366f1', 0.4 + pulse * 0.4); ctx.lineWidth = 2.4; ctx.stroke();
         ctx.strokeStyle = withA('#818cf8', 0.15 + pulse * 0.2); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(d.P.sx, d.P.sy, r + 6 + pulse * 5, 0, TAU); ctx.stroke();
-      } else if (d.kind === 'disc') {
-        star(d.P.sx, d.P.sy, 3.4 * d.P.scale, d.col, d.fade);
+      } else if (d.kind === 'skill') {
+        hexChip(d.P.sx, d.P.sy, 4 * d.P.scale, d.col, d.fade);
       } else if (d.kind === 'flyer') {
-        star(d.P.sx, d.P.sy, (5 - d.t * 2) * d.P.scale, d.col, 1);
+        hexChip(d.P.sx, d.P.sy, (6 - d.t * 2.5) * d.P.scale, d.col, 1);
       } else if (d.kind === 'node') {
         const held = pressNode === d.n || overNode === d.n;
         sphere(d.P, d.r, d.n.color, d.alpha, held);
         icon(d.n.key, d.P.sx, d.P.sy, d.r * 0.55, isDark ? '#f1f5ff' : '#ffffff', d.alpha);
-        // billboard label + index badge
         ctx.font = `700 ${clamp(12 * d.P.scale, 10, 14)}px ui-sans-serif, system-ui, sans-serif`;
         ctx.textAlign = 'center';
         ctx.fillStyle = isDark ? withA('#e6ecf7', d.alpha) : withA('#334155', d.alpha);
@@ -244,12 +246,12 @@
       }
     });
 
-    // core counter overlay (always readable, screen-space)
+    // core counter overlay (always readable)
     ctx.textAlign = 'center';
     ctx.font = '800 22px ui-sans-serif, system-ui, sans-serif'; ctx.fillStyle = fg();
-    ctx.fillText(String(discCount), core.sx, core.sy - 1);
-    ctx.font = '700 9px ui-sans-serif, system-ui, sans-serif'; ctx.fillStyle = mut();
-    ctx.fillText('DISCOVERIES', core.sx, core.sy + 13);
+    ctx.fillText(String(skillCount), core.sx, core.sy - 2);
+    ctx.font = '700 8px ui-sans-serif, system-ui, sans-serif'; ctx.fillStyle = mut();
+    ctx.fillText('SKILL LIBRARY', core.sx, core.sy + 12);
   }
 
   function loop() { if (!animate) return; step(); render(); requestAnimationFrame(loop); }
@@ -266,7 +268,7 @@
   }
   function showTip(n, cx, cy) {
     tooltip.innerHTML = '<strong>' + n.name + ' Agent</strong><br>' + n.role;
-    tooltip.style.left = Math.min(cx + 14, window.innerWidth - 244) + 'px';
+    tooltip.style.left = Math.min(cx + 14, window.innerWidth - 254) + 'px';
     tooltip.style.top = (cy + 16) + 'px'; tooltip.style.opacity = '1';
   }
   const hideTip = () => tooltip.style.opacity = '0';
@@ -297,8 +299,8 @@
   canvas.addEventListener('pointerleave', () => { dragging = false; pressNode = null; overNode = null; hideTip(); canvas.style.cursor = 'grab'; if (!animate) render(); });
   window.addEventListener('resize', () => { fit(); if (!animate) render(); });
 
-  // seed so the core isn't empty on first paint
-  spawnPacket(0); settleDiscovery(nodes[1].color); settleDiscovery(nodes[2].color); settleDiscovery(nodes[0].color);
+  // seed the library so it isn't empty on first paint
+  spawnPacket(0); spawnPacket(1.6); settleSkill(nodes[1].color); settleSkill(nodes[2].color); settleSkill(nodes[0].color);
   if (animate) loop(); else render();
 })();
 </script>
