@@ -57,7 +57,7 @@ tailwind.config = {
       <a href="#papers" class="hover:text-accent">Papers</a>
       <a href="#reviews" class="hover:text-accent">Peer&nbsp;Review</a>
       <a href="#bibtex" class="hover:text-accent hidden sm:inline">BibTeX</a>
-      <a href="static/paper.pdf" class="bg-ink text-white px-3 py-1 rounded-md hover:bg-slate-700">PDF</a>
+      <span class="bg-slate-200 text-slate-500 px-3 py-1 rounded-md cursor-default" title="The paper will be released after review">Paper · soon</span>
     </div>
   </div>
 </nav>
@@ -81,9 +81,9 @@ tailwind.config = {
       and writes the paper. <span class="font-semibold text-ink">Every reported number is bound to a logged training run.</span>
     </p>
     <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <a href="static/paper.pdf" class="inline-flex items-center gap-2 bg-ink text-white px-5 py-2.5 rounded-lg font-medium hover:bg-slate-700">
+      <span class="inline-flex items-center gap-2 bg-slate-100 border border-dashed border-slate-300 text-slate-500 px-5 py-2.5 rounded-lg font-medium cursor-default" title="The paper will be released after review">
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V7.4L12.6 2H4zm8 1.5L16.5 8H12V3.5zM6 11h8v1.5H6V11zm0 3h8v1.5H6V14z"/></svg>
-        Paper (PDF)</a>
+        Paper — coming soon</span>
       <a href="#papers" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-medium hover:border-accent hover:text-accent">
         🗂️ 16 Generated Papers</a>
       <a href="#reviews" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-medium hover:border-accent hover:text-accent">
@@ -99,12 +99,12 @@ tailwind.config = {
 <section class="px-4">
   <div class="max-w-6xl mx-auto">
     <figure class="figure-card p-3 sm:p-5">
-      <img src="static/images/teaser.webp" alt="GS-Scientist overview: a one-line prompt enters a 36-agent hierarchy that searches a seven-category 3DGS novelty space with a verbal-Elo tournament, producing eight submission-ready manuscripts that each beat their reproduced target" class="w-full zoomable" loading="eager" onclick="zoom(this)">
+      <img src="static/images/teaser.webp" alt="GS-Scientist teaser: a one-line prompt flows through six stages — grounding, grounded ideation, verified-plugin implementation, cascade-weighted tournament, integrity audit, and manuscript synthesis — each contrasted against baseline systems, producing a filmstrip of sixteen submission-ready manuscripts" class="w-full zoomable" loading="eager" onclick="zoom(this)">
       <figcaption class="text-sm text-slate-500 mt-3 px-1">
         <span class="font-semibold text-slate-700">A research lab in a single command.</span>
-        A prompt (or autonomous mode) drives 36 subagents through grounding, ideation, evolution, refinement, writing, and review.
-        Ideas are explored over a seven-category 3DGS novelty space and ranked by a grounded Elo tournament on <em>measured</em> GPU PSNR —
-        a standing falsifier subtracts Elo on every failed stress test. Each output manuscript beats its reproduced target.
+        A prompt (or autonomous mode) drives the run through six stages — grounding, grounded ideation, verified-plugin implementation,
+        a cascade-weighted tournament with a standing falsifier that subtracts Elo on stress-test failure, an integrity audit, and manuscript synthesis.
+        The green/red panels contrast each stage with what prior systems do; the strip below shows the sixteen manuscripts this produced.
       </figcaption>
     </figure>
   </div>
@@ -193,16 +193,6 @@ tailwind.config = {
         <p class="text-sm text-slate-600">A pinned 10k-token summary of the run's anchor facts is written once and never rewritten; later compactions append 4k-token deltas. The professor never forgets what it is trying to beat, across 24–48 h runs.</p>
       </div>
     </div>
-
-    <!-- systems view -->
-    <figure class="figure-card p-3 sm:p-5 mt-8">
-      <img src="static/images/pipeline.webp" alt="Systems view: tick-based master orchestrator over a durable ledger.json, gpu_state.json, and append-only events journal, driving seven phases from research and reproduction to writing and review" class="w-full zoomable" loading="lazy" onclick="zoom(this)">
-      <figcaption class="text-sm text-slate-500 mt-3 px-1">
-        <span class="font-semibold text-slate-700">The systems view.</span> The orchestrator is tick-based and stateless across ticks:
-        all run state lives in <code class="text-xs bg-slate-100 px-1 rounded">ledger.json</code>, a GPU pool file, and an append-only event
-        journal — so a 24–48 h run survives crashes, restarts, and context compaction, and resumes from its last checkpoint.
-      </figcaption>
-    </figure>
 
     <!-- Elo figure -->
     <figure class="figure-card p-3 sm:p-5 mt-8">
