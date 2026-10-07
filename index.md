@@ -4,9 +4,9 @@ layout: homepage
 
 ## About Me
 
-I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). My research centers on **world models and policy learning for embodied decision-making**, and on **automating the scientific research process** through multi-agent systems — alongside NeRFs, 3D Gaussian Splatting, and diffusion models for 3D-aware image/video synthesis.
+I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). My research centers on three threads: **world models and policy learning for embodied decision-making**; **mental models and Theory-of-Mind reasoning in multi-agent embodied tasks** — agents that infer what their partners believe, intend, and know, and act on those inferences; and **automating the scientific research process** with multi-agent systems. This builds on my background in NeRFs, 3D Gaussian Splatting, and diffusion models for 3D-aware image/video synthesis.
 
-My recent work includes **Nerfify** (CVPR 2026 Highlight), a multi-agent system that autonomously converts NeRF research papers into executable code; **Splatify**, its 3DGS counterpart with knowledge discovery; and **Idea2Paper**, a multi-agent pipeline extending these systems toward end-to-end research automation — from literature to novel method to validated paper.
+My recent work includes **Nerfify** (CVPR 2026 Highlight), a multi-agent system that autonomously converts NeRF research papers into executable code; **Splatify**, its 3DGS counterpart with knowledge discovery; and **GS-Scientist** (NeurIPS 2026), an autonomous research system that extends these toward end-to-end scientific discovery — from literature to novel method to validated paper.
 
 Previously, I completed my MS in Computer Science at the [University of Illinois Urbana–Champaign](https://cs.illinois.edu/) (GPA 3.92/4), advised by [Prof. David Forsyth](http://luthuli.cs.uiuc.edu/~daf/), where I worked on single-shot 3D reconstruction, convex decomposition, intrinsic image decomposition and relighting with diffusion models, and 2D-to-3D transformations. I am a [Siebel Scholar, Class of 2024](https://www.siebelscholars.com/).
 
@@ -33,10 +33,10 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 ## Research Interests
 
-- 3D Vision and Graphics: NeRFs, single-shot 3D reconstruction, convex decomposition, 3D-aware image/video generation, relighting
-- Generative Models: diffusion models for image/video and 3D synthesis; accelerating sampling and improving geometric consistency
-- LLMs and Agents: multi-agent LLM frameworks for 3D scene understanding, reconstruction, and tool-augmented reasoning
-- World Models and Automated Research: learning world models and policies for embodied decision-making, and multi-agent systems that automate the scientific research loop
+- **World Models and Embodied Policy Learning:** learning predictive models of the world and using them to train and plan policies for embodied agents
+- **Mental Models and Theory of Mind in Multi-Agent Embodied Tasks:** agents that build explicit models of other agents' beliefs, intentions, and knowledge, and use them to coordinate, communicate, and collaborate in shared physical environments
+- **Automated Scientific Research:** multi-agent systems that read papers, implement them, and discover and validate new methods (Nerfify, Splatify, GS-Scientist)
+- **3D Vision and Generative Models:** NeRFs, 3D Gaussian Splatting, single-shot 3D reconstruction, relighting, and diffusion models for 3D-aware image/video synthesis
 
 {% include multiagent-viz.html %}
 
@@ -232,6 +232,7 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 ## Highlights
 
+- GS-Scientist (NeurIPS 2026): autonomous scientific discovery system for 3D Gaussian Splatting research
 - Nerfify (CVPR 2026 Highlight): multi-agent system that autonomously converts NeRF papers to executable code
 - Accelerated large-scale video generation: 2× faster SANA diffusion sampling for Veo; Gemma 2–based captioning improved FID by 20%
 - HealthAIgnite: founded and leading a healthcare CV consulting startup; partnerships across healthcare and MedTech
