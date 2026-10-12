@@ -59,3 +59,17 @@ include:
 
 plugins:
   - jekyll-sitemap
+
+defaults:
+  - scope: {path: "docs"}
+    values: {sitemap: false}
+  - scope: {path: "test-viz.html"}
+    values: {sitemap: false}
+  - scope: {path: "xx.html"}
+    values: {sitemap: false}
+  - scope: {path: "ubuntu/404"}
+    values: {sitemap: false}
+  - scope: {path: "ubuntu/files"}
+    values: {sitemap: false}
+  - scope: {path: "assets/files/-11.pdf"}
+    values: {sitemap: false}
