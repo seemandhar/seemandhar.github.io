@@ -321,7 +321,7 @@ tailwind.config = {
     <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8">
       Four fully-autonomous manuscripts were submitted to a <span class="font-semibold">CVPR 2026 workshop</span>,
       following the submission protocol described in the paper (§4.6). Human reviewers scored them like any other submission.
-      <span class="font-semibold text-ink">Three were accepted as posters; one was rejected.</span>
+      <span class="font-semibold text-ink">Three were accepted as posters; the fourth was rejected over formatting issues, not its content, after one reviewer rated it 5 (Weak Accept).</span>
     </p>
 
     <!-- 3/4 accepted — cropped decision strips -->
@@ -346,8 +346,8 @@ tailwind.config = {
           <figcaption class="text-xs text-slate-500 mt-1.5 px-1"><span class="font-semibold text-emerald-600">Accept (Poster) · avg 3.50</span> — <em>"Generally well written and appropriately scoped… transparent about limitations"</em> — from a reviewer at confidence 5/5.</figcaption>
         </figure>
         <figure class="figure-card border-l-4 !border-l-rose-300 p-2 opacity-90">
-          <img src="static/images/reviews/row_tilefocalgs.webp?v=redact2" alt="OpenReview entry for TileFocalGS: average rating 3.00 with split reviews of 5 and 1, decision Reject, authors anonymous" class="w-full zoomable rounded" loading="lazy" onclick="zoom(this)">
-          <figcaption class="text-xs text-slate-500 mt-1.5 px-1"><span class="font-semibold text-rose-500">Reject · avg 3.00</span> — split reviews (5 vs 1). The system does not win every time, and the failure is part of the data.</figcaption>
+          <img src="static/images/reviews/row_tilefocalgs.webp?v=redact2" alt="OpenReview entry for TileFocalGS: split reviews of 5 and 1 (average 3.00), rejected over formatting issues, authors anonymous" class="w-full zoomable rounded" loading="lazy" onclick="zoom(this)">
+          <figcaption class="text-xs text-slate-500 mt-1.5 px-1"><span class="font-semibold text-rose-500">Reject (formatting) · avg 3.00</span> — rejected over formatting issues rather than its content; one reviewer rated it 5 (Weak Accept), the other 1.</figcaption>
         </figure>
       </div>
       <p class="text-xs text-slate-400 mt-2 text-center">Author names redacted from the OpenReview screenshots for double-blind review. Reviewers scored the papers like any other submission.</p>
@@ -423,7 +423,7 @@ const PAPERS = [
   {id:'run_20260503_050138', t:'AuditSplat: Self-Auditing Feed-Forward 3DGS for Web-Scale Auto-Annotation', d:'May 3, 2026', badge:'Accepted · CVPR’26 WS', bc:'green'},
   {id:'run_20260502_025645', t:'BubbleGS: Physics-Aware Layers on MCMC Gaussian Splatting for Soap Bubbles', d:'May 2, 2026', badge:'+2.71 dB', bc:'indigo'},
   {id:'run_20260418_225812', t:'View-Curriculum-GS: Pose-Similarity View Scheduling for 50-Second 3DGS', d:'Apr 18, 2026', badge:'+2.83 dB', bc:'indigo'},
-  {id:'run_20260424_070505', t:'TileFocalGS: Per-View Per-Tile Adaptive Loss Weighting for Fast GS', d:'Apr 24, 2026', badge:'Rejected · CVPR’26 WS', bc:'red'},
+  {id:'run_20260424_070505', t:'TileFocalGS: Per-View Per-Tile Adaptive Loss Weighting for Fast GS', d:'Apr 24, 2026', badge:'Rejected (formatting) · CVPR’26 WS', bc:'red'},
   {id:'run_20260419_195749', t:'FreezeGS: Fast Gaussian Splatting via Phase-2 Densification Freeze', d:'Apr 19, 2026', badge:'+0.43 dB', bc:'indigo'},
   {id:'run_20260430_223610', t:'BayesPose: Per-Gaussian Inverse-Variance Preconditioning for 3DGS', d:'Apr 30, 2026'},
   {id:'run_20260421_105202', t:'Contracted-Space Vacancy Fields and Normal-Residual SH Pruning', d:'Apr 21, 2026'},
