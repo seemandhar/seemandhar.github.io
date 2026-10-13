@@ -24,7 +24,8 @@ main:
     authors: <strong>S. Jain</strong>, K. Gupta, M. Chandraker
     conference_short: 3DV 2027
     conference: International Conference on 3D Vision (3DV), 2027 — under review.
-    page: https://seemandhar.github.io/SPLATIFY/
+    page: https://seemandhar.github.io/splatify/
+    code: https://github.com/seemandhar/splatify
     image: ./assets/img/splatify.png
     notes: Under Review
 
