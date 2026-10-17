@@ -4,6 +4,7 @@ main:
     authors: <strong>S. Jain</strong>, M. Chandraker
     conference_short: In Submission
     conference: Manuscript in submission, 2026.
+    image: ./assets/img/robometaharness.png
 
   - title: "Who Wrote This Paper? Autonomous Scientific Discovery for 3DGS Research"
     authors: <strong>S. Jain</strong>, M. Chandraker
