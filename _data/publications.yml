@@ -1,5 +1,10 @@
 main:
 
+  - title: "RoboMetaHarness: Automated Harness Discovery for Frozen Robot Policies"
+    authors: <strong>S. Jain</strong>, M. Chandraker
+    conference_short: In Submission
+    conference: Manuscript in submission, 2026.
+
   - title: "Who Wrote This Paper? Autonomous Scientific Discovery for 3DGS Research"
     authors: <strong>S. Jain</strong>, M. Chandraker
     conference_short: NeurIPS 2026
