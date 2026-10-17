@@ -68,6 +68,26 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 - **[Dec 2015]** Secured State rank 2 and International rank 26 in International Mathematics Olympiad.
 - **[Aug 2013]** Became a UCMAS degree scholar, and secured 9th rank in UCMAS global competition.
 
+{% include_relative _includes/publications.md %}
+
+{% include_relative _includes/services.md %}
+
+{% include_relative _includes/affiliation.md %}
+
+## Highlights
+
+- SplatLab (NeurIPS 2026): autonomous scientific discovery system for 3D Gaussian Splatting research
+- Nerfify (CVPR 2026 Highlight): multi-agent system that autonomously converts NeRF papers to executable code
+- Accelerated large-scale video generation: 2× faster SANA diffusion sampling for Veo; Gemma 2–based captioning improved FID by 20%
+- HealthAIgnite: founded and leading a healthcare CV consulting startup; partnerships across healthcare and MedTech
+
+## Honors & Awards
+
+- Siebel Scholar, Class of 2024 (UIUC)
+- Best BTP award, IIT Indore (2021)
+- International Mathematics Olympiad: State Rank 2, International Rank 26 (2015)
+- ACM ICPC onsite qualifier (2019); Technothlon AIR 43 (2016); UCMAS global rank 9 (2013)
+
 ## Media Coverage
 
 <div class="media-grid">
@@ -165,80 +185,3 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 </div>
 
 {% include gallery.html %}
-
-{% include_relative _includes/publications.md %}
-
-{% include_relative _includes/services.md %}
-
-{% include_relative _includes/affiliation.md %}
-
-## Skills
-
-<div class="skills-section">
-
-<h4>Programming</h4>
-<div class="skills-group">
-<span class="skill-pill">Python</span>
-<span class="skill-pill">Java</span>
-<span class="skill-pill">C/C++</span>
-<span class="skill-pill">Apex</span>
-<span class="skill-pill">R</span>
-<span class="skill-pill">SQL</span>
-<span class="skill-pill">MATLAB</span>
-</div>
-
-<h4>ML / Systems</h4>
-<div class="skills-group">
-<span class="skill-pill">PyTorch</span>
-<span class="skill-pill">JAX</span>
-<span class="skill-pill">TensorFlow</span>
-<span class="skill-pill">CUDA</span>
-<span class="skill-pill">Kubernetes</span>
-<span class="skill-pill">Azure</span>
-<span class="skill-pill">AWS</span>
-</div>
-
-<h4>CV / GenAI</h4>
-<div class="skills-group">
-<span class="skill-pill">NeRF</span>
-<span class="skill-pill">Diffusion Models</span>
-<span class="skill-pill">GANs</span>
-<span class="skill-pill">LLMs</span>
-<span class="skill-pill">3D Reconstruction</span>
-<span class="skill-pill">3D-Aware Generation</span>
-</div>
-
-<h4>Data / Infra</h4>
-<div class="skills-group">
-<span class="skill-pill">PostgreSQL</span>
-<span class="skill-pill">MongoDB</span>
-<span class="skill-pill">Docker</span>
-<span class="skill-pill">Git</span>
-</div>
-
-<h4>Web / Tools</h4>
-<div class="skills-group">
-<span class="skill-pill">Django</span>
-<span class="skill-pill">Flask</span>
-<span class="skill-pill">React</span>
-<span class="skill-pill">Tableau</span>
-<span class="skill-pill">MuleSoft</span>
-<span class="skill-pill">HTML</span>
-<span class="skill-pill">PHP</span>
-</div>
-
-</div>
-
-## Highlights
-
-- SplatLab (NeurIPS 2026): autonomous scientific discovery system for 3D Gaussian Splatting research
-- Nerfify (CVPR 2026 Highlight): multi-agent system that autonomously converts NeRF papers to executable code
-- Accelerated large-scale video generation: 2× faster SANA diffusion sampling for Veo; Gemma 2–based captioning improved FID by 20%
-- HealthAIgnite: founded and leading a healthcare CV consulting startup; partnerships across healthcare and MedTech
-
-## Honors & Awards
-
-- Siebel Scholar, Class of 2024 (UIUC)
-- Best BTP award, IIT Indore (2021)
-- International Mathematics Olympiad: State Rank 2, International Rank 26 (2015)
-- ACM ICPC onsite qualifier (2019); Technothlon AIR 43 (2016); UCMAS global rank 9 (2013)

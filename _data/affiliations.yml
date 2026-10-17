@@ -1,5 +1,6 @@
 main:
-  - name: "Adobe Research"
+  - image: "./assets/img/adobe.png"
+    name: "Adobe Research"
     type: "Research Scientist Intern (World Models)"
     date: "Jun 2026 - Sep 2026"
 
