@@ -1,0 +1,30 @@
+---
+permalink: /404.html
+sitemap: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Page not found | Seemandhar Jain</title>
+<meta name="robots" content="noindex">
+<script>
+(function () {
+  var p = location.pathname, n = null;
+  if (/^\/gs-scientist(\/|$)/i.test(p)) {
+    n = p.replace(/^\/gs-scientist/i, '/splatlab').replace(/gs-scientist\.pdf$/i, 'splatlab.pdf');
+  } else if (/\/GS-SCIENTIST_SUPP_merged\.pdf$/i.test(p)) {
+    n = p.replace(/GS-SCIENTIST_SUPP_merged\.pdf$/i, 'SPLATLAB_SUPP_merged.pdf');
+  } else if (/\/gs-scientist\.png$/i.test(p)) {
+    n = p.replace(/gs-scientist\.png$/i, 'splatlab.png');
+  }
+  if (n) location.replace(n + location.search + location.hash);
+})();
+</script>
+<style>body{font-family:system-ui,sans-serif;max-width:560px;margin:15vh auto;padding:0 16px;color:#222;background:#fff}a{color:#1a5fb4}</style>
+</head>
+<body>
+<h1>Page not found</h1>
+<p>That page doesn't exist. Go to the <a href="/">homepage</a>.</p>
+</body>
+</html>

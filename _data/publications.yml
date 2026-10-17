@@ -10,9 +10,9 @@ main:
     authors: <strong>S. Jain</strong>, M. Chandraker
     conference_short: NeurIPS 2026
     conference: Conference on Neural Information Processing Systems (NeurIPS), 2026.
-    pdf: ./gs-scientist/static/gs-scientist.pdf
-    page: https://seemandhar.github.io/gs-scientist/
-    image: ./assets/img/gs-scientist.png
+    pdf: ./splatlab/static/splatlab.pdf
+    page: https://seemandharjain.com/splatlab/
+    image: ./assets/img/splatlab.png
     notes: Accepted at NeurIPS 2026
 
   # - title: "Mnemonics Training: Multi-Class Incremental Learning without Forgetting"
