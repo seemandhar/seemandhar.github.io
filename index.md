@@ -4,9 +4,9 @@ layout: homepage
 
 ## About Me
 
-I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). My research centers on three threads: **world models and policy learning for embodied decision-making**; **mental models and Theory-of-Mind reasoning in multi-agent embodied tasks** — agents that infer what their partners believe, intend, and know, and act on those inferences; and **automating the scientific research process** with multi-agent systems. This builds on my background in NeRFs, 3D Gaussian Splatting, and diffusion models for 3D-aware image/video synthesis.
+I am Seemandhar Jain, a PhD student in Computer Science at the [University of California San Diego](https://cseweb.ucsd.edu/~mkchandraker/), advised by [Prof. Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/). My main goal is **automating scientific discovery in physical AI**: building research agents that find what a robot cannot yet do, design experiments that separate competing explanations, and turn the findings into new control and learning methods. Alongside this, I work on **world models and policy learning for embodied agents**, and I am exploring **mental models for better multi-agent communication** between research agents. This builds on my background in NeRFs, 3D Gaussian Splatting, and diffusion models for 3D-aware image/video synthesis.
 
-My recent work includes **Nerfify** (CVPR 2026 Highlight), a multi-agent system that autonomously converts NeRF research papers into executable code; **Splatify**, its 3DGS counterpart with knowledge discovery; and **SplatLab** (NeurIPS 2026), an autonomous research system that extends these toward end-to-end scientific discovery — from literature to novel method to validated paper.
+My recent work includes **Nerfify** (CVPR 2026 Highlight), a multi-agent system that turns NeRF research papers into executable code; **Splatify**, its 3DGS counterpart with knowledge discovery; **SplatLab** (NeurIPS 2026), an autonomous research system that goes from literature to a new method to a validated paper; and **RoboMetaHarness**, which brings this research loop to robotics by automatically discovering harnesses for frozen robot policies.
 
 Previously, I completed my MS in Computer Science at the [University of Illinois Urbana–Champaign](https://cs.illinois.edu/) (GPA 3.92/4), advised by [Prof. David Forsyth](http://luthuli.cs.uiuc.edu/~daf/), where I worked on single-shot 3D reconstruction, convex decomposition, intrinsic image decomposition and relighting with diffusion models, and 2D-to-3D transformations. I am a [Siebel Scholar, Class of 2024](https://www.siebelscholars.com/).
 
@@ -33,9 +33,9 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 ## Research Interests
 
+- **Automated Scientific Discovery for Physical AI:** research agents that reproduce baselines, form hypotheses, run experiments that separate competing explanations, and turn findings into new robot control and learning methods (SplatLab, RoboMetaHarness)
 - **World Models and Embodied Policy Learning:** learning predictive models of the world and using them to train and plan policies for embodied agents
-- **Mental Models and Theory of Mind in Multi-Agent Embodied Tasks:** agents that build explicit models of other agents' beliefs, intentions, and knowledge, and use them to coordinate, communicate, and collaborate in shared physical environments
-- **Automated Scientific Research:** multi-agent systems that read papers, implement them, and discover and validate new methods (Nerfify, Splatify, SplatLab)
+- **Multi-Agent Research Systems:** agents that read papers, implement them, and validate new methods (Nerfify, Splatify), and mental models for better communication between agents
 - **3D Vision and Generative Models:** NeRFs, 3D Gaussian Splatting, single-shot 3D reconstruction, relighting, and diffusion models for 3D-aware image/video synthesis
 
 
