@@ -38,7 +38,6 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 - **Automated Scientific Research:** multi-agent systems that read papers, implement them, and discover and validate new methods (Nerfify, Splatify, SplatLab)
 - **3D Vision and Generative Models:** NeRFs, 3D Gaussian Splatting, single-shot 3D reconstruction, relighting, and diffusion models for 3D-aware image/video synthesis
 
-{% include multiagent-viz.html %}
 
 ## News
 
@@ -185,3 +184,5 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 </div>
 
 {% include gallery.html %}
+
+{% include multiagent-viz.html %}
