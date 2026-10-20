@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RoboMetaHarness: Automated Harness Discovery for Frozen Robot Policies</title>
+  <meta name="description" content="RoboMetaHarness discovers and evaluates training-free harnesses around frozen robot policies. Seemandhar Jain and Manmohan Chandraker, UC San Diego. Under review at CVPR.">
+  <link rel="canonical" href="https://seemandharjain.com/robometaharness/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RoboMetaHarness: Automated Harness Discovery for Frozen Robot Policies">
+  <meta property="og:description" content="An automated research loop for physical AI: diagnose failures, propose a harness, implement it, and test it against matched controls. All model weights stay frozen.">
+  <meta property="og:url" content="https://seemandharjain.com/robometaharness/">
+  <meta property="og:image" content="https://seemandharjain.com/robometaharness/static/images/method.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%234f46e5'/%3E%3Cpath d='M18 45V20h17q12 0 12 10q0 8-9 10l10 10H36L27 39v11H18' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/style.css">
+  <script src="static/page.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="brand">RoboMetaHarness <span>· automated robotics research</span></a>
+    <div class="nav-links"><a href="#method">Method</a><a href="#results">Results</a><a href="#replays">Replays</a><a class="nav-home" href="/">Seemandhar Jain ↗</a></div>
+  </div>
+</nav>
+<main id="main">
+  <header class="hero wrap">
+    <p class="badge">Under review at CVPR</p>
+    <h1>RoboMetaHarness<span>Automated Harness Discovery<br class="desktop-break"> for Frozen Robot Policies</span></h1>
+    <p class="authors"><a href="https://seemandharjain.com/">Seemandhar Jain</a><span>·</span><a href="https://cseweb.ucsd.edu/~mkchandraker/">Manmohan Chandraker</a></p>
+    <p class="affiliation">University of California, San Diego</p>
+    <p class="hero-description">Can a research agent improve how a robot uses a policy it cannot retrain?<br class="desktop-break"> <strong>RoboMetaHarness</strong> closes the loop from failure diagnosis to executable harnesses, controlled experiments, and reusable research memory. <strong>Every model weight stays frozen.</strong></p>
+    <div class="actions"><a href="#method" class="button primary">Explore the method <span aria-hidden="true">↓</span></a><a href="#results" class="button">Experimental results</a><a href="static/images/method.pdf" class="button" target="_blank" rel="noopener">Method figure <span class="filetype">PDF ↗</span></a></div>
+  </header>
+
+  <section class="wrap teaser" aria-label="RoboMetaHarness overview">
+    <figure class="figure-card">
+      <button class="figure-zoom" data-figure="static/images/method.svg" aria-label="Enlarge the RoboMetaHarness method figure"><img src="static/images/method.svg" width="1560" height="1010" fetchpriority="high" alt="RoboMetaHarness architecture. Research time: ground and diagnose, propose and review, implement and freeze, then replay audit, development, fresh validation and full evaluation. Failure analysis updates reusable memory. Execution time: public observations pass through a discovered wrapper around the frozen robot policy, then an action chunk executes. Success labels and reset fixtures remain evaluator-only."></button>
+      <figcaption><strong>Discover the harness. Keep the policy frozen.</strong> Research agents change the surrounding code, prompts, memory, or action selection. A candidate advances only after complete evidence passes the protocol’s gates. <a href="static/images/method.svg" target="_blank" rel="noopener">Open vector figure ↗</a></figcaption>
+    </figure>
+  </section>
+
+  <div class="wrap"><div class="stats" aria-label="Method at a glance">
+    <div><strong>0</strong><span>model-training steps</span></div><div><strong>12</strong><span>harness capability families</span></div><div><strong>3 arms</strong><span>candidate · baseline · null</span></div><div><strong>4 stages</strong><span>audit → subset → validation → full</span></div>
+  </div></div>
+
+  <section class="section narrow" id="abstract">
+    <h2>Abstract</h2>
+    <p>Frozen robot policies can fail because of how observations are presented, how action proposals are selected, or how execution is coordinated. Improving these interfaces offers a route to better behavior without updating the policy’s parameters. Discovering a useful intervention, however, requires more than generating plausible wrapper code: it requires compatible interfaces, reproducible comparisons, and evidence that survives independent evaluation.</p>
+    <p><strong>RoboMetaHarness</strong> is an automated research pipeline for discovering training-free harnesses around a user-selected robot policy. It retrieves mechanisms from a research memory, diagnoses recorded failures, proposes falsifiable hypotheses, implements and freezes candidates, and evaluates them against both a baseline and an overhead-matched null control. A staged protocol separates development from fresh validation and full evaluation; negative findings and infrastructure failures return to memory with their costs and limitations.</p>
+    <p>The project currently contains development screens and reproducibility audits for robot-policy harnesses. These records illustrate why proposal selection, inference precision, and simulator replay must be tested together. <strong>The evidence shown here does not establish a validated full-benchmark harness improvement.</strong></p>
+  </section>
+
+  <section class="section wrap" id="method">
+    <div class="section-heading"><p class="eyebrow">How it works</p><h2>From a robot failure to a testable intervention</h2><p>A research loop grounded in the policy interface, measured trajectories, and a fixed evaluation contract.</p></div>
+    <div class="cards">
+      <article><span class="step">01 / GROUND</span><h3>Inspect before proposing</h3><p>Identify the frozen checkpoint, permitted observations, action interface, benchmark, and compute budget. Retrieve relevant mechanisms together with their assumptions and prior failures.</p></article>
+      <article><span class="step">02 / HYPOTHESIZE</span><h3>Make the mechanism falsifiable</h3><p>A proposal specifies a failure, an intervention, a predicted effect, a null control, and a cost. Independent review checks whether the mechanism fits the original policy.</p></article>
+      <article><span class="step">03 / IMPLEMENT</span><h3>Freeze the experiment</h3><p>Implement a wrapper and pin its source, configuration, cases, and checkpoints before evaluation. Keep policy and auxiliary weights frozen, with official horizons and control timing.</p></article>
+      <article><span class="step">04 / AUDIT</span><h3>Test the comparison itself</h3><p>Check initial observations and replay traces before interpreting outcomes. An overhead null performs extra work while preserving the baseline action rule.</p></article>
+      <article><span class="step">05 / EVALUATE</span><h3>Earn each larger experiment</h3><p>Start with a small, predeclared development subset. Only complete, valid improvements against both controls can advance to fresh validation and then full evaluation.</p></article>
+      <article><span class="step">06 / LEARN</span><h3>Retain what failed, and why</h3><p>Analyze gains, regressions, intervention activations, and inference cost. Preserve negative results and distinguish robot-policy failures from invalid experiments.</p></article>
+    </div>
+    <aside class="method-note"><strong>Training-free still has a cost.</strong> A harness may use additional frozen-model inference. The protocol measures that cost separately from physical interaction, while keeping privileged simulator state and success labels out of the runtime policy.</aside>
+  </section>
+
+  <section class="section results-section" id="results"><div class="wrap">
+    <div class="section-heading"><p class="eyebrow">Experimental evidence</p><h2>Measured outcomes. Explicit limits.</h2><p>A snapshot of the recorded development screens and audits, reviewed October 20, 2026.</p></div>
+    <div class="notice"><strong>Current evidence status</strong><p>No validated full-benchmark harness improvement is established in these records. The development screens below were <strong>not promoted</strong>. Historical screens inform the research memory; they are not evidence that a new pipeline candidate passed validation.</p></div>
+    <div class="baseline-grid">
+      <article class="baseline"><p class="eyebrow">Reproduced baseline · Awomo-0.5I</p><div class="baseline-number">43.96<span>%</span></div><p><strong>211 / 480 episodes</strong> · RoboCasa365 Composite-Unseen</p><p class="small">The cited published reference is 217/480 (45.21%). It is a separate reference, not a matched control or a SOTA claim.</p></article>
+      <article class="baseline"><p class="eyebrow">Reproduced baseline · GR00T N1.5</p><div class="baseline-number">4.25<span>%</span></div><p><strong>34 / 800 episodes</strong> · native Composite-Unseen audit</p><p class="small">Human300 checkpoint 120000. The session records a separate official 2.7% reference; this local result is not an exact paper replication claim.</p></article>
+    </div>
+    <h3 class="subheading">Historical Awomo discovery screens</h3>
+    <p class="section-intro">Each screen contains 32 development episodes per arm. These measurements were cached as starting evidence for harness discovery. Hatching marks an initial-observation mismatch that invalidated comparison with the baseline.</p>
+    <figure class="figure-card results-figure"><button class="figure-zoom" data-figure="static/images/development-results.svg" aria-label="Enlarge the development results chart"><img src="static/images/development-results.svg" width="1300" height="480" loading="lazy" alt="Historical development results, successes out of 32. Screen D: baseline 10, sampling null 11, medoid 14, local mean 11. Screen E: baseline 10, precision null 11, FP32 accumulation 12, Heun solver 7. Medoid, local mean and Heun have initial-observation mismatches. No candidate was promoted."></button><figcaption>Success counts are descriptive development outcomes. A larger count alone does not establish a valid causal improvement.</figcaption></figure>
+    <div class="table-container" tabindex="0" role="region" aria-label="Development screen results table"><table>
+      <caption>Development outcomes and reasons candidates did not advance</caption>
+      <thead><tr><th scope="col">Screen / intervention</th><th scope="col">Baseline</th><th scope="col">Null</th><th scope="col">Candidate</th><th scope="col">Interpretation</th></tr></thead>
+      <tbody><tr><th scope="row">D · consensus medoid (K = 3)</th><td>10/32</td><td>11/32</td><td><strong>14/32</strong></td><td><span class="result-tag">Invalid comparison</span>Initial input mismatch against baseline. About 2.30× aggregate inference time; no promotion.</td></tr>
+      <tr><th scope="row">D · local action mean</th><td>10/32</td><td>11/32</td><td>11/32</td><td><span class="result-tag">Invalid comparison</span>Initial input mismatch against baseline; tied its null.</td></tr>
+      <tr><th scope="row">E · FP32 flow accumulation</th><td>10/32</td><td>11/32</td><td>12/32</td><td><span class="result-tag neutral">Below gain gate</span>Net gains of +2 and +1 did not meet the declared +3 gate against both controls.</td></tr>
+      <tr><th scope="row">E · second-order Heun</th><td>10/32</td><td>11/32</td><td>7/32</td><td><span class="result-tag">Invalid comparison</span>Initial input mismatch; the observed count was also below both controls.</td></tr></tbody>
+    </table></div>
+    <div class="insight"><h3>Why the null control matters</h3><p>The medoid harness samples three native action chunks and executes the one closest to the others. A sampling null also generates extra proposals but returns the original first proposal and restores RNG state. This separates the action-selection mechanism from the effects of additional inference. Three consistently wrong proposals can still produce the wrong action.</p></div>
+
+    <h3 class="subheading">Reproducibility is an experiment</h3>
+    <div class="audit-grid">
+      <article><span class="audit-value">3 / 3</span><h4>Initial fixture restores passed</h4><p>Independent task/process restores matched the original camera, state, and instruction bytes. This establishes initial identity for those checks, not long-trajectory determinism.</p></article>
+      <article><span class="audit-value">1,200</span><h4>Steps per native preflight arm</h4><p>On one GR00T CuttingToolSelection scene, baseline and a copy/hash null matched public inputs and executed actions throughout two complete 1,200-step arms. This was a one-sample control.</p></article>
+      <article><span class="audit-value">2 of 3</span><h4>Required K = 3 replay pairs completed</h4><p>A separate replay matched BreadSelection and CuttingToolSelection. GarnishPancake stopped at chunk index 31 after public-input drift. The audit remained incomplete; candidate quality was not measured.</p></article>
+    </div>
+    <p class="data-link"><a href="static/data/results.json" download>Download the evidence snapshot (JSON) ↓</a><span>Includes source-relative provenance and SHA-256 hashes.</span></p>
+  </div></section>
+
+  <section class="section wrap" id="replays">
+    <div class="section-heading"><p class="eyebrow">Real simulator recordings</p><h2>Watch a matched replay pair</h2><p>GR00T N1.5 · BreadSelection · 1,950 steps per arm · recorded at 20 fps</p></div>
+    <div class="video-toolbar"><button class="button primary" id="play-pair">Play both replays</button><button class="button" id="reset-pair">Reset both</button><span id="video-status" role="status" aria-live="polite">Baseline and sampling null; replay audit only.</span></div>
+    <div class="video-grid">
+      <figure><div class="video-label"><span class="dot"></span>Frozen-policy baseline</div><video id="baseline-video" controls muted playsinline preload="none" poster="static/images/bread-selection.webp" aria-label="BreadSelection frozen-policy baseline replay"><source src="static/videos/bread-selection-baseline.mp4" type="video/mp4">Your browser cannot play this video. <a href="static/videos/bread-selection-baseline.mp4">Download the baseline replay.</a></video><figcaption>Original first action proposal executes.</figcaption></figure>
+      <figure><div class="video-label"><span class="dot indigo"></span>Sampling null · K = 3</div><video id="null-video" controls muted playsinline preload="none" poster="static/images/bread-selection.webp" aria-label="BreadSelection action-preserving sampling null replay"><source src="static/videos/bread-selection-null.mp4" type="video/mp4">Your browser cannot play this video. <a href="static/videos/bread-selection-null.mp4">Download the null replay.</a></video><figcaption>Extra proposals are computed; the original action rule is retained.</figcaption></figure>
+    </div>
+    <p class="video-context">These are control recordings from a completed replay pair, not candidate success demonstrations. The two video files have identical SHA-256 hashes, consistent with the recorded input/action parity for this case. The broader three-case replay audit stopped on another task.</p>
+  </section>
+
+  <section class="section narrow resources" id="resources">
+    <div class="section-heading"><p class="eyebrow">Project materials</p><h2>Figures &amp; evidence</h2></div>
+    <div class="resource-list"><a href="static/images/method.pdf" target="_blank" rel="noopener"><span>Method overview<small>Vector figure for reading or presentation</small></span><span>PDF ↗</span></a><a href="static/images/method.svg" target="_blank" rel="noopener"><span>Method source artwork<small>Scalable SVG, also available as <span class="inline-format">PNG</span></small></span><span>SVG ↗</span></a><a href="static/images/method.png" download><span>High-resolution method image<small>2,340 × 1,515 pixels</small></span><span>PNG ↓</span></a><a href="static/images/development-results.pdf" target="_blank" rel="noopener"><span>Development results<small>Historical screens with comparison validity marked</small></span><span>PDF ↗</span></a><a href="static/data/results.json" download><span>Evidence snapshot<small>Counts, limitations, and source hashes</small></span><span>JSON ↓</span></a></div>
+    <p class="availability">RoboMetaHarness · <strong>Under review at CVPR</strong></p>
+  </section>
+</main>
+<footer><div class="wrap"><a class="brand" href="#">RoboMetaHarness</a><p>Seemandhar Jain · Manmohan Chandraker<br>University of California, San Diego</p><p class="footer-links"><a href="/">Personal website</a><a href="/splatlab/">SplatLab</a><a href="https://seemandhar.github.io/SPLATIFY/">Splatify</a></p></div></footer>
+<dialog id="figure-dialog" aria-label="Enlarged research figure"><div class="dialog-toolbar"><span>Research figure</span><button id="close-figure" aria-label="Close enlarged figure">Close <span aria-hidden="true">×</span></button></div><div class="dialog-scroll"><img id="enlarged-figure" alt="Enlarged research figure"></div></dialog>
+</body>
+</html>

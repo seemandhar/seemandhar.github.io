@@ -1,0 +1,227 @@
+{
+  "snapshot_date": "2026-10-20",
+  "project": "RoboMetaHarness",
+  "scope": "Historical development screens and infrastructure audits; no validated full-benchmark harness improvement.",
+  "awomo": {
+    "policy": "Awomo-0.5I",
+    "benchmark": "RoboCasa365 Composite-Unseen",
+    "reproduced_baseline": {
+      "successes": 211,
+      "episodes": 480,
+      "percent": 43.96
+    },
+    "published_reference": {
+      "successes": 217,
+      "episodes": 480,
+      "percent": 45.21,
+      "kind": "published_reference_not_matched_control"
+    },
+    "development_screens": {
+      "d": {
+        "stage": "screen_complete_no_gain",
+        "updated_at": "2026-10-14T21:24:02.991639+00:00",
+        "status": "no_discovery_improvement",
+        "full_evaluation_launched": false,
+        "scores": {
+          "consensus_medoid": {
+            "baseline": {
+              "episodes": 32,
+              "baseline_success": 10,
+              "harness_success": 14,
+              "net_successes": 4,
+              "identical_initial_observations": false,
+              "initial_observation_mismatches": [
+                {
+                  "task": "PanTransfer",
+                  "trial": 2,
+                  "seed": 459
+                }
+              ],
+              "end_to_end_inference_time_ratio": 2.3043030484027494
+            },
+            "null": {
+              "episodes": 32,
+              "baseline_success": 11,
+              "harness_success": 14,
+              "net_successes": 3,
+              "identical_initial_observations": true,
+              "initial_observation_mismatches": [],
+              "end_to_end_inference_time_ratio": 0.9152011677030994
+            }
+          },
+          "consensus_local_mean": {
+            "baseline": {
+              "episodes": 32,
+              "baseline_success": 10,
+              "harness_success": 11,
+              "net_successes": 1,
+              "identical_initial_observations": false,
+              "initial_observation_mismatches": [
+                {
+                  "task": "PanTransfer",
+                  "trial": 2,
+                  "seed": 459
+                }
+              ],
+              "end_to_end_inference_time_ratio": 2.3463893335902624
+            },
+            "null": {
+              "episodes": 32,
+              "baseline_success": 11,
+              "harness_success": 11,
+              "net_successes": 0,
+              "identical_initial_observations": true,
+              "initial_observation_mismatches": [],
+              "end_to_end_inference_time_ratio": 0.9319165981559631
+            }
+          }
+        },
+        "source_directory": "Awomo-0.5/harness_runs/campaign_d_20261014",
+        "interpretation": "COMPLETED discovery screen; PROVISIONAL development evidence, no validation or full-benchmark improvement established."
+      },
+      "e": {
+        "stage": "screen_complete_no_gain",
+        "updated_at": "2026-10-14T23:30:54.562179+00:00",
+        "status": "no_discovery_improvement",
+        "full_evaluation_launched": false,
+        "scores": {
+          "fp32_flow16": {
+            "baseline": {
+              "episodes": 32,
+              "baseline_success": 10,
+              "harness_success": 12,
+              "net_successes": 2,
+              "identical_initial_observations": true,
+              "initial_observation_mismatches": [],
+              "end_to_end_inference_time_ratio": 0.9524295169446871
+            },
+            "null": {
+              "episodes": 32,
+              "baseline_success": 11,
+              "harness_success": 12,
+              "net_successes": 1,
+              "identical_initial_observations": true,
+              "initial_observation_mismatches": [],
+              "end_to_end_inference_time_ratio": 0.5391723799427454
+            }
+          },
+          "heun_flow16": {
+            "baseline": {
+              "episodes": 32,
+              "baseline_success": 10,
+              "harness_success": 7,
+              "net_successes": -3,
+              "identical_initial_observations": false,
+              "initial_observation_mismatches": [
+                {
+                  "task": "PanTransfer",
+                  "trial": 2,
+                  "seed": 459
+                }
+              ],
+              "end_to_end_inference_time_ratio": 1.8444479818028972
+            },
+            "null": {
+              "episodes": 32,
+              "baseline_success": 11,
+              "harness_success": 7,
+              "net_successes": -4,
+              "identical_initial_observations": false,
+              "initial_observation_mismatches": [
+                {
+                  "task": "PanTransfer",
+                  "trial": 2,
+                  "seed": 459
+                }
+              ],
+              "end_to_end_inference_time_ratio": 1.0441459345143502
+            }
+          }
+        },
+        "source_directory": "Awomo-0.5/harness_runs/campaign_e_20261014",
+        "interpretation": "COMPLETED discovery screen; PROVISIONAL development evidence, no validation or full-benchmark improvement established."
+      }
+    }
+  },
+  "groot": {
+    "policy": "GR00T N1.5 Human300 checkpoint 120000",
+    "reproduced_baseline": {
+      "successes": 34,
+      "episodes": 800,
+      "percent": 4.25
+    },
+    "native_preflight": {
+      "arms": {
+        "baseline": {
+          "horizon": 1200,
+          "policy_calls": 75,
+          "steps": 1200,
+          "success": false,
+          "trace_path": "RoboMetaHarness/runs/groot-n15-mac3-recovery-v4/ideas/native-mac3-recovery-v4/execution/preflight/baseline.trace.jsonl"
+        },
+        "null": {
+          "horizon": 1200,
+          "policy_calls": 75,
+          "steps": 1200,
+          "success": false,
+          "trace_path": "RoboMetaHarness/runs/groot-n15-mac3-recovery-v4/ideas/native-mac3-recovery-v4/execution/preflight/null.trace.jsonl"
+        }
+      },
+      "checkpoint_sha256": "527a88d5af444fecfb413bdbd5f8b096dbe4350898140123d2cebfa72f77fdc5",
+      "checks": {
+        "all_executed_actions_identical": true,
+        "all_policy_inputs_identical": true,
+        "frozen_weights": true,
+        "initial_observations_identical": true,
+        "official_horizons": true,
+        "success_is_evaluator_only": true
+      },
+      "extra_simulator_steps": 0,
+      "horizon": 1200,
+      "kind": "native_equivalence",
+      "no_quality_selection": true,
+      "null_control": "one sample per chunk; CPU copy/hash overhead only; not MAC3 null",
+      "task": "CuttingToolSelection"
+    },
+    "k3_replay": {
+      "complete_paired_cases": 2,
+      "required_paired_cases": 3,
+      "stopped_case": "GarnishPancake",
+      "stopped_at_chunk_index": 31,
+      "completed_null_steps": 496,
+      "reason": "Public-input drift; stopped before next policy call.",
+      "candidate_quality_measured": false
+    }
+  },
+  "fixture_audit": {
+    "independent_task_process_restores_passed": 3,
+    "checks": 3,
+    "scope": "Initial camera/state/instruction byte identity only; not long-trajectory determinism."
+  },
+  "provenance": [
+    {
+      "source": "knowledge/lessons/awomo.json",
+      "sha256": "5984d244b63c8408d932ee1749160fa20b003d8520a787cf4e524b3f9c66fdd8"
+    },
+    {
+      "source": "docs/AWOMO_LESSONS.txt",
+      "sha256": "9a225864092b75811352309571cbb5365ec4693965833b0da11958f20dd5827f"
+    },
+    {
+      "source": "runs/awomo-001/bootstrap/fixture_diagnostics_v2/summary.json",
+      "sha256": "bba7135617b3c98c0e66625e1bde920e1e6cfa6d8e6fbc9d360aebbe7b12247c"
+    },
+    {
+      "source": "runs/groot-n15-mac3-recovery-v4/ideas/native-mac3-recovery-v4/execution/preflight/native-equivalence.json",
+      "sha256": "4dd847625d2b6818833a74bcfd1e6648885620f7aca7159789046b36f6c7e985"
+    },
+    {
+      "source": "research_sessions/groot-n15-trainingfree-001/PILOT_REPORT.txt",
+      "sha256": "4bf0e1b38a01052efb6ca4329c8ff953ef220c88fda29803d43a38869f95bdd0"
+    },
+    {
+      "source": "research_sessions/groot-n15-trainingfree-001/PILOT_EVIDENCE.json",
+      "sha256": "8dab2c3547c13accf8522d8d5a4abdadad778fcbcbf85ccd88c8627372eed270"
+    }
+  ]
+}

@@ -2,9 +2,11 @@ main:
 
   - title: "RoboMetaHarness: Automated Harness Discovery for Frozen Robot Policies"
     authors: <strong>S. Jain</strong>, M. Chandraker
-    conference_short: In Submission
-    conference: Manuscript in submission, 2026.
+    conference_short: CVPR
+    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), under review.
+    page: https://seemandharjain.com/robometaharness/
     image: ./assets/img/robometaharness.png
+    notes: Under Review
 
   - title: "Who Wrote This Paper? Autonomous Scientific Discovery for 3DGS Research"
     authors: <strong>S. Jain</strong>, M. Chandraker
