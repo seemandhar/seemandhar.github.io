@@ -5,7 +5,7 @@ main:
     conference_short: CVPR
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), under review.
     page: https://seemandharjain.com/robometaharness/
-    image: ./assets/img/robometaharness.png
+    image: ./robometaharness/static/images/architecture-gpt-image.png
     notes: Under Review
 
   - title: "Who Wrote This Paper? Autonomous Scientific Discovery for 3DGS Research"
