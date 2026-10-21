@@ -8,7 +8,7 @@ main:
     image: ./robometaharness/static/images/architecture-gpt-image.png
     notes: Under Review
 
-  - title: "Who Wrote This Paper? Autonomous Scientific Discovery for 3DGS Research"
+  - title: "SplatLab: Autonomous Scientific Discovery for 3DGS Research"
     authors: <strong>S. Jain</strong>, M. Chandraker
     conference_short: NeurIPS 2026
     conference: Conference on Neural Information Processing Systems (NeurIPS), 2026.
