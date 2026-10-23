@@ -41,7 +41,7 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 ## News
 
-- **[Sep 2026]** **[SplatLab: Autonomous Scientific Discovery for 3DGS Research](https://seemandharjain.com/splatlab/)** accepted at **NeurIPS 2026**!
+- **[Sep 2026]** **[SplatLab: Autonomous Scientific Discovery for 3DGS Research](https://seemandharjain.com/splatlab/)** accepted at **NeurIPS 2026**! [[arXiv]](https://arxiv.org/abs/2610.30468) [[Code]](https://github.com/seemandhar/SplatLab)
 - **[Jun 2026]** Started as a **Research Scientist Intern at Adobe Research**, working on **world models**.
 - **[Jun 2026]** Passed my PhD Research Exam at UC San Diego; my research now focuses on **world models, policy learning, and automated research**.
 - **[Apr 2026]** **Nerfify** selected as a **CVPR 2026 Highlight**!

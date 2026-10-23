@@ -12,7 +12,8 @@ main:
     authors: <strong>S. Jain</strong>, M. Chandraker
     conference_short: NeurIPS 2026
     conference: Conference on Neural Information Processing Systems (NeurIPS), 2026.
-    pdf: ./splatlab/static/splatlab.pdf
+    pdf: https://arxiv.org/pdf/2610.30468
+    code: https://github.com/seemandhar/SplatLab
     page: https://seemandharjain.com/splatlab/
     image: ./assets/img/splatlab.png
     notes: Accepted at NeurIPS 2026

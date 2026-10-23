@@ -57,7 +57,7 @@ tailwind.config = {
       <a href="#papers" class="hover:text-accent">Papers</a>
       <a href="#reviews" class="hover:text-accent">Peer&nbsp;Review</a>
       <a href="#bibtex" class="hover:text-accent hidden sm:inline">BibTeX</a>
-      <a href="static/splatlab.pdf" target="_blank" rel="noopener" class="bg-accent text-white px-3 py-1 rounded-md hover:opacity-90">Paper&nbsp;PDF</a>
+      <a href="https://arxiv.org/pdf/2610.30468" target="_blank" rel="noopener" class="bg-accent text-white px-3 py-1 rounded-md hover:opacity-90">Paper&nbsp;PDF</a>
     </div>
   </div>
 </nav>
@@ -82,9 +82,11 @@ tailwind.config = {
       and writes the paper. <span class="font-semibold text-ink">Every reported number is bound to a logged training run.</span>
     </p>
     <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <a href="static/splatlab.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-accent text-white px-5 py-2.5 rounded-lg font-medium shadow-sm hover:opacity-90" title="Full paper with supplementary material (PDF, 84 pages, 41 MB)">
+      <a href="https://arxiv.org/pdf/2610.30468" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-accent text-white px-5 py-2.5 rounded-lg font-medium shadow-sm hover:opacity-90" title="Paper PDF on arXiv (2610.30468)">
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V7.4L12.6 2H4zm8 1.5L16.5 8H12V3.5zM6 11h8v1.5H6V11zm0 3h8v1.5H6V14z"/></svg>
         Paper (PDF)</a>
+      <a href="https://arxiv.org/abs/2610.30468" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-medium hover:border-accent hover:text-accent" title="arXiv abstract page">
+        📜 arXiv 2610.30468</a>
       <a href="#papers" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-medium hover:border-accent hover:text-accent">
         🗂️ 16 Generated Papers</a>
       <a href="#reviews" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-medium hover:border-accent hover:text-accent">
@@ -385,14 +387,14 @@ tailwind.config = {
     <h2 class="font-serif text-3xl font-bold text-center mb-6">BibTeX</h2>
     <div class="relative">
       <button onclick="copyBib(this)" class="absolute top-3 right-3 text-xs bg-slate-700 text-slate-100 px-2.5 py-1 rounded hover:bg-slate-600">Copy</button>
-      <pre id="bib" class="bg-ink text-slate-200 text-[13px] rounded-xl p-5 overflow-x-auto font-mono">@inproceedings{jain2026splatlab,
-  title     = {SplatLab: Autonomous Scientific Discovery
-               for 3DGS Research},
-  author    = {Jain, Seemandhar and Chandraker, Manmohan},
-  booktitle = {Neural Information Processing Systems (NeurIPS)},
-  year      = {2026},
-  note      = {Code, manuscripts, experiment ledgers, and the
-               cross-run paper store will be released.}
+      <pre id="bib" class="bg-ink text-slate-200 text-[13px] rounded-xl p-5 overflow-x-auto font-mono">@misc{jain2026splatlabautonomousscientificdiscovery,
+      title={SplatLab: Autonomous Scientific Discovery for 3DGS Research}, 
+      author={Seemandhar Jain and Manmohan Chandraker},
+      year={2026},
+      eprint={2610.30468},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.30468}, 
 }</pre>
     </div>
   </div>
