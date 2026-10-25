@@ -56,7 +56,6 @@ exclude:
 include:
   - ubuntu/_next
   - ubuntu/next
-  - .well-known  # Tesla Fleet API public key
 
 plugins:
   - jekyll-sitemap
