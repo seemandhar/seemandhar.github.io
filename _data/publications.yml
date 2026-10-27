@@ -1,5 +1,12 @@
 main:
 
+  - title: "HarnessStudio: A Unified, Training-Free Harness Framework for Frozen Robot Policies"
+    authors: <strong>S. Jain</strong>, M. Chandraker
+    conference_short: In Prep
+    conference: Submission in progress.
+    image: ./assets/img/harnessstudio.png
+    notes: Submission in Progress
+
   - title: "RoboMetaHarness: Automated Harness Discovery for Frozen Robot Policies"
     authors: <strong>S. Jain</strong>, M. Chandraker
     conference_short: CVPR
