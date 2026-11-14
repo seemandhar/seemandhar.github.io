@@ -16,13 +16,14 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%234f46e5'/%3E%3Cpath d='M18 45V20h17q12 0 12 10q0 8-9 10l10 10H36L27 39v11H18' fill='white'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="static/style.css">
   <script src="static/page.js" defer></script>
+  <script src="static/gallery.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main navigation">
   <div class="nav-inner">
     <a href="#" class="brand">RoboMetaHarness <span>· automated robotics research</span></a>
-    <div class="nav-links"><a href="#method">Method</a><a href="#results">Results</a><a href="#replays">Replays</a></div>
+    <div class="nav-links"><a href="#method">Method</a><a href="#gallery">Gallery</a><a href="#results">Results</a><a href="#replays">Replays</a></div>
   </div>
 </nav>
 <main id="main">
@@ -31,7 +32,7 @@
     <h1>RoboMetaHarness<span>Automated Harness Discovery<br class="desktop-break"> for Frozen Robot Policies</span></h1>
     <p class="authors">Anonymous Authors</p>
     <p class="hero-description">Can a research agent improve how a robot uses a policy it cannot retrain?<br class="desktop-break"> <strong>RoboMetaHarness</strong> closes the loop from failure diagnosis to executable harnesses, controlled experiments, and reusable research memory. <strong>Every model weight stays frozen.</strong></p>
-    <div class="actions"><a href="#method" class="button primary">Explore the method <span aria-hidden="true">↓</span></a><a href="#results" class="button">Experimental results</a><a href="static/images/architecture-gpt-image.png" class="button" target="_blank" rel="noopener">Architecture figure <span class="filetype">PNG ↗</span></a></div>
+    <div class="actions"><a href="#method" class="button primary">Explore the method <span aria-hidden="true">↓</span></a><a href="#gallery" class="button">Rescue gallery <span class="filetype">154 videos</span></a><a href="#results" class="button">Experimental results</a><a href="static/images/architecture-gpt-image.png" class="button" target="_blank" rel="noopener">Architecture figure <span class="filetype">PNG ↗</span></a></div>
   </header>
 
   <section class="wrap teaser" aria-label="RoboMetaHarness overview">
@@ -63,6 +64,51 @@
       <article><span class="step">06 / LEARN</span><h3>Retain what failed, and why</h3><p>Analyze gains, regressions, intervention activations, and inference cost. Preserve negative results and distinguish robot-policy failures from invalid experiments.</p></article>
     </div>
     <aside class="method-note"><strong>Training-free still has a cost.</strong> A harness may use additional frozen-model inference. The protocol measures that cost separately from physical interaction, while keeping privileged simulator state and success labels out of the runtime policy.</aside>
+  </section>
+
+  <section class="section gallery-section" id="gallery" aria-labelledby="gallery-title">
+    <div class="wrap">
+      <div class="section-heading"><p class="eyebrow">Paired rescue gallery</p><h2 id="gallery-title">The frozen policy fails. The harness succeeds.</h2><p><strong><span id="gallery-total">154</span> recorded episodes</strong> on LIBERO-Pro unseen tasks and unseen scenes. Each clip shows the frozen policy alone on the left and the same policy inside <strong>PGD-Ground D1</strong>, a harness discovered by RoboMetaHarness, on the right, on the identical seeded case.</p></div>
+
+      <div class="gallery-bar">
+        <div class="gallery-filters">
+          <div class="seg" role="group" aria-label="Filter by policy" data-filter="policy">
+            <button type="button" data-value="all" aria-pressed="true">All<span class="seg-long"> policies</span> <span class="seg-n"></span></button>
+            <button type="button" data-value="π0.5" aria-pressed="false">π0.5 <span class="seg-n"></span></button>
+            <button type="button" data-value="π0-FAST" aria-pressed="false">π0-FAST <span class="seg-n"></span></button>
+            <button type="button" data-value="OpenVLA" aria-pressed="false">OpenVLA <span class="seg-n"></span></button>
+          </div>
+          <div class="seg" role="group" aria-label="Filter by setting" data-filter="setting">
+            <button type="button" data-value="all" aria-pressed="true">All<span class="seg-long"> settings</span> <span class="seg-n"></span></button>
+            <button type="button" data-value="tasks" aria-pressed="false">Unseen tasks <span class="seg-n"></span></button>
+            <button type="button" data-value="scenes" aria-pressed="false">Unseen scenes <span class="seg-n"></span></button>
+          </div>
+        </div>
+        <label class="gallery-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="gallery-search" type="search" placeholder="Search instructions" aria-label="Search clips by instruction" autocomplete="off"></label>
+      </div>
+
+      <div class="gallery-legend">
+        <span><span class="dot"></span>Left: frozen policy alone (fails)</span>
+        <span><span class="dot indigo"></span>Right: policy + PGD-Ground D1 (succeeds)</span>
+        <span class="gallery-count" id="gallery-count" role="status" aria-live="polite">Loading clips…</span>
+      </div>
+
+      <ul class="clip-grid" id="clip-grid"></ul>
+      <p class="gallery-empty" id="gallery-empty" hidden>No clips match these filters. <button type="button" id="gallery-clear">Clear filters</button></p>
+      <div class="gallery-more" id="gallery-more-wrap" hidden><button type="button" class="button primary" id="gallery-more">Show more</button><button type="button" class="button" id="gallery-all">Show all</button></div>
+      <noscript><p class="gallery-empty">The gallery needs JavaScript to load its clips.</p></noscript>
+
+      <details class="gallery-rates">
+        <summary><span>Success rates on identical seeded cases, by cell</span><span class="summary-hint">13 cells · 3 policies</span></summary>
+        <div class="table-container"><table>
+          <caption>Success (%) of the frozen policy alone and of policy + PGD-Ground D1 on the same seeded cases. W / L: paired wins and losses (not listed for the subset fresh-start cells). Clips: rescues shown in this gallery.</caption>
+          <thead><tr><th scope="col">Policy and evaluation</th><th scope="col">Alone</th><th scope="col">+ D1</th><th scope="col">Δ pts</th><th scope="col"><span class="sr-only">Comparison</span><span class="db-legend" aria-hidden="true"><i class="db-a"></i>alone <i class="db-b"></i>+ D1</span></th><th scope="col">W / L</th><th scope="col">Clips</th></tr></thead>
+          <tbody id="gallery-rates-body"></tbody>
+        </table></div>
+      </details>
+
+      <p class="gallery-rule"><strong>Selection rule, fixed in advance.</strong> A clip qualifies only if the policy alone fails and policy + PGD-Ground D1 succeeds on the same seeded case. Wins are interleaved across suites and taken in episode order, up to 12 per cell. No clip was chosen for visual quality, and every clip is the scored episode itself, recorded from the agent view. In 4 clips, marked <span class="clip-flag inline">Scripted re-grasp</span>, the harness’s scripted re-grasp performs the grasp. In the other 150, the frozen policy performs both the grasp and the placement.</p>
+    </div>
   </section>
 
   <section class="section results-section" id="results"><div class="wrap">
@@ -111,6 +157,29 @@
   </section>
 </main>
 <footer><div class="wrap"><a class="brand" href="#">RoboMetaHarness</a><p>Anonymous Authors</p></div></footer>
+<dialog id="clip-dialog" class="clip-dialog" aria-labelledby="clip-title">
+  <div class="cd-head">
+    <div class="cd-heading"><p class="cd-kicker" id="clip-kicker"></p><h3 id="clip-title"></h3></div>
+    <div class="cd-nav"><span class="cd-pos" id="clip-pos"></span><button type="button" id="clip-prev" aria-label="Previous clip">‹</button><button type="button" id="clip-next" aria-label="Next clip">›</button><button type="button" id="clip-close" class="cd-close" aria-label="Close video">×</button></div>
+  </div>
+  <div class="cd-stage">
+    <video id="clip-video" controls muted loop playsinline preload="auto" width="1036" height="630"></video>
+  </div>
+  <div class="cd-info">
+    <dl class="cd-meta">
+      <div><dt>Case</dt><dd><code id="clip-case"></code></dd></div>
+      <div><dt>Suite</dt><dd id="clip-suite"></dd></div>
+      <div><dt>Cell success</dt><dd id="clip-cell"></dd></div>
+      <div><dt>Paired W / L</dt><dd id="clip-wl"></dd></div>
+    </dl>
+    <div class="cd-tools">
+      <div class="seg seg-sm" id="clip-speed" role="group" aria-label="Playback speed"><button type="button" data-rate="0.5" aria-pressed="false">0.5×</button><button type="button" data-rate="1" aria-pressed="true">1×</button><button type="button" data-rate="2" aria-pressed="false">2×</button></div>
+      <a class="cd-download" id="clip-download" href="#" download>Download MP4 ↓</a>
+    </div>
+    <p class="cd-note" id="clip-note" hidden></p>
+    <p class="cd-hint">Use ← and → to step through clips.</p>
+  </div>
+</dialog>
 <dialog id="figure-dialog" aria-label="Enlarged research figure"><div class="dialog-toolbar"><span>Research figure</span><button id="close-figure" aria-label="Close enlarged figure">Close <span aria-hidden="true">×</span></button></div><div class="dialog-scroll"><img id="enlarged-figure" alt="Enlarged research figure"></div></dialog>
 </body>
 </html>
