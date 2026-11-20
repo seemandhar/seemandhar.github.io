@@ -13,6 +13,7 @@ for (const trigger of document.querySelectorAll('[data-figure]')) {
 document.getElementById('close-figure').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
 dialog.addEventListener('close', () => previousFocus?.focus());
+if (document.getElementById('play-pair')) {
 const videos = [document.getElementById('baseline-video'), document.getElementById('null-video')];
 const playButton = document.getElementById('play-pair');
 const status = document.getElementById('video-status');
@@ -49,3 +50,5 @@ document.getElementById('reset-pair').addEventListener('click', () => {
   status.textContent = 'Both replays reset to the start.';
   updateButton();
 });
+
+}

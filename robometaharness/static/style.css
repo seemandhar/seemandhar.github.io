@@ -133,3 +133,13 @@ html:has(dialog[open]){overflow:hidden}
 @media(max-width:860px){.gallery-bar{position:static;margin:0;padding:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none}.gallery-search{flex:1 1 100%}.cd-info{grid-template-columns:1fr}.cd-tools{justify-content:space-between}}
 @media(max-width:700px){.gallery-filters{width:100%}.seg{width:100%}.seg button{flex:1 0 auto;justify-content:center;padding:6px 9px;font-size:12.5px}.seg-long{display:none}.gallery-count{margin-left:0;width:100%}.clip-grid{grid-template-columns:1fr;gap:16px}.clip-body{padding:13px 14px 12px}.gallery-rates summary{padding:14px 16px;font-size:14px}.summary-hint{display:none}.gallery-rule{text-align:left}.clip-dialog{width:100vw;max-height:100dvh;border-radius:18px 18px 0 0;margin:auto 0 0}.cd-head{padding:12px 12px 10px 16px}.cd-head h3{font-size:16px}.cd-pos{display:none}.cd-nav button{width:34px;height:34px}.cd-stage video{max-height:none}.cd-info{padding:14px 16px 18px}.cd-hint{display:none}}
 @media(prefers-reduced-motion:reduce){.clip,.clip-media img,.clip-play{transition:none}.clip:hover{transform:none}.clip:hover .clip-media img{transform:none}.clip-dialog[open]{animation:none}}
+/* v2: paper-aligned page */
+.demo-video{margin-top:10px}.video-card video{display:block;width:100%;height:auto;border-radius:8px;background:#0b1512;aspect-ratio:16/9}.video-card figcaption{padding:12px 7px 2px;font-size:14px;color:var(--muted);line-height:1.7}
+.teaser{margin-top:28px}
+.method-figs{display:grid;grid-template-columns:70fr 30fr;gap:16px;align-items:start}.method-figs figcaption,.results-split figcaption,.results-figure figcaption{font-size:13px;color:var(--muted);line-height:1.65;padding:10px 6px 2px}
+.cards.loops{grid-template-columns:1fr 1fr;margin-top:18px}
+.results-split{display:grid;grid-template-columns:1.45fr 1fr;gap:18px;align-items:start}.results-split .table-container{margin-top:0}
+.results-two{display:grid;grid-template-columns:1fr 1fr;gap:26px}.results-two .subheading{font-size:22px}
+table.num td{white-space:nowrap}table.num td.pos{color:#067647;font-weight:600}table.num tr.ours{background:#f4f3ff}table.num tr.ours th{color:var(--accent)}table.num tr.sep th,table.num tr.sep td{border-top:2px solid #d5d9e3}table.num tr.group th{background:#fafbfd;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#667085;font-weight:600}
+.results-figure{margin-top:22px}.note{font-size:13px;color:var(--muted);line-height:1.7;margin-top:12px}
+@media (max-width:900px){.method-figs,.results-split,.results-two,.cards.loops{grid-template-columns:1fr}}
