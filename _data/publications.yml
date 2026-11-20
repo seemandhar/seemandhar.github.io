@@ -1,21 +1,5 @@
 main:
 
-  - title: "HarnessStudio: A Unified, Training-Free Harness Framework for Frozen Robot Policies"
-    authors: <strong>S. Jain</strong>, M. Chandraker
-    conference_short: In Prep
-    conference: Submission in progress.
-    code: https://github.com/seemandhar/harnessstudio
-    image: ./assets/img/harnessstudio.png
-    notes: Submission in Progress
-
-  - title: "RoboMetaHarness: Automated Harness Discovery for Frozen Robot Policies"
-    authors: <strong>S. Jain</strong>, M. Chandraker
-    conference_short: CVPR
-    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), under review.
-    page: https://seemandharjain.com/robometaharness/
-    image: ./robometaharness/static/images/architecture-gpt-image.png
-    notes: Under Review
-
   - title: "SplatLab: Autonomous Scientific Discovery for 3DGS Research"
     authors: <strong>S. Jain</strong>, M. Chandraker
     conference_short: NeurIPS 2026
