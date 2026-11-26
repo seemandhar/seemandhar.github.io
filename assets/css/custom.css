@@ -797,3 +797,55 @@ a[href="/ubuntu/"]:hover {
   .affil-role { color: #aab; }
   .affil-date { color: #8899aa; }
 }
+
+/* ===== Tabbed homepage (assets/js/tabs.js) ===== */
+.site-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 0 26px;
+  padding: 10px 0 8px;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+.site-tab {
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  line-height: 1.2;
+  color: #555 !important;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.site-tab:hover { background: #eef3f8; color: #043361 !important; }
+.site-tab.active { background: #043361; color: #fff !important; }
+.site-tab:focus-visible { outline: 2px solid #39c; outline-offset: 2px; }
+.site-tab-external { margin-left: auto; }
+.tab-panel[hidden] { display: none !important; }
+.tab-panel > h2:first-child { margin-top: 0; }
+.tabs-ready .tab-panel { animation: fadeInUp 0.35s ease both; }
+
+@media (prefers-color-scheme: dark) {
+  .site-tabs { background: #20212b; border-bottom-color: #3a3b47; }
+  .site-tab { color: #b8b9c2 !important; }
+  .site-tab:hover { background: #2c2d3a; color: #3eb7f0 !important; }
+  .site-tab.active { background: #3eb7f0; color: #20212b !important; }
+}
+
+@media screen and (max-width: 960px) {
+  .site-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    scrollbar-width: none;
+  }
+  .site-tabs::-webkit-scrollbar { display: none; }
+  .site-tab { white-space: nowrap; }
+  .site-tab-external { margin-left: 0; }
+}
