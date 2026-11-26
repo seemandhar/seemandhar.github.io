@@ -185,4 +185,3 @@ A talk on my research is available here: [YouTube](https://youtu.be/lT77jFuQMzE)
 
 {% include gallery.html %}
 
-{% include multiagent-viz.html %}

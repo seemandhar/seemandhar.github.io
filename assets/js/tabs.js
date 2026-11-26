@@ -7,11 +7,11 @@
  */
 (function () {
   var TABS = [
-    { id: 'about',        label: 'About',              sections: ['about-me', 'research-interests', 'highlights', 'multiagent-section'] },
+    { id: 'about',        label: 'About',              sections: ['about-me', 'research-interests'] },
     { id: 'news',         label: 'News',               sections: ['news'] },
     { id: 'publications', label: 'Publications',       sections: ['publications'] },
     { id: 'experience',   label: 'Experience & Service', sections: ['services', 'affiliations'] },
-    { id: 'awards',       label: 'Awards & Media',     sections: ['honors--awards', 'media-coverage'] },
+    { id: 'awards',       label: 'Awards & Media',     sections: ['highlights', 'honors--awards', 'media-coverage'] },
     { id: 'gallery',      label: 'Gallery',            sections: ['gallery'] }
   ];
 
